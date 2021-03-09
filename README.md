@@ -12,7 +12,7 @@ Insert info or logo
 * [Max Jander](https://github.com/maxjander)
 * [Youssef Chardi](https://github.com/Youssef-C)
 * [Simon Lindqvist](https://github.com/simonlindqvist)
-* [Mehrab Norouzi ]()
+* [Mehrab Norouzi ](https://github.com/MehrabNorouzi)
 
 <a name="tech-stack"></a>
 ## Dependecies
