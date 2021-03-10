@@ -2,7 +2,6 @@
 Insert info or logo
 
 ## Table of Contents
-- [B-E-V](#b-e-v)
   - [Table of Contents](#table-of-contents)
   - [Team Members:](#team-members)
   - [Dependecies](#dependecies)
@@ -20,3 +19,4 @@ Insert info or logo
 * React-Router
 * Styled Components
 * Firebase
+* Rechart
