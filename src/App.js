@@ -1,55 +1,49 @@
 import styled from 'styled-components'
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { StyledH1, Content, StyledH2, StyledH3 } from './tools/styledComponents.js'
+//import { breakpoints } from "./tools/breakpoints.js";
 
 const data = [
   {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
+    name: "27/2",
+    high: 3,
+    low: 2,
     amt: 2400
   },
   {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
+    name: "28/2",
+    high: 3000,
+    low: 1398,
     amt: 2210
   },
   {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
+    name: "1/3",
+    high: 2000,
+    low: 9800,
     amt: 2290
   },
   {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
+    name: "2/3",
+    high: 2780,
+    low: 3908,
     amt: 2000
   },
   {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
+    name: "3/3",
+    high: 1890,
+    low: 4800,
     amt: 2181
   },
   {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
+    name: "4/3",
+    high: 2390,
+    low: 3800,
     amt: 2500
   },
   {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
+    name: "5/3",
+    high: 3490,
+    low: 4300,
     amt: 2100
   }
 ];
@@ -57,36 +51,36 @@ const data = [
 function App() {
   return (
     <StyledApp>
-      <header className="App-header">
-        <p>
-         Tjena <br />
-         Grupp 7
-        </p>
-        <LineChart
-      width={500}
-      height={300}
-      data={data}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Line
-        type="monotone"
-        dataKey="pv"
-        stroke="#8884d8"
-        activeDot={{ r: 8 }}
-      />
-      <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-    </LineChart>
-      </header>
+      
+        <StyledH1>H1 TCG Empire</StyledH1>
+        <StyledH2>H2 TCG Empire</StyledH2>
+        <StyledH3>H3 TCG Empire</StyledH3>
+        <Content>
+          Section Styled compontents <br />
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nec dui nunc mattis enim. Blandit massa enim nec dui nunc mattis enim ut. Mauris cursus mattis molestie a iaculis at erat. Nibh mauris cursus mattis molestie a iaculis at erat. Nisl pretium fusce id velit ut tortor pretium. Faucibus pulvinar elementum integer enim neque.
+          </Content> 
+          <ResponsiveContainer width="100%" height={300}>
+          <LineChart
+            width={500}
+            height={300}
+            data={data}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 30,
+              bottom: 10,
+            }}
+          >
+            <CartesianGrid strokeDasharray="10 10" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend  />
+            <Line type="monotone" dataKey="high"  stroke="#8884d8" activeDot={{ r: 8 }} />
+            <Line type="monotone" dataKey="low"  stroke="#82ca9d" />
+          </LineChart>
+        </ResponsiveContainer>
+     
     </StyledApp>
   );
 }
@@ -100,9 +94,9 @@ const StyledApp = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: 1rem;);
+  justify-content: flex-start;
   color: white;
   text-align: center;
+  font-size: 1rem;
 
 `
