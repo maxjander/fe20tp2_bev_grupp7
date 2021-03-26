@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { compose } from 'recompose';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { compose } from "recompose";
+import styled from "styled-components";
 
-import { AuthUserContext, withAuthorization } from '../Session';
-import { withFirebase } from '../Firebase';
-import Autocomplete from '../Autocomplete';
-import infoData from '../../constants/listOfNames.json';
-import allData from '../../constants/data.json';
-import cardConditions from '../../constants/cardConditions';
+import { AuthUserContext, withAuthorization } from "../Session";
+import { withFirebase } from "../Firebase";
+import Autocomplete from "../Autocomplete";
+import infoData from "../../constants/listOfNames.json";
+import allData from "../../constants/data.json";
+import cardConditions from "../../constants/cardConditions";
 
 const HomePage = () => (
   <div>
@@ -19,9 +19,9 @@ const HomePage = () => (
 
 const CardsBase = (props) => {
   const autoCompleteElement = React.createRef();
-  const [cardName, setCardName] = useState('');
+  const [cardName, setCardName] = useState("");
   const [cardSet, setCardSet] = useState(null);
-  const [cardCondition, setCardCondition] = useState('');
+  const [cardCondition, setCardCondition] = useState("");
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState([]);
   const [card_sets, setCard_sets] = useState([]);
@@ -29,7 +29,7 @@ const CardsBase = (props) => {
   useEffect(() => {
     setLoading(true);
     //messages
-    props.firebase.cards().on('value', (snapshot) => {
+    props.firebase.cards().on("value", (snapshot) => {
       const cardObject = snapshot.val();
 
       if (cardObject) {
@@ -76,13 +76,13 @@ const CardsBase = (props) => {
       });
 
       //Resets State when Card is created
-      setCardName('');
+      setCardName("");
       setCardSet(null);
-      setCardCondition('');
+      setCardCondition("");
       setCard_sets([]);
       //This changes states on our child when Card is created
       autoCompleteElement.current.setState({
-        userInput: '',
+        userInput: "",
       });
     }
     event.preventDefault();
@@ -144,6 +144,7 @@ const CardsBase = (props) => {
               onEditCard={onEditCard}
               onRemoveCard={onRemoveCard}
               props={props}
+              authUser={authUser}
             />
           ) : (
             <div>There are no cards ...</div>
@@ -152,12 +153,12 @@ const CardsBase = (props) => {
           <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
             <Autocomplete
               ref={autoCompleteElement}
-              type="text"
+              type='text'
               value={cardName}
               onChange={onChangeCardName}
-              name="cardName"
-              min="3"
-              required="required"
+              name='cardName'
+              min='3'
+              required='required'
               suggestions={infoData}
               autoCompleteCallback={autoCompleteCallback}
             />
@@ -165,9 +166,9 @@ const CardsBase = (props) => {
             {card_sets.length > 0 && (
               <StyledSelect
                 onChange={onChangeCardSet}
-                required="required"
-                name="card__sets"
-                placeholder="Card Sets">
+                required='required'
+                name='card__sets'
+                placeholder='Card Sets'>
                 <option> Select a Card Set</option>
                 {card_sets.map((item, idx) => (
                   <option key={idx} value={item.set_code}>
@@ -183,11 +184,11 @@ const CardsBase = (props) => {
 
             {cardSet && (
               <StyledSelect
-                type="text"
+                type='text'
                 value={cardCondition}
                 onChange={onChangeCardCondition}
-                required="required"
-                placeholder="Condition">
+                required='required'
+                placeholder='Condition'>
                 <option>What Condition is your card?</option>
                 {cardConditions.map((item, idx) => (
                   <option key={idx} value={item}>
@@ -197,7 +198,7 @@ const CardsBase = (props) => {
               </StyledSelect>
             )}
 
-            {cardCondition && <button type="submit">Add Card</button>}
+            {cardCondition && <button type='submit'>Add Card</button>}
           </FlexForm>
         </FlexContainer>
       )}
@@ -209,21 +210,25 @@ const CardList = ({
   cards, //messages
   onEditCard, //oneditmessage
   onRemoveCard,
-  props, //onremovemessage
+  props,
+  authUser, //onremovemessage
 }) => {
   console.log(cards);
 
   return (
     <ul>
-      {cards.map((card) => (
-        <CardItem //MessageItem
-          key={card.uid} //message.uid
-          card={card}
-          onEditCard={onEditCard}
-          onRemoveCard={onRemoveCard}
-          props={props}
-        />
-      ))}
+      {cards.map(
+        (card) =>
+          card.userId === authUser.uid && (
+            <CardItem //MessageItem
+              key={card.uid} //message.uid
+              card={card}
+              onEditCard={onEditCard}
+              onRemoveCard={onRemoveCard}
+              props={props}
+            />
+          )
+      )}
     </ul>
   );
 };
@@ -272,21 +277,20 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
 
     setEditMode(false);
   };
-  console.log(card.editedAt);
   return (
     <>
       {editMode ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type="text"
+            type='text'
             value={editCardName}
             onChange={onChangeEditCardName}
             readOnly
           />
           <StyledSelect
-            type="text"
+            type='text'
             onChange={onChangeEditCardSet}
-            required="required">
+            required='required'>
             <option>Card Sets</option>
             {editCard_sets.map((item, idx) => (
               <option key={idx} value={item.set_code}>
@@ -295,11 +299,11 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
             ))}
           </StyledSelect>
           <StyledSelect
-            type="text"
+            type='text'
             value={editCondition}
             onChange={onChangeEditCondition}
-            required="required"
-            placeholder="Condition">
+            required='required'
+            placeholder='Condition'>
             <option>What Condition is your card?</option>
             {cardConditions.map((item, idx) => (
               <option key={idx} value={item}>
@@ -317,7 +321,7 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
         <li>
           <span>
             {/* {card.userId} */}
-            <strong> {card.cardName}</strong> {card.cardSet.set_code}{' '}
+            <strong> {card.cardName}</strong> {card.cardSet.set_code}{" "}
             <em>{card.cardSet.set_rarity_code}</em> {card.cardCondition}
             {card.editedAt && (
               <span

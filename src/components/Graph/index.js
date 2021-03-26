@@ -1,32 +1,40 @@
 import React from "react";
-import { Line } from 'react-chartjs-2';
-import mockDat from '../MockData/index.js';
-import FetchRandCard from '../FetchTest/index.js';
+import { Line } from "react-chartjs-2";
+import mockDat from "../MockData/index.js";
+import FetchRandCard from "../FetchTest/index.js";
+import styled from "styled-components";
 
-const PortfolioGraph = () =>
-{
-  return <div>
+const PortfolioGraph = () => {
+  return (
+    <div>
+      <Line
+        data={{
+          labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+          datasets: [
+            {
+              data: mockDat,
+            },
+          ],
+        }}
+        // height={100}
+        // width={600}
+        options={{
+          maintainAspectRatio: false,
+        }}
+      />
 
-  <Line
-  data={{
-    labels: ['Mon','Tue','Wed','Thur','Fri','Sat','Sun'],
-    datasets: [
-{
-      data: mockDat,
-    },
-  ],
+      <FetchRandCard />
+    </div>
+  );
+};
 
-  }}
-  height={400}
-  width={600}
-  options={{
-    maintainAspectRatio: false,
-  }}
-   />
+export default PortfolioGraph;
 
-   <FetchRandCard/>
-
-  </div>
-}
-
-export default PortfolioGraph
+const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 80%;
+`;
