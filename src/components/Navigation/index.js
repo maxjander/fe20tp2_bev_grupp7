@@ -36,6 +36,9 @@ const NavigationAuth = ({ authUser }) => (
       <li>
         <Link to={ROUTES.ACCOUNT}>Account</Link>
       </li>
+      <li>
+      <Link to={ROUTES.GRAPH}>Graph</Link>
+      </li>
       {!!authUser.roles[ROLES.ADMIN] && (
         <li>
           <Link to={ROUTES.ADMIN}>Admin</Link>
@@ -122,7 +125,7 @@ const NavUl = styled.ul`
   }
 `;
 
-/* 
+/*
 "
 
 ul {
@@ -130,19 +133,19 @@ ul {
     padding: 0;
     list-style: none;
   }
-  
-  
-  
-  
-  
+
+
+
+
+
   .logo {
       margin: 0;
       font-size: 1.45em;
   }
-  
+
   .main-nav {
       margin-top: 5px;
-  
+
   }
   .logo a,
   .main-nav a {
@@ -151,18 +154,18 @@ ul {
       text-align: center;
       display: block;
   }
-  
+
   .main-nav a {
       color: #34495e;
       font-size: .99em;
   }
-  
+
   .main-nav a:hover {
       color: #718daa;
   }
-  
-  
-  
+
+
+
   .header {
       padding-top: .5em;
       padding-bottom: .5em;
@@ -175,9 +178,9 @@ ul {
       -moz-border-radius: 5px;
       border-radius: 5px;
   }
-  
-  
-  /* ================================= 
+
+
+  /* =================================
     Media Queries
   ==================================== */
 
@@ -195,15 +198,15 @@ ul {
           max-width: 1150px;
       }
       }
-  
+
   }
-  
+
   @media (minWidth: 1025px) {
       .header {
           flex-direction: row;
           justify-content: space-between;
       }
-  
+
   }
 
 " */
