@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import { createGlobalStyle } from 'styled-components';
+import { normalize } from 'styled-normalize';
 
+import App from './components/App';
+import Firebase, { FirebaseContext } from './components/Firebase';
 
-// create Global Style for whole the whole project, this is instad of index.css
-
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
+  ${normalize}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -16,14 +17,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-`
-
+html {
+  scroll-behavior: smooth;
+}
+`;
 ReactDOM.render(
-  <React.StrictMode>
+  <FirebaseContext.Provider value={new Firebase()}>
     <GlobalStyle />
     <App />
-  </React.StrictMode>,
+  </FirebaseContext.Provider>,
   document.getElementById('root')
 );
-
