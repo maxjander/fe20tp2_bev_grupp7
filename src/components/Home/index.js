@@ -213,8 +213,6 @@ const CardList = ({
   props,
   authUser, //onremovemessage
 }) => {
-  console.log(cards);
-
   return (
     <ul>
       {cards.map(

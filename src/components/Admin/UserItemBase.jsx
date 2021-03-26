@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
+import { ListOfCards } from "../ListOfCards";
 const UserItemBase = (props) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();
-  const [cards, setCards] = useState(null);
 
   // const [location, setLocation] = useState(props.location.state)
   const onSendPasswordResetEmail = () => {
@@ -23,25 +23,6 @@ const UserItemBase = (props) => {
       return () => {
         props.firebase.user(props.match.params.id).off();
       };
-    });
-    props.firebase.cards().on("value", (snapshot) => {
-      const cardObject = snapshot.val();
-
-      if (cardObject) {
-        //convert cards list from snapshot
-        const cardList = Object.keys(cardObject)
-          .map((key) => ({
-            ...cardObject[key],
-            uid: key,
-          }))
-          .filter((card) => card.userId === props.match.params.id);
-
-        setCards(cardList);
-        console.log(cardList);
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
     });
   }, [user, props.firebase, props.match.params.id]);
 
@@ -68,15 +49,7 @@ const UserItemBase = (props) => {
           </span>
         </div>
       )}
-
-      <ul>
-        {cards &&
-          cards.map((card) => (
-            <li key={card.uid}>
-              {card.cardName} {card.cardSet.set_rarity_code}
-            </li>
-          ))}
-      </ul>
+      <ListOfCards userId={props.match.params.id} />
     </div>
   );
 };
