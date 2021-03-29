@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const PortfolioGraph = () => {
   return (
-    <div>
+    <StyledWrapper>
       <Line
         data={{
           labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
@@ -19,12 +19,12 @@ const PortfolioGraph = () => {
         // height={100}
         // width={600}
         options={{
-          maintainAspectRatio: false,
+          maintainAspectRatio: true,
         }}
       />
 
       <FetchRandCard />
-    </div>
+    </StyledWrapper>
   );
 };
 

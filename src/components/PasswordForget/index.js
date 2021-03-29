@@ -1,59 +1,72 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-
-import { withFirebase } from '../Firebase'
-import * as ROUTES from '../../constants/routes'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { withFirebase } from "../Firebase";
+import * as ROUTES from "../../constants/routes";
 
 const PasswordForgetPage = () => (
-    <div>
-        <h1>PasswordForget</h1>
-        <PasswordForgetForm />
-    </div>
-)
+  <div>
+    <h1>PasswordForget</h1>
+    <PasswordForgetForm />
+  </div>
+);
 
 const PasswordForgetFormBase = (props) => {
-    const [email, setEmail] = useState('')
-    const [error, setError] = useState('')
-    const isInvalid = email === ''
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const isInvalid = email === "";
 
-    const onSubmit = (event) => {
-        props.firebase
-            .doPasswordReset(email)
-            .then(() => {
-                setEmail('')
-            })
-            .catch((error) => {
-                setError(error)
-            })
+  const onSubmit = (event) => {
+    props.firebase
+      .doPasswordReset(email)
+      .then(() => {
+        setEmail("");
+      })
+      .catch((error) => {
+        setError(error);
+      });
 
-        event.preventDefault()
-    }
-    const onChange = (event) => setEmail(event.target.value)
+    event.preventDefault();
+  };
+  const onChange = (event) => setEmail(event.target.value);
 
-    return (
-        <form onSubmit={onSubmit}>
-            <input
-                name="email"
-                value={email}
-                onChange={onChange}
-                type="text"
-                placeholder="Email Address"
-            />
-            <button disabled={isInvalid} type="submit">
-                Reset My Password
-            </button>
+  return (
+    <FlexForm onSubmit={onSubmit}>
+      <StyledInput
+        name='email'
+        value={email}
+        onChange={onChange}
+        type='text'
+        placeholder='Email Address'
+      />
+      <button disabled={isInvalid} type='submit'>
+        Reset My Password
+      </button>
 
-            {error && <p>{error.message}</p>}
-        </form>
-    )
-}
+      {error && <p>{error.message}</p>}
+    </FlexForm>
+  );
+};
 
 const PasswordForgetLink = () => (
-    <p>
-        <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
-    </p>
-)
+  <p>
+    <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
+  </p>
+);
 
-export default PasswordForgetPage
-const PasswordForgetForm = withFirebase(PasswordForgetFormBase)
-export { PasswordForgetForm, PasswordForgetLink }
+export default PasswordForgetPage;
+const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
+export { PasswordForgetForm, PasswordForgetLink };
+const FlexForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledInput = styled.input`
+  width: 220px;
+  padding: 10px;
+  margin: 10px 0px 10px 0px;
+  box-sizing: border-box;
+`;

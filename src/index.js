@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createGlobalStyle } from 'styled-components';
-import { normalize } from 'styled-normalize';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createGlobalStyle } from "styled-components";
+import { normalize } from "styled-normalize";
 
-import App from './components/App';
-import Firebase, { FirebaseContext } from './components/Firebase';
+import App from "./components/App";
+import Firebase, { FirebaseContext } from "./components/Firebase";
 
 export const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -20,11 +20,15 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+*:focus {
+    outline: none;
+}
 `;
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <GlobalStyle />
     <App />
   </FirebaseContext.Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
