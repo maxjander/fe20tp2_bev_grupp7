@@ -66,6 +66,7 @@ const CardsBase = (props) => {
   //onCreateMessage
   const onCreateCard = (event, authUser) => {
     //Checks if input is correct and voids the post if incorrect
+    // https://firebase.google.com/docs/database/ios/structure-data
     if (cardConditions.includes(cardCondition)) {
       props.firebase.cards().push({
         cardName: cardName,
@@ -96,7 +97,7 @@ const CardsBase = (props) => {
   const onEditCard = (card, cardName, cardSet, cardCondition) => {
     const { uid, ...cardSnapshot } = card;
 
-    props.firebase.card(card.uid).set({
+    props.firebase.card(card.uid).update({
       ...cardSnapshot,
       cardName,
       cardSet,
