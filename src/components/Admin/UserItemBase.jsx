@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import styled from "styled-components";
 import { ListOfCards } from "../ListOfCards";
 const UserItemBase = (props) => {
   const [loading, setLoading] = useState(false);
@@ -26,32 +26,51 @@ const UserItemBase = (props) => {
     });
   }, [user, props.firebase, props.match.params.id]);
 
+  console.log(user);
+
   return (
     <div>
       <h2>User ({props.match.params.id})</h2>
       {loading && <div>Loading ...</div>}
 
       {user && (
-        <div>
-          <span>
-            <strong>ID:</strong> {user.uid}
-          </span>
-          <span>
+        <StyledUl>
+          <StyledLi>
+            <strong>ID:</strong> {props.match.params.id}
+          </StyledLi>
+          <StyledLi>
             <strong>E-Mail:</strong> {user.email}
-          </span>
-          <span>
+          </StyledLi>
+          <StyledLi>
             <strong>Username:</strong> {user.username}
-          </span>
-          <span>
+          </StyledLi>
+          <StyledLi>
             <button type='button' onClick={onSendPasswordResetEmail}>
               Send Password Reset
             </button>
-          </span>
-        </div>
+          </StyledLi>
+        </StyledUl>
       )}
+      <span>All of Users Cards</span>
+      <hr />
       <ListOfCards userId={props.match.params.id} />
     </div>
   );
 };
 
 export default UserItemBase;
+
+const StyledLi = styled.li`
+  list-style: none;
+  li {
+    list-style: none;
+  }
+`;
+const StyledUl = styled.ul`
+  padding-left: 0;
+
+  ul {
+    padding-left: 0;
+    padding-bottom: 10px;
+  }
+`;

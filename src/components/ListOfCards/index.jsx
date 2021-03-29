@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
 import { withFirebase } from "../Firebase";
 
@@ -40,27 +41,37 @@ const ExternalCardList = (props) => {
   }, [props.userId, props.firebase]);
 
   return (
-    <ul>
+    <StyledUl>
       {loading && <li>Loading....</li>}
       {cards &&
         cards.map((card) => (
           <>
-            <li key={card.uid} style={{ listStyle: "none" }}>
+            <StyledLi key={card.uid}>
               <strong>
-                {" "}
                 {card.cardName} {card.cardSet.set_rarity_code}
               </strong>
-            </li>
+            </StyledLi>
 
-            <li style={{ listStyle: "none" }}>
-              <em style={{ fontSize: "12px" }}>
-                {" "}
-                {card.cardSet.set_name} - {card.cardSet.set_code}
-              </em>
-            </li>
+            <p>
+              {card.cardSet.set_name} - {card.cardSet.set_code}
+            </p>
           </>
         ))}
-    </ul>
+    </StyledUl>
   );
 };
 export const ListOfCards = withFirebase(ExternalCardList);
+
+const StyledLi = styled.li`
+  list-style: none;
+`;
+
+const StyledUl = styled.ul`
+  padding-left: 0;
+  p {
+    margin: 0;
+    font-size: 12px;
+    padding-top: 0;
+    padding-bottom: 16px;
+  }
+`;

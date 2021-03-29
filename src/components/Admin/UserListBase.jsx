@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import * as ROUTES from "../../constants/routes";
@@ -29,32 +30,49 @@ const UserListBase = (props) => {
     <div>
       <h2>Users</h2>
       {loading && <div>Loading ...</div>}
-      <ul>
+      <StyledUl>
         {users.map((user) => (
-          <li key={user.uid}>
-            <span>
-              <strong>ID:</strong> {user.uid}
-            </span>
-            <span>
-              <strong>E-Mail:</strong> {user.email}
-            </span>
-            <span>
-              <strong>Username:</strong> {user.username}
-            </span>
-            <span>
-              <Link
-                to={{
-                  pathname: `${ROUTES.ADMIN}/${user.uid}`,
-                  state: { user },
-                }}>
-                Details
-              </Link>
-            </span>
-          </li>
+          <StyledLi key={user.uid}>
+            <ul>
+              <li>
+                <strong>ID:</strong> {user.uid}
+              </li>
+              <li>
+                <strong>E-Mail:</strong> {user.email}
+              </li>
+              <li>
+                <strong>Username:</strong> {user.username}
+              </li>
+              <li>
+                <Link
+                  to={{
+                    pathname: `${ROUTES.ADMIN}/${user.uid}`,
+                    state: { user },
+                  }}>
+                  Details
+                </Link>
+              </li>
+            </ul>
+          </StyledLi>
         ))}
-      </ul>
+      </StyledUl>
     </div>
   );
 };
 
 export default UserListBase;
+
+const StyledLi = styled.li`
+  list-style: none;
+  li {
+    list-style: none;
+  }
+`;
+const StyledUl = styled.ul`
+  padding-left: 0;
+
+  ul {
+    padding-left: 0;
+    padding-bottom: 10px;
+  }
+`;

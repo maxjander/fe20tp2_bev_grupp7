@@ -135,7 +135,7 @@ const CardsBase = (props) => {
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
-        <FlexContainer>
+        <>
           {loading && <div>Loading...</div>}
           {/*messages*/}
           {cards /*MessageList*/ ? (
@@ -200,7 +200,7 @@ const CardsBase = (props) => {
 
             {cardCondition && <button type='submit'>Add Card</button>}
           </FlexForm>
-        </FlexContainer>
+        </>
       )}
     </AuthUserContext.Consumer>
   );
@@ -343,14 +343,6 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
 const Cards = withFirebase(CardsBase);
 const condition = (authUser) => !!authUser;
 export default compose(withAuthorization(condition))(HomePage);
-
-const FlexContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 40px;
-`;
 
 const FlexForm = styled.form`
   display: flex;
