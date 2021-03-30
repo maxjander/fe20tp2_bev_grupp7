@@ -86,8 +86,8 @@ const CardsBase = (props) => {
           marketPrice: {
             marketPriceDateAdded: setPrice,
           },
-        priceChangeDeltaValueHistory: [
-            { x: props.firebase.serverValue.TIMESTAMP, y: 0 }
+          priceChangeDeltaValueHistory: [
+            { x: props.firebase.serverValue.TIMESTAMP, y: 0 },
           ],
           userId: authUser.uid,
           createdAt: props.firebase.serverValue.TIMESTAMP,
@@ -121,7 +121,8 @@ const CardsBase = (props) => {
   };
 
   //onRemoveMessage
-  const onRemoveCard = (uid) => {
+  const onRemoveCard = (uid, authUser) => {
+    props.firebase.userCardArray(authUser.uid).child(uid).remove();
     props.firebase.card(uid).remove();
   };
   //oneditmessage //message //text
@@ -245,13 +246,14 @@ const CardList = ({
               onEditCard={onEditCard}
               onRemoveCard={onRemoveCard}
               props={props}
+              authUser={authUser}
             />
           )
       )}
     </ul>
   );
 };
-const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
+const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
   const [apiCard, setApiCard] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editCardName, setEditCardName] = useState(card.cardName);
@@ -345,7 +347,9 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
           </span>
           <span>
             <button onClick={onToggleEditMode}>Edit</button>
-            <button onClick={() => onRemoveCard(card.uid)}>Delete</button>
+            <button onClick={() => onRemoveCard(card.uid, authUser)}>
+              Delete
+            </button>
           </span>
         </li>
       )}
