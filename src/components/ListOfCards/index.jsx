@@ -46,7 +46,7 @@ const ExternalCardList = (props) => {
           <>
             <StyledLi key={card.uid}>
               <strong>
-                {card.cardName} {card.cardSet.set_rarity_code}
+                {card.cardName} {card.cardSet}
               </strong>
             </StyledLi>
 

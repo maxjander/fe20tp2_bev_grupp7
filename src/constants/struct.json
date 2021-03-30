@@ -1,0 +1,37 @@
+({
+  "cards": {
+    "-MWxmnAJcNCjurRMqa7M": {
+      "cardId": 1324155,
+      "set": {
+        "set_code": "SDDC-EN028",
+        "set_rarity_code": ""
+      },
+      "cardCondition": "Mint",
+      "buy_point": 1,
+      "createdAt": 1617018172157,
+      "editedAt": 1617018172157,
+      "marketPrice": {
+        "marketPriceDateAdded": 10
+      },
+      "priceChangeDeltaValueHistory": [
+        { "x": "23/1/2021", "y": null },
+        { "x": "c", "y": 3 }
+      ],
+      "userId": "4zyW9pkhKHQ3m1Jrev47umzxpOo2"
+    }
+  }
+},
+{
+  "4zyW9pkhKHQ3m1Jrev47umzxpOo2": {
+    "cards": [
+      {
+        "-MWxmnAJcNCjurRMqa7M": true
+      }
+    ],
+    "email": "maxjander@gmail.com",
+    "roles": {
+      "ADMIN": "ADMIN"
+    },
+    "username": "maxjander@gmail.com"
+  }
+})

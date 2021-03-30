@@ -20,11 +20,13 @@ const HomePage = () => (
 const CardsBase = (props) => {
   const autoCompleteElement = React.createRef();
   const [cardName, setCardName] = useState("");
+  const [apiCard, setApiCard] = useState(null);
   const [cardSet, setCardSet] = useState(null);
   const [cardCondition, setCardCondition] = useState("");
+  const [setPrice, setSetPrice] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [buyPoint, setBuyPoint] = useState(null);
   const [cards, setCards] = useState([]);
-  const [card_sets, setCard_sets] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -53,25 +55,35 @@ const CardsBase = (props) => {
   const onChangeCardName = (event) => setCardName(event.target.value);
   //did not exist
   const onChangeCardSet = (event) => {
-    //text
+    //Function for setting Cardset to state, it's a callback from input field when adding cards.
+
+    //setting index for selecting the right cardset
     let index = event.target.options.selectedIndex - 1;
     if (index >= 0) {
-      setCardSet(card_sets[index]);
+      setCardSet({
+        set_code: apiCard.card_sets[index].set_code,
+        set_rarity_code: apiCard.card_sets[index].set_rarity_code,
+      });
+      setSetPrice(apiCard.card_sets[index].set_price);
     } else {
       setCardSet(null);
     }
-  };
-  //did not exist
+  }; //did not exist
   const onChangeCardCondition = (event) => setCardCondition(event.target.value);
+  const onChangeBuyPoint = (event) => setBuyPoint(event.target.value);
   //onCreateMessage
   const onCreateCard = (event, authUser) => {
     //Checks if input is correct and voids the post if incorrect
     // https://firebase.google.com/docs/database/ios/structure-data
     if (cardConditions.includes(cardCondition)) {
       props.firebase.cards().push({
-        cardName: cardName,
+        cardId: apiCard.id,
         cardSet: cardSet,
         cardCondition: cardCondition,
+        buy_point: buyPoint,
+        marketPrice: {
+          marketPriceDateAdded: setPrice,
+        },
         userId: authUser.uid,
         createdAt: props.firebase.serverValue.TIMESTAMP,
       });
@@ -80,7 +92,8 @@ const CardsBase = (props) => {
       setCardName("");
       setCardSet(null);
       setCardCondition("");
-      setCard_sets([]);
+      setApiCard(null);
+
       //This changes states on our child when Card is created
       autoCompleteElement.current.setState({
         userInput: "",
@@ -97,7 +110,7 @@ const CardsBase = (props) => {
   const onEditCard = (card, cardName, cardSet, cardCondition) => {
     const { uid, ...cardSnapshot } = card;
 
-    props.firebase.card(card.uid).update({
+    props.firebase.card(card.uid).set({
       ...cardSnapshot,
       cardName,
       cardSet,
@@ -107,30 +120,10 @@ const CardsBase = (props) => {
   };
   const autoCompleteCallback = (props) => {
     // Callback function to send down the component tree to update state
+    const innerApiCard = allData.data.find((item) => item.name === props);
 
-    // Filter out the card object from full datafile,
-    //connect API here
-    const cardArray = allData.data
-      .filter((item) => item.name === props)
-      .map((item) => item.card_sets);
-
-    //temporary array to push to state
-    const tmpArray = [];
-
-    cardArray.map((item, index) =>
-      item.map(({ set_rarity_code, set_code, set_name }) =>
-        tmpArray.push({
-          set_code,
-          set_rarity_code,
-          set_name,
-        })
-      )
-    );
-
-    // Updates state
-
+    setApiCard(innerApiCard);
     setCardName(props);
-    setCard_sets(tmpArray);
     setCardSet(null);
   };
   return (
@@ -164,14 +157,14 @@ const CardsBase = (props) => {
               autoCompleteCallback={autoCompleteCallback}
             />
 
-            {card_sets.length > 0 && (
+            {apiCard && apiCard.card_sets.length > 0 && (
               <StyledSelect
                 onChange={onChangeCardSet}
                 required='required'
                 name='card__sets'
                 placeholder='Card Sets'>
                 <option> Select a Card Set</option>
-                {card_sets.map((item, idx) => (
+                {apiCard.card_sets.map((item, idx) => (
                   <option key={idx} value={item.set_code}>
                     {item.set_code} -{item.set_rarity_code}
                   </option>
@@ -198,8 +191,17 @@ const CardsBase = (props) => {
                 ))}
               </StyledSelect>
             )}
+            {cardCondition && (
+              <StyledInput
+                type='number'
+                value={buyPoint}
+                onChange={onChangeBuyPoint}
+                required='required'
+                placeholder='What did you pay?'
+              />
+            )}
 
-            {cardCondition && <button type='submit'>Add Card</button>}
+            {buyPoint && <button type='submit'>Add Card</button>}
           </FlexForm>
         </>
       )}
@@ -232,6 +234,7 @@ const CardList = ({
   );
 };
 const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
+  const [apiCard, setApiCard] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editCardName, setEditCardName] = useState(card.cardName);
   const [editCardSet, setEditCardSet] = useState(card.cardSet);
@@ -242,8 +245,7 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
 
   //did not exist
   const onChangeEditCardSet = (event) => {
-    let index = event.target.options.selectedIndex - 1;
-    setEditCardSet(editCard_sets[index]);
+    setEditCardSet(event.target.value);
   };
   //did not exist
   const onChangeEditCondition = (event) => setEditCondition(event.target.value);
@@ -251,23 +253,11 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
 
   const onToggleEditMode = () => {
     setEditMode(!editMode);
-    const cardArray = allData.data
-      .filter((item) => item.name === card.cardName)
-      .map((item) => item.card_sets);
-
+    const innerApiCard = allData.data.find((item) => item.id === card.cardId);
+    innerApiCard && console.log(innerApiCard);
     //temporary array to push to state
-    const tmpArray = [];
 
-    cardArray.map((item, index) =>
-      item.map(({ set_rarity_code, set_code, set_name }) =>
-        tmpArray.push({
-          set_code,
-          set_rarity_code,
-          set_name,
-        })
-      )
-    );
-    setEditCard_sets(tmpArray);
+    setApiCard(innerApiCard);
   };
 
   const onSaveEditCard = () => {
@@ -278,21 +268,25 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props }) => {
   };
   return (
     <>
-      {editMode ? (
+      {editMode && apiCard ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
             type='text'
-            value={editCardName}
+            value={apiCard.name}
             onChange={onChangeEditCardName}
             readOnly
           />
           <StyledSelect
             type='text'
+            value={editCardSet}
             onChange={onChangeEditCardSet}
             required='required'>
-            <option>Card Sets</option>
-            {editCard_sets.map((item, idx) => (
-              <option key={idx} value={item.set_code}>
+            <option key='1' value={card.cardSet.set_code}>
+              {card.cardSet.set_code} - {card.cardSet.set_rarity.code}
+            </option>
+            -------
+            {apiCard.card_sets.map((item, idx) => (
+              <option key={idx} value={item.card_set}>
                 {item.set_code} - {item.set_rarity_code}
               </option>
             ))}
