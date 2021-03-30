@@ -76,17 +76,32 @@ const CardsBase = (props) => {
     //Checks if input is correct and voids the post if incorrect
     // https://firebase.google.com/docs/database/ios/structure-data
     if (cardConditions.includes(cardCondition)) {
-      props.firebase.cards().push({
-        cardId: apiCard.id,
-        cardSet: cardSet,
-        cardCondition: cardCondition,
-        buy_point: buyPoint,
-        marketPrice: {
-          marketPriceDateAdded: setPrice,
-        },
-        userId: authUser.uid,
-        createdAt: props.firebase.serverValue.TIMESTAMP,
-      });
+      props.firebase
+        .cards()
+        .push({
+          cardId: apiCard.id,
+          cardSet: cardSet,
+          cardCondition: cardCondition,
+          buy_point: buyPoint,
+          marketPrice: {
+            marketPriceDateAdded: setPrice,
+          },
+          userId: authUser.uid,
+          createdAt: props.firebase.serverValue.TIMESTAMP,
+        })
+
+        .then((res) => {
+          let createdCardId = res.getKey();
+          props.firebase
+            .userCardArray(authUser.uid)
+            .child(createdCardId)
+            .set(true);
+          console.log(
+            "card " + createdCardId,
+            " + user " + authUser.uid,
+            "responsebody " + res
+          );
+        });
 
       //Resets State when Card is created
       setCardName("");
