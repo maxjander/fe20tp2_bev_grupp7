@@ -21,7 +21,7 @@ const CardsBase = (props) => {
   const autoCompleteElement = React.createRef();
   const [cardName, setCardName] = useState("");
   const [apiCard, setApiCard] = useState(null);
-  const [cardSet, setCardSet] = useState(null);
+  const [cardSet, setCardSet] = useState("");
   const [cardCondition, setCardCondition] = useState("");
   const [setPrice, setSetPrice] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -66,7 +66,7 @@ const CardsBase = (props) => {
       });
       setSetPrice(apiCard.card_sets[index].set_price);
     } else {
-      setCardSet(null);
+      setCardSet("");
     }
   }; //did not exist
   const onChangeCardCondition = (event) => setCardCondition(event.target.value);
@@ -108,7 +108,7 @@ const CardsBase = (props) => {
 
       //Resets State when Card is created
       setCardName("");
-      setCardSet(null);
+      setCardSet("");
       setCardCondition("");
       setApiCard(null);
 
@@ -143,7 +143,7 @@ const CardsBase = (props) => {
 
     setApiCard(innerApiCard);
     setCardName(props);
-    setCardSet(null);
+    setCardSet("");
   };
   return (
     <AuthUserContext.Consumer>
@@ -179,6 +179,7 @@ const CardsBase = (props) => {
             {apiCard && apiCard.card_sets.length > 0 && (
               <StyledSelect
                 onChange={onChangeCardSet}
+                value={cardSet || ""}
                 required='required'
                 name='card__sets'
                 placeholder='Card Sets'>
@@ -198,7 +199,7 @@ const CardsBase = (props) => {
             {cardSet && (
               <StyledSelect
                 type='text'
-                value={cardCondition}
+                value={cardCondition || ""}
                 onChange={onChangeCardCondition}
                 required='required'
                 placeholder='Condition'>
@@ -213,7 +214,7 @@ const CardsBase = (props) => {
             {cardCondition && (
               <StyledInput
                 type='number'
-                value={buyPoint}
+                value={buyPoint || ""}
                 onChange={onChangeBuyPoint}
                 required='required'
                 placeholder='What did you pay?'
@@ -258,7 +259,7 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
   const [editMode, setEditMode] = useState(false);
   const [editCardName, setEditCardName] = useState(card.cardName);
   const [editCardSet, setEditCardSet] = useState(card.cardSet);
-  const [editCard_sets, setEditCard_sets] = useState(null);
+  const [editCard_sets, setEditCard_sets] = useState("");
   const [editCondition, setEditCondition] = useState(card.cardCondition);
 
   const onChangeEditCardName = (event) => setEditCardName(event.target.value);

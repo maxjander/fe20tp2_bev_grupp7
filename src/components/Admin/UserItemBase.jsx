@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { ListOfCards } from "../ListOfCards";
+
 const UserItemBase = (props) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();

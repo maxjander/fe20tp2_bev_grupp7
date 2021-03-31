@@ -43,17 +43,17 @@ const ExternalCardList = (props) => {
       {loading && <li>Loading....</li>}
       {cards &&
         cards.map((card) => (
-          <>
-            <StyledLi key={card.uid}>
+          <div key={card.uid}>
+            <StyledLi>
               <strong>
-                {card.cardName} {card.cardSet}
+                {card.uid} {card.cardSet.set_rarity_code}
               </strong>
             </StyledLi>
 
             <p>
-              {card.cardSet.set_name} - {card.cardSet.set_code}
+              {card.cardSet.set_code} - {card.cardSet.set_code}
             </p>
-          </>
+          </div>
         ))}
     </StyledUl>
   );

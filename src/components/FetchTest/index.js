@@ -13,6 +13,7 @@ export default class FetchRandCard extends React.Component {
     this.setState({ loading: false });
   }
 
+  componentWillUnmount() {}
   render() {
     return (
       <div>
