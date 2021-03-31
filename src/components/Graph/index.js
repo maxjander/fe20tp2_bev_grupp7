@@ -4,7 +4,7 @@ import mockDat from "../MockData/index.js";
 import FetchRandCard from "../FetchTest/index.js";
 import styled from "styled-components";
 
-const PortfolioGraph = () => {
+const PortfolioGraph = (props) => {
   return (
     <StyledWrapper>
       <Line
@@ -12,7 +12,9 @@ const PortfolioGraph = () => {
           labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
           datasets: [
             {
+              label: "Card Value",
               data: mockDat,
+              borderColor: "palevioletred",
             },
           ],
         }}

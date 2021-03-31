@@ -8,7 +8,6 @@ import { withFirebase } from "../Firebase";
     ad pass in user id of the list of cards you want.
 
     <ListOfCards userId={userId} />
-
 */
 
 const ExternalCardList = (props) => {
@@ -21,12 +20,11 @@ const ExternalCardList = (props) => {
 
       if (cardObject) {
         //convert cards list from snapshot
-        const cardList = Object.keys(cardObject)
-          .map((key) => ({
-            ...cardObject[key],
-            uid: key,
-          }))
-          .filter((card) => card.userId === props.userId);
+        const cardList = Object.keys(cardObject).map((key) => ({
+          ...cardObject[key],
+          uid: key,
+        }));
+        // .filter((card) => card.userId === props.userId);
 
         setCards(cardList);
         console.log(cardList);
@@ -45,17 +43,17 @@ const ExternalCardList = (props) => {
       {loading && <li>Loading....</li>}
       {cards &&
         cards.map((card) => (
-          <>
-            <StyledLi key={card.uid}>
+          <div key={card.uid}>
+            <StyledLi>
               <strong>
-                {card.cardName} {card.cardSet.set_rarity_code}
+                {card.uid} {card.cardSet.set_rarity_code}
               </strong>
             </StyledLi>
 
             <p>
-              {card.cardSet.set_name} - {card.cardSet.set_code}
+              {card.cardSet.set_code} - {card.cardSet.set_code}
             </p>
-          </>
+          </div>
         ))}
     </StyledUl>
   );
