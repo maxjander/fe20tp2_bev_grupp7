@@ -11,6 +11,11 @@ import infoData from "../../constants/listOfNames.json";
 import allData from "../../constants/data.json";
 import cardConditions from "../../constants/cardConditions";
 
+/*
+  HomePage
+  functional component that renders card component
+*/
+
 const HomePage = () => (
   <div> 
     
@@ -21,7 +26,14 @@ const HomePage = () => (
   </div>
 );
 
+/*
+  Cards component is CardsBase component withFirebaseContext
+*/
+
 const CardsBase = (props) => {
+  /*
+  autocompletelement creates ref to this state to Autocomplete Component
+  */
   const autoCompleteElement = React.createRef();
   const [cardName, setCardName] = useState("");
   const [apiCard, setApiCard] = useState(null);
@@ -32,6 +44,11 @@ const CardsBase = (props) => {
   const [buyPoint, setBuyPoint] = useState(null);
   const [cards, setCards] = useState([]);
 
+  /*
+  useEffect is react hooks version of componentdidmount
+
+  And its return is hooks version of componentwillunmount
+  */
   useEffect(() => {
     setLoading(true);
     //messages
@@ -40,11 +57,19 @@ const CardsBase = (props) => {
 
       if (cardObject) {
         //convert cards list from snapshot
+
+        /*
+          takes a snapshot off all cards, and takes the cards uniqe id 
+          and adds it the cardobject.
+        */
         const cardList = Object.keys(cardObject).map((key) => ({
           ...cardObject[key],
           uid: key,
         }));
+
+        //Set CardList to state
         setCards(cardList);
+        //approves loading of page
         setLoading(false);
       } else {
         setLoading(false);
@@ -52,6 +77,8 @@ const CardsBase = (props) => {
     });
 
     return () => {
+      //when component unmounts, this disconncts form the cards entity of the
+      //database
       props.firebase.cards().off();
     };
   }, [props.firebase]);
@@ -63,11 +90,17 @@ const CardsBase = (props) => {
 
     //setting index for selecting the right cardset
     let index = event.target.options.selectedIndex - 1;
+
+    /*
+    if the index is above or equal to zero it defines the state
+    with an object with set_code and set_rarity_code.
+    */
     if (index >= 0) {
       setCardSet({
         set_code: apiCard.card_sets[index].set_code,
         set_rarity_code: apiCard.card_sets[index].set_rarity_code,
       });
+
       setSetPrice(apiCard.card_sets[index].set_price);
     } else {
       setCardSet("");
@@ -76,6 +109,7 @@ const CardsBase = (props) => {
   const onChangeCardCondition = (event) => setCardCondition(event.target.value);
   const onChangeBuyPoint = (event) => setBuyPoint(event.target.value);
   //onCreateMessage
+
   const onCreateCard = (event, authUser) => {
     //Checks if input is correct and voids the post if incorrect
     // https://firebase.google.com/docs/database/ios/structure-data
@@ -96,7 +130,9 @@ const CardsBase = (props) => {
           userId: authUser.uid,
           createdAt: props.firebase.serverValue.TIMESTAMP,
         })
-
+        /*
+  Above pushes our card to firebase, with the values from state
+  */
         .then((res) => {
           let createdCardId = res.getKey();
           props.firebase
@@ -109,6 +145,10 @@ const CardsBase = (props) => {
             "responsebody " + res
           );
         });
+      /* 
+        Above takes the response from the push and gets the new uid for the card
+        and sets it to the correct user
+*/
 
       //Resets State when Card is created
       setCardName("");
@@ -116,7 +156,7 @@ const CardsBase = (props) => {
       setCardCondition("");
       setApiCard(null);
 
-      //This changes states on our child when Card is created
+      //This changes states on the autocomplete when Card is created
       autoCompleteElement.current.setState({
         userInput: "",
       });
@@ -141,12 +181,14 @@ const CardsBase = (props) => {
       editedAt: props.firebase.serverValue.TIMESTAMP,
     });
   };
-  const autoCompleteCallback = (props) => {
+  const autoCompleteCallback = (cardNameFromAutoComplete) => {
     // Callback function to send down the component tree to update state
-    const innerApiCard = allData.data.find((item) => item.name === props);
+    const innerApiCard = allData.data.find(
+      (item) => item.name === cardNameFromAutoComplete
+    );
 
     setApiCard(innerApiCard);
-    setCardName(props);
+    setCardName(cardNameFromAutoComplete);
     setCardSet("");
   };
   return (
@@ -183,10 +225,8 @@ const CardsBase = (props) => {
             {apiCard && apiCard.card_sets.length > 0 && (
               <StyledSelect
                 onChange={onChangeCardSet}
-                value={cardSet || ""}
-                required='required'
-                name='card__sets'
-                placeholder='Card Sets'>
+                value={cardSet.set_code || ""}
+                required='required'>
                 <option> Select a Card Set</option>
                 {apiCard.card_sets.map((item, idx) => (
                   <option key={idx} value={item.set_code}>
@@ -205,8 +245,7 @@ const CardsBase = (props) => {
                 type='text'
                 value={cardCondition || ""}
                 onChange={onChangeCardCondition}
-                required='required'
-                placeholder='Condition'>
+                required='required'>
                 <option>What Condition is your card?</option>
                 {cardConditions.map((item, idx) => (
                   <option key={idx} value={item}>
