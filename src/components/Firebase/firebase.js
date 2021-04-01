@@ -69,18 +69,44 @@ class Firebase {
     });
 
   // *** User API ***
+  /*
+    All functions below ar refs to diffrent places in our 
+    firebase database
+*/
+
+  /*
+    user = a reference to a specific user, provided as a parameter 
+    in the function
+*/
   user = (uid) => this.db.ref(`users/${uid}`);
+
+  /*
+    userCardArray = a reference to a instance in a specific users cards in the 
+    users entity 
+*/
   userCardArray = (uid) => this.db.ref(`users/${uid}/cards`);
+
+  /*
+    users = a reference to acces all users
+ */
   users = () => this.db.ref("users");
-  //gör samma sak för grafer
-  //
 
-  // *** Message API ***
-  // message = uid => this.db.ref(`messages/${uid}`)
-  // messages = () => this.db.ref('messages)
+  /*
+    Ref to Road to firebase
+  *** Message API ***
+  message = uid => this.db.ref(`messages/${uid}`)
+  messages = () => this.db.ref('messages)
 
+  */
+
+  /*
+    card = a ref to a specific card in the cards entity takes id as a parameter
+  */
   card = (uid) => this.db.ref(`cards/${uid}`);
 
+  /*
+    cards = a ref to all cards in the cards entity
+*/
   cards = () => this.db.ref("cards");
 }
 
