@@ -33,7 +33,6 @@ const withAuthentication = (Component) => {
     }
     /*
     Takes a component, and its props, and wraps it within the AuthUserContext. 
-    In addition, it adds another prop: firebase
 */
     render() {
       return (

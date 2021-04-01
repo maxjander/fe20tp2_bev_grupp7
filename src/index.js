@@ -5,7 +5,14 @@ import { normalize } from "styled-normalize";
 
 import App from "./components/App";
 import Firebase, { FirebaseContext } from "./components/Firebase";
+/*
 
+  Imported createGlobalStyle
+  and inserted the styles from index.css
+
+  this to apply global styles over the whole app
+
+*/
 export const GlobalStyle = createGlobalStyle`
   ${normalize}
 body {
@@ -25,6 +32,7 @@ html {
     outline: none;
 }
 `;
+
 ReactDOM.render(
   <FirebaseContext.Provider value={new Firebase()}>
     <GlobalStyle />
