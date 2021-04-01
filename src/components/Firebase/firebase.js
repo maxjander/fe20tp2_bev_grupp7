@@ -102,12 +102,15 @@ class Firebase {
   /*
     card = a ref to a specific card in the cards entity takes id as a parameter
   */
+
   card = (uid) => this.db.ref(`cards/${uid}`);
 
   /*
     cards = a ref to all cards in the cards entity
 */
   cards = () => this.db.ref("cards");
+
+  priceChangeDeltaValueHistory = (uid) => this.db.ref(`cards/${uid}/priceChangeDeltaValueHistory`);
 }
 
 export default Firebase;

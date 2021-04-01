@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { compose } from "recompose";
 import styled from "styled-components";
+import ApiFetch from "../ApiFetch";
+
 
 import { AuthUserContext, withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
@@ -15,7 +17,9 @@ import cardConditions from "../../constants/cardConditions";
 */
 
 const HomePage = () => (
-  <div>
+  <div> 
+    
+    
     <h1>Home</h1>
     <p>The Home Page is accessible by every signed in user.</p>
     <Cards />
