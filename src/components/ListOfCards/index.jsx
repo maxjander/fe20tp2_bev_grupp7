@@ -10,7 +10,7 @@ import { withFirebase } from "../Firebase";
     <ListOfCards userId={userId} />
 */
 
-const ExternalCardList = (props) => {
+const ListOfCardsBase = (props) => {
   const [cards, setCards] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -58,7 +58,7 @@ const ExternalCardList = (props) => {
     </StyledUl>
   );
 };
-export const ListOfCards = withFirebase(ExternalCardList);
+export const ListOfCards = withFirebase(ListOfCardsBase);
 
 const StyledLi = styled.li`
   list-style: none;
