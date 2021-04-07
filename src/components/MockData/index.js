@@ -1,4 +1,4 @@
-const mockDat = [1, 2, 3, 25, 46, 16, 2, 4];
+const mockDat = [1, 2];
 
 const revDat = mockDat.reverse();
 

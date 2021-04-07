@@ -1,19 +1,26 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
-import mockDat from "../MockData/index.js";
-import FetchRandCard from "../FetchTest/index.js";
+import { Doughnut } from 'react-chartjs-2';
 import styled from "styled-components";
+import 'firebase/auth'
+import 'firebase/database'
+import 'firebase/storage'
+import { withFirebase } from "../Firebase";
 
-const PortfolioGraph = (props) => {
+
+const PortfolioGraphXD = (props) => {
+  
+
+  
   return (
     <StyledWrapper>
-      <Line
+      <Doughnut
         data={{
-          labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+          labels: ["Win", "Loss"],
           datasets: [
             {
               label: "Card Value",
-              data: mockDat,
+              data: [2,1],
+              backgroundColor: ['rgb(54, 162, 235)','rgb(255, 99, 132)'],
               borderColor: "palevioletred",
             },
           ],
@@ -25,11 +32,12 @@ const PortfolioGraph = (props) => {
         }}
       />
 
-      <FetchRandCard />
+      
     </StyledWrapper>
   );
 };
 
+const PortfolioGraph = withFirebase(PortfolioGraphXD);
 export default PortfolioGraph;
 
 const StyledWrapper = styled.div`
