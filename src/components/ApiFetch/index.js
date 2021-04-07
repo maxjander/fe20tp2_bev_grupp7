@@ -5,7 +5,7 @@ import 'firebase/database'
 import 'firebase/storage'
 
 const ApiFetcher = (props) => {
-    const [UCid, setUCid] = useState(null);
+   
 
     
     useEffect(() => {
@@ -48,7 +48,7 @@ const ApiFetcher = (props) => {
           });
 
           
-    }, 300000);
+    }, 60000);
     return () => clearInterval(interval);
         
         

@@ -1,16 +1,43 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Doughnut } from "react-chartjs-2";
 import styled from "styled-components";
-import "firebase/auth";
-import "firebase/database";
-import "firebase/storage";
 import { withFirebase } from "../Firebase";
 
-const PortfolioGraphXD = ({ cards, authUser }) => {
-  const userCardList = cards.filter((card) => card.userId === authUser.uid);
 
-  console.log(userCardList[0].cardCondition);
+const PortfolioGraphXD = ({ cards, authUser }) => {
+
+  const [data, setData] = useState(null);  
+
+  useEffect(() => {
+    const userCardList = cards.filter((card) => card.userId === authUser.uid);
+    var pieData = { pos: 0, neg: 0 }
+    userCardList.forEach((card, k) => {
+      let data = card.priceChangeDeltaValueHistory
+      if (data) {
+      const cardDelta = Object.keys(data);
+      const lastDelta = data[cardDelta[cardDelta.length -1]];
+      if (typeof lastDelta === 'number') {
+      
+      if(lastDelta > 0)
+      {
+       
+       pieData.pos += lastDelta
+
+      }
+      else if(lastDelta < 0)
+      {
+        pieData.neg += lastDelta
+       
+      }
+    }
+  }
+    })
+    setData(pieData)
+    
+  }, [cards,authUser.uid])
+
   return (
+    data ?
     <StyledWrapper>
       <Doughnut
         data={{
@@ -18,7 +45,7 @@ const PortfolioGraphXD = ({ cards, authUser }) => {
           datasets: [
             {
               label: "Card Value",
-              data: [2, 1],
+              data: [...Object.values(data)],
               backgroundColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)"],
               borderColor: "palevioletred",
             },
@@ -30,8 +57,10 @@ const PortfolioGraphXD = ({ cards, authUser }) => {
           maintainAspectRatio: true,
         }}
       />
-    </StyledWrapper>
+    </StyledWrapper> : null
+    
   );
+  
 };
 
 const PortfolioGraph = withFirebase(PortfolioGraphXD);
