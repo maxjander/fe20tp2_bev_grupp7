@@ -1,16 +1,15 @@
 import React from "react";
-import { Doughnut } from 'react-chartjs-2';
+import { Doughnut } from "react-chartjs-2";
 import styled from "styled-components";
-import 'firebase/auth'
-import 'firebase/database'
-import 'firebase/storage'
+import "firebase/auth";
+import "firebase/database";
+import "firebase/storage";
 import { withFirebase } from "../Firebase";
 
+const PortfolioGraphXD = ({ cards, authUser }) => {
+  const userCardList = cards.filter((card) => card.userId === authUser.uid);
 
-const PortfolioGraphXD = (props) => {
-  
-
-  
+  console.log(userCardList[0].cardCondition);
   return (
     <StyledWrapper>
       <Doughnut
@@ -19,8 +18,8 @@ const PortfolioGraphXD = (props) => {
           datasets: [
             {
               label: "Card Value",
-              data: [2,1],
-              backgroundColor: ['rgb(54, 162, 235)','rgb(255, 99, 132)'],
+              data: [2, 1],
+              backgroundColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)"],
               borderColor: "palevioletred",
             },
           ],
@@ -31,8 +30,6 @@ const PortfolioGraphXD = (props) => {
           maintainAspectRatio: true,
         }}
       />
-
-      
     </StyledWrapper>
   );
 };

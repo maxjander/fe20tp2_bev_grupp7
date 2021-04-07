@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { compose } from "recompose";
 import styled from "styled-components";
 import ApiFetch from "../ApiFetch";
-import { Doughnut } from 'react-chartjs-2';
-import PortfolioGraph from "../Graph"
+import { Doughnut } from "react-chartjs-2";
+import PortfolioGraph from "../Graph";
 import { AuthUserContext, withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import Autocomplete from "../Autocomplete";
@@ -12,13 +12,10 @@ import allData from "../../constants/data.json";
 import cardConditions from "../../constants/cardConditions";
 
 const HomePage = () => (
-  <div> 
-    
-    
+  <div>
     <h1>Home</h1>
     <p>The Home Page is accessible by every signed in user.</p>
     <Cards />
-    <PortfolioGraph/>
   </div>
 );
 
@@ -157,13 +154,16 @@ const CardsBase = (props) => {
           {loading && <div>Loading...</div>}
           {/*messages*/}
           {cards /*MessageList*/ ? (
-            <CardList /*propmessages, oneditmessage, onremovemessage */
-              cards={cards}
-              onEditCard={onEditCard}
-              onRemoveCard={onRemoveCard}
-              props={props}
-              authUser={authUser}
-            />
+            <>
+              <PortfolioGraph cards={cards} authUser={authUser} />
+              <CardList /*propmessages, oneditmessage, onremovemessage */
+                cards={cards}
+                onEditCard={onEditCard}
+                onRemoveCard={onRemoveCard}
+                props={props}
+                authUser={authUser}
+              />
+            </>
           ) : (
             <div>There are no cards ...</div>
           )}
@@ -254,32 +254,8 @@ const CardList = ({
               props={props}
               authUser={authUser}
             />
-            <StyledWrapper>
-            <Doughnut
-              data={{
-                labels: ["Win", "Loss"],
-                datasets: [
-                  {
-                    label: "Card Value",
-                    data: [2,1],
-                    backgroundColor: ['rgb(54, 162, 235)','rgb(255, 99, 132)'],
-                    borderColor: "palevioletred",
-                  },
-                ],
-              }}
-              // height={100}
-              // width={600}
-              options={{
-                maintainAspectRatio: true,
-              }}
-            />
-      
-            
-          </StyledWrapper>
-            
           )
       )}
-      
     </ul>
   );
 };
