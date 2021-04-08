@@ -1,19 +1,52 @@
-import React from "react";
-import { Line } from "react-chartjs-2";
-import mockDat from "../MockData/index.js";
-import FetchRandCard from "../FetchTest/index.js";
+import React, {useEffect, useState} from "react";
+import { Doughnut } from "react-chartjs-2";
 import styled from "styled-components";
+import { withFirebase } from "../Firebase";
 
-const PortfolioGraph = (props) => {
+
+const PortfolioGraphXD = ({ cards, authUser }) => {
+
+  const [data, setData] = useState(null);  
+
+  useEffect(() => {
+    const userCardList = cards.filter((card) => card.userId === authUser.uid);
+    var pieData = { pos: 0, neg: 0 }
+    userCardList.forEach((card, k) => {
+      let data = card.priceChangeDeltaValueHistory
+      if (data) {
+      const cardDelta = Object.keys(data);
+      const lastDelta = data[cardDelta[cardDelta.length -1]];
+      if (typeof lastDelta === 'number') {
+      
+      if(lastDelta > 0)
+      {
+       
+       pieData.pos += lastDelta
+
+      }
+      else if(lastDelta < 0)
+      {
+        pieData.neg += lastDelta
+       
+      }
+    }
+  }
+    })
+    setData(pieData)
+    
+  }, [cards,authUser.uid])
+
   return (
+    data ?
     <StyledWrapper>
-      <Line
+      <Doughnut
         data={{
-          labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
+          labels: ["Win", "Loss"],
           datasets: [
             {
               label: "Card Value",
-              data: mockDat,
+              data: [...Object.values(data)],
+              backgroundColor: ["rgb(54, 162, 235)", "rgb(255, 99, 132)"],
               borderColor: "palevioletred",
             },
           ],
@@ -24,12 +57,13 @@ const PortfolioGraph = (props) => {
           maintainAspectRatio: true,
         }}
       />
-
-      <FetchRandCard />
-    </StyledWrapper>
+    </StyledWrapper> : null
+    
   );
+  
 };
 
+const PortfolioGraph = withFirebase(PortfolioGraphXD);
 export default PortfolioGraph;
 
 const StyledWrapper = styled.div`

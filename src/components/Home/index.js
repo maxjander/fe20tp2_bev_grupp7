@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { compose } from "recompose";
 import styled from "styled-components";
 import ApiFetch from "../ApiFetch";
-
-
+import { Doughnut } from "react-chartjs-2";
+import PortfolioGraph from "../Graph";
 import { AuthUserContext, withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import Autocomplete from "../Autocomplete";
@@ -17,8 +17,7 @@ import cardConditions from "../../constants/cardConditions";
 */
 
 const HomePage = () => (
-  <div> 
-    
+  <div>
     
     <h1>Home</h1>
     <p>The Home Page is accessible by every signed in user.</p>
@@ -198,13 +197,16 @@ const CardsBase = (props) => {
           {loading && <div>Loading...</div>}
           {/*messages*/}
           {cards /*MessageList*/ ? (
-            <CardList /*propmessages, oneditmessage, onremovemessage */
-              cards={cards}
-              onEditCard={onEditCard}
-              onRemoveCard={onRemoveCard}
-              props={props}
-              authUser={authUser}
-            />
+            <>
+              <PortfolioGraph cards={cards} authUser={authUser} />
+              <CardList /*propmessages, oneditmessage, onremovemessage */
+                cards={cards}
+                onEditCard={onEditCard}
+                onRemoveCard={onRemoveCard}
+                props={props}
+                authUser={authUser}
+              />
+            </>
           ) : (
             <div>There are no cards ...</div>
           )}
