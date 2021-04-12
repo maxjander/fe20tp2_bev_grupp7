@@ -384,9 +384,9 @@ const CardList = ({
           )}
         </ul>
       </div>
-      <button
-          onClick={handleToggleGridView}
-      >grid</button>
+      <button onClick={handleToggleGridView}>
+        grid
+      </button>
     </StyledCardContainer>
     
   );
