@@ -18,7 +18,7 @@ import cardConditions from "../../constants/cardConditions";
 
 const HomePage = () => (
   <div>
-    
+
     <h1>Home</h1>
     <p>The Home Page is accessible by every signed in user.</p>
     <Cards />
@@ -117,6 +117,7 @@ const CardsBase = (props) => {
         .cards()
         .push({
           cardId: apiCard.id,
+          cardName: cardName,
           cardSet: cardSet,
           cardCondition: cardCondition,
           buy_point: buyPoint,
@@ -208,8 +209,8 @@ const CardsBase = (props) => {
               />
             </>
           ) : (
-            <div>There are no cards ...</div>
-          )}
+              <div>There are no cards ...</div>
+            )}
 
           <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
             <Autocomplete
@@ -376,29 +377,29 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
           </span>
         </FlexForm>
       ) : (
-        //{message.userId} {message.text} //message.editedAt
-        <li>
-          <span>
-            {/* {card.userId} */}
-            <strong> {card.cardName}</strong> {card.cardSet.set_code}{" "}
-            <em>{card.cardSet.set_rarity_code}</em> {card.cardCondition}
-            {card.editedAt && (
-              <span
-                title={`Edited at: ${new Date(
-                  card.editedAt
-                ).toLocaleTimeString()}`}>
-                (Edited)
+          //{message.userId} {message.text} //message.editedAt
+          <li>
+            <span>
+              {/* {card.userId} */}
+              <strong> {card.cardName}</strong> {card.cardSet.set_code}{" "}
+              <em>{card.cardSet.set_rarity_code}</em> {card.cardCondition}
+              {card.editedAt && (
+                <span
+                  title={`Edited at: ${new Date(
+                    card.editedAt
+                  ).toLocaleTimeString()}`}>
+                  (Edited)
               </span>
-            )}
-          </span>
-          <span>
-            <button onClick={onToggleEditMode}>Edit</button>
-            <button onClick={() => onRemoveCard(card.uid, authUser)}>
-              Delete
+              )}
+            </span>
+            <span>
+              <button onClick={onToggleEditMode}>Edit</button>
+              <button onClick={() => onRemoveCard(card.uid, authUser)}>
+                Delete
             </button>
-          </span>
-        </li>
-      )}
+            </span>
+          </li>
+        )}
     </>
   );
 };
