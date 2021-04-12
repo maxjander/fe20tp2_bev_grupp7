@@ -10,7 +10,7 @@ import Autocomplete from "../Autocomplete";
 import infoData from "../../constants/listOfNames.json";
 import allData from "../../constants/data.json";
 import cardConditions from "../../constants/cardConditions";
-
+import ThemeABC from "../TESTFORTHEME";
 /*
   HomePage
   functional component that renders card component
@@ -18,7 +18,7 @@ import cardConditions from "../../constants/cardConditions";
 
 const HomePage = () => (
   <div>
-
+    <ThemeABC/>
     <h1>Home</h1>
     <p>The Home Page is accessible by every signed in user.</p>
     <Cards />
