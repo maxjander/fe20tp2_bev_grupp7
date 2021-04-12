@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   isAdmin: false,
+  theme: 'light',
   error: null,
 };
 
@@ -30,7 +31,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = (event) => {
-    const { username, email, passwordOne, isAdmin } = this.state;
+    const { username, email, passwordOne, isAdmin, theme } = this.state;
 
     const roles = {};
 
@@ -46,6 +47,7 @@ class SignUpFormBase extends Component {
           username,
           email,
           roles,
+          theme
         });
       })
       .then(() => {
