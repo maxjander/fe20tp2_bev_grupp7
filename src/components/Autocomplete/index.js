@@ -19,9 +19,8 @@ const StyledInput = styled.input`
 `;
 
 const StyledDiv = styled.div`
-  position: absolute;
   z-index: 20;
-  
+
 .suggestions-container {
 }
 

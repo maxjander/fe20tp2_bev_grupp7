@@ -44,6 +44,10 @@ const CardsBase = (props) => {
   const [buyPoint, setBuyPoint] = useState(null);
   const [cards, setCards] = useState([]);
 
+  const [toggleModal, setToggleModal] = useState(false)
+
+  const [toggleGridView, setToggleGridView] = useState(false) //grid: false //grid:true
+
   /*
   useEffect is react hooks version of componentdidmount
 
@@ -82,6 +86,10 @@ const CardsBase = (props) => {
       props.firebase.cards().off();
     };
   }, [props.firebase]);
+
+  const handleToggleModal = () => setToggleModal(!toggleModal)
+
+  const handleToggleGridView = () => setToggleGridView(!toggleGridView) //grid: false -> grid: true
 
   const onChangeCardName = (event) => setCardName(event.target.value);
   //did not exist
@@ -156,6 +164,8 @@ const CardsBase = (props) => {
       setCardSet("");
       setCardCondition("");
       setApiCard(null);
+      setToggleModal(false)
+
 
       //This changes states on the autocomplete when Card is created
       autoCompleteElement.current.setState({
@@ -196,9 +206,31 @@ const CardsBase = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
-           { cards ? (<PortfolioGraph cards={cards} authUser={authUser} />) : null }
+          { cards ? (<PortfolioGraph cards={cards} authUser={authUser} />) : null }
+
+          {loading && <div>Loading...</div>}
+          {/*messages*/}
+          {cards /*MessageList*/ ? (
+            <>
+            
+              <CardList /*propmessages, oneditmessage, onremovemessage */
+                cards={cards}
+                onEditCard={onEditCard}
+                onRemoveCard={onRemoveCard}
+                props={props}
+                authUser={authUser}
+              />
+            </>
+          ) : (
+              <div>There are no cards ...</div>
+            )}
+       
+      
+      <StyledModal>
+          <Modal handleToggleModal={handleToggleModal} toggleModal={toggleModal} authUser={authUser}>
 
           <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
+
             <Autocomplete
               ref={autoCompleteElement}
               type='text'
@@ -229,7 +261,7 @@ const CardsBase = (props) => {
                             Renders datalist of cardsets after Card is chosen 
                             */}
 
-            {cardSet && (
+{cardSet && (
               <StyledSelect
                 type='text'
                 value={cardCondition || ""}
@@ -255,26 +287,36 @@ const CardsBase = (props) => {
 
             {buyPoint && <button type='submit'>Add Card</button>}
           </FlexForm>
+          </Modal>
+      </StyledModal>
+      
 
-          {loading && <div>Loading...</div>}
-          {/*messages*/}
-          {cards /*MessageList*/ ? (
-            <>
-            
-              <CardList /*propmessages, oneditmessage, onremovemessage */
-                cards={cards}
-                onEditCard={onEditCard}
-                onRemoveCard={onRemoveCard}
-                props={props}
-                authUser={authUser}
-              />
-            </>
-          ) : (
-              <div>There are no cards ...</div>
-            )}
-        </>
-      )}
+      <button type='button' onClick={handleToggleModal}>Open</button>
+     
+      </>
+      )} 
+      
+   
     </AuthUserContext.Consumer>
+       
+  );
+};
+
+const Modal = ({ handleToggleModal, toggleModal, children }) => {
+  const showHideClassName = toggleModal ? 'modal display-block' : 'modal display-none';
+
+  return (
+    <div className={showHideClassName}>
+      <section className='modal-main'>
+        {children}
+        <br />
+        <button
+          onClick={handleToggleModal}
+        >
+          Close
+        </button>
+      </section>
+    </div>
   );
 };
 
@@ -287,7 +329,7 @@ const CardList = ({
   authUser, //onremovemessage
 }) => {
   return (
-    <StyledCardContiner>
+    <StyledCardContainer>
       <div>
         <ul className="card-list">
           {cards.map(
@@ -305,7 +347,7 @@ const CardList = ({
           )}
         </ul>
       </div>
-    </StyledCardContiner>
+    </StyledCardContainer>
   );
 };
 const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
@@ -459,6 +501,36 @@ const StyledHomeComponent = styled.div`
   }
 `
 
+const StyledModal = styled.div`
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+
+  .modal-main {
+    position:fixed;
+    background: white;
+    width: 80%;
+    height: auto;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  }
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+`
+
+
 const FlexForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -494,13 +566,15 @@ const StyledInput = styled.input`
 `;
 
 /*---CARD LIST, card list with all users card at the top of home component---*/
-const StyledCardContiner = styled.div`
+const StyledCardContainer = styled.div`
+background-color: red;
   display: flex;
   z-index: 0;
   justify-content: center;
   max-width: 1000px;
 
   .card-list{
+    background-color: blue;
     display: flex; 
     justify-content: space-between;
     list-style: none;
