@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { compose } from "recompose";
 import styled from "styled-components";
 import ApiFetch from "../ApiFetch";
@@ -45,6 +45,7 @@ const CardsBase = (props) => {
   const [cards, setCards] = useState([]);
 
   const [toggleModal, setToggleModal] = useState(false)
+  const node = useRef() //ref for modal to cancel onmousedown
 
   const [toggleGridView, setToggleGridView] = useState(false) //grid: false //grid:true
 
@@ -219,6 +220,8 @@ const CardsBase = (props) => {
                 onRemoveCard={onRemoveCard}
                 props={props}
                 authUser={authUser}
+                toggleGridView={toggleGridView}
+                handleToggleGridView={handleToggleGridView}
               />
             </>
           ) : (
@@ -227,7 +230,7 @@ const CardsBase = (props) => {
        
       
       <StyledModal>
-          <Modal handleToggleModal={handleToggleModal} toggleModal={toggleModal} authUser={authUser}>
+          <Modal ref={node} handleToggleModal={handleToggleModal} toggleModal={toggleModal} authUser={authUser}>
 
           <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
 
@@ -304,10 +307,35 @@ const CardsBase = (props) => {
 
 const Modal = ({ handleToggleModal, toggleModal, children }) => {
   const showHideClassName = toggleModal ? 'modal display-block' : 'modal display-none';
+  const node = useRef()
+  //const logTjena = () => {console.log('tjena')}
+
+  
+
+  //const [toggleModal, setToggleModal] = useState(false)
+
+  const handleClick = e => {
+    if (node.current.contains(e.target)) {
+      console.log('we are clicking inside if')
+      return
+    }
+    handleToggleModal()
+  }
+
+  useEffect(() => {
+    if (toggleModal == true) {
+      window.addEventListener('mousedown', handleClick)
+    } else {
+      window.removeEventListener('mousedown', handleClick)
+    }
+    return () => {
+      window.removeEventListener('mousedown', handleClick)
+    };
+  }, [toggleModal]);
 
   return (
     <div className={showHideClassName}>
-      <section className='modal-main'>
+      <section className='modal-main' ref={node}>
         {children}
         <br />
         <button
@@ -320,6 +348,11 @@ const Modal = ({ handleToggleModal, toggleModal, children }) => {
   );
 };
 
+// const CloseModal = (handleToggleModal, toggleModal) => {
+//   .addEventListener('mousedown', console.log('TJENA'))
+// }
+
+
             /*---CARD LIST THAT SHOWS ALL CARDS USER OWNS---*/
 const CardList = ({
   cards, //messages
@@ -327,10 +360,14 @@ const CardList = ({
   onRemoveCard,
   props,
   authUser, //onremovemessage
+  handleToggleGridView, //toggle grid
+  toggleGridView,
 }) => {
+  const showHideClassName = toggleGridView ? 'card-list display-list' : 'card-list display-grid'
+
   return (
     <StyledCardContainer>
-      <div>
+      <div className = {showHideClassName}>
         <ul className="card-list">
           {cards.map(
             (card) =>
@@ -347,7 +384,11 @@ const CardList = ({
           )}
         </ul>
       </div>
+      <button
+          onClick={handleToggleGridView}
+      >grid</button>
     </StyledCardContainer>
+    
   );
 };
 const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
@@ -567,14 +608,12 @@ const StyledInput = styled.input`
 
 /*---CARD LIST, card list with all users card at the top of home component---*/
 const StyledCardContainer = styled.div`
-background-color: red;
   display: flex;
   z-index: 0;
   justify-content: center;
   max-width: 1000px;
 
   .card-list{
-    background-color: blue;
     display: flex; 
     justify-content: space-between;
     list-style: none;
@@ -609,5 +648,22 @@ background-color: red;
     .card-image{
       width: 150px;
     }
+
+    
+
+  }
+              /*---Style these to change between grid and list view---*/
+  .display-grid {
+    display: flex; 
+    justify-content: space-between;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  
+  .display-list {
+    display: none; 
+    justify-content: space-between;
+    list-style: none;
+    flex-wrap: wrap;
   }
 `
