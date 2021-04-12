@@ -17,12 +17,13 @@ import cardConditions from "../../constants/cardConditions";
 */
 
 const HomePage = () => (
-  <div>
-
-    <h1>Home</h1>
-    <p>The Home Page is accessible by every signed in user.</p>
-    <Cards />
-  </div>
+  <StyledHomeComponent>
+    <div>
+        <h1>Home</h1>
+        <p>The Home Page is accessible by every signed in user.</p>
+        <Cards />
+      </div>
+  </StyledHomeComponent>
 );
 
 /*
@@ -195,22 +196,7 @@ const CardsBase = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
-          {loading && <div>Loading...</div>}
-          {/*messages*/}
-          {cards /*MessageList*/ ? (
-            <>
-              <PortfolioGraph cards={cards} authUser={authUser} />
-              <CardList /*propmessages, oneditmessage, onremovemessage */
-                cards={cards}
-                onEditCard={onEditCard}
-                onRemoveCard={onRemoveCard}
-                props={props}
-                authUser={authUser}
-              />
-            </>
-          ) : (
-              <div>There are no cards ...</div>
-            )}
+           { cards ? (<PortfolioGraph cards={cards} authUser={authUser} />) : null }
 
           <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
             <Autocomplete
@@ -269,12 +255,30 @@ const CardsBase = (props) => {
 
             {buyPoint && <button type='submit'>Add Card</button>}
           </FlexForm>
+
+          {loading && <div>Loading...</div>}
+          {/*messages*/}
+          {cards /*MessageList*/ ? (
+            <>
+            
+              <CardList /*propmessages, oneditmessage, onremovemessage */
+                cards={cards}
+                onEditCard={onEditCard}
+                onRemoveCard={onRemoveCard}
+                props={props}
+                authUser={authUser}
+              />
+            </>
+          ) : (
+              <div>There are no cards ...</div>
+            )}
         </>
       )}
     </AuthUserContext.Consumer>
   );
 };
 
+            /*---CARD LIST THAT SHOWS ALL CARDS USER OWNS---*/
 const CardList = ({
   cards, //messages
   onEditCard, //oneditmessage
@@ -283,21 +287,25 @@ const CardList = ({
   authUser, //onremovemessage
 }) => {
   return (
-    <ul>
-      {cards.map(
-        (card) =>
-          card.userId === authUser.uid && (
-            <CardItem //MessageItem
-              key={card.uid} //message.uid
-              card={card}
-              onEditCard={onEditCard}
-              onRemoveCard={onRemoveCard}
-              props={props}
-              authUser={authUser}
-            />
-          )
-      )}
-    </ul>
+    <StyledCardContiner>
+      <div>
+        <ul className="card-list">
+          {cards.map(
+            (card) =>
+              card.userId === authUser.uid && (
+                <CardItem //MessageItem
+                  key={card.uid} //message.uid
+                  card={card}
+                  onEditCard={onEditCard}
+                  onRemoveCard={onRemoveCard}
+                  props={props}
+                  authUser={authUser}
+                />
+              )
+          )}
+        </ul>
+      </div>
+    </StyledCardContiner>
   );
 };
 const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
@@ -379,25 +387,29 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
       ) : (
           //{message.userId} {message.text} //message.editedAt
           <li>
+            <div className="single-card">
             <span>
-              {/* {card.userId} */}
-              <strong> {card.cardName}</strong> {card.cardSet.set_code}{" "}
-              <em>{card.cardSet.set_rarity_code}</em> {card.cardCondition}
+            {/* {card.userId} */}  
+            <div className="card-title"><span><strong>{card.cardName}</strong></span></div>
+              
+              <div className="card-specs"><p><strong>Card set:</strong> {card.cardSet.set_code}{" "}</p>
+              <em>{card.cardSet.set_rarity_code}</em> {card.cardCondition}</div> 
               {card.editedAt && (
                 <span
                   title={`Edited at: ${new Date(
                     card.editedAt
                   ).toLocaleTimeString()}`}>
                   (Edited)
-              </span>
+                </span>
               )}
             </span>
-            <span>
-              <button onClick={onToggleEditMode}>Edit</button>
-              <button onClick={() => onRemoveCard(card.uid, authUser)}>
-                Delete
-            </button>
-            </span>
+              <div className="card-buttons">
+                <span>
+                  <button onClick={onToggleEditMode}>Edit</button>
+                  <button onClick={() => onRemoveCard(card.uid, authUser)}>Delete</button>
+                </span>
+              </div>
+            </div>
           </li>
         )}
     </>
@@ -408,6 +420,45 @@ const Cards = withFirebase(CardsBase);
 const condition = (authUser) => !!authUser;
 export default compose(withAuthorization(condition))(HomePage);
 
+/*---THE ENTIRE HOME COMPONENT STYLE---*/
+const StyledHomeComponent = styled.div`
+  display: flex; 
+  justify-content: center;
+
+  button{
+  position: relative;
+  display: block;
+  margin: 2px;
+  width: 120px;
+  height: 26px;
+  border-radius: 18px;
+  background-color: #1c89ff;
+  border: solid 1px transparent;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+    &:hover {
+      background-color: #39375B;
+      border-color: #fff;
+      transition: all .1s ease-in-out;
+    }
+  }
+
+  .card-buttons{
+    margin-top: 4px;
+    margin-bottom: 0px;
+    align-self: center;
+  }
+
+  .card-title{
+    font-size: 20px;
+    margin:0px;
+    align-self: center;
+  }
+`
+
 const FlexForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -415,16 +466,74 @@ const FlexForm = styled.form`
   justify-content: center;
 `;
 
+/*---STYLED SELECTS, dropdowns---*/ 
 const StyledSelect = styled.select`
+  border-radius: 8px;
+  border: 1px solid; 
+  border-color: rgba(0,0,0,0.3);
+  width: 220px;
+  padding: 10px;
+  margin: 10px 0px 10px 0px;
+  box-sizing: border-box;
+  
+  :focus {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+`;
+
+/*---STYLED INPUT, The search/add card field*/
+const StyledInput = styled.input`
+  border-radius: 8px;
+  border: 1px solid; 
+  border-color: rgba(0,0,0,0.3);
   width: 220px;
   padding: 10px;
   margin: 10px 0px 10px 0px;
   box-sizing: border-box;
 `;
 
-const StyledInput = styled.input`
-  width: 220px;
-  padding: 10px;
-  margin: 10px 0px 10px 0px;
-  box-sizing: border-box;
-`;
+/*---CARD LIST, card list with all users card at the top of home component---*/
+const StyledCardContiner = styled.div`
+  display: flex;
+  z-index: 0;
+  justify-content: center;
+  max-width: 1000px;
+
+  .card-list{
+    display: flex; 
+    justify-content: space-between;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .single-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 250px;
+    height: 270px;
+    border: 1px solid;
+    background-color: white;
+    border-color: rgba(0,0,0,0.3);
+    margin: 4px;
+    padding: 4px;
+    border-radius: 8px;
+    transition: all .1s ease-in-out;
+
+    :hover{
+      box-shadow: 1px 1px 16px -6px #000000;
+    }
+    .card-specs{
+      margin: 0px;
+    }
+
+    .image-container{
+      margin: 2px;
+    }
+
+    .card-image{
+      width: 150px;
+    }
+  }
+`

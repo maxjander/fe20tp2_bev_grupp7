@@ -2,28 +2,50 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+/*---Card Search Field---*/
 const StyledInput = styled.input`
+  border-radius: 8px;
+  border: 1px solid; 
+  border-color: rgba(0,0,0,0.3);
   width: 200px;
   padding: 10px;
   margin: 10px;
+  margin-bottom: 0px;
+
+  :focus {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
 `;
 
 const StyledDiv = styled.div`
+  position: absolute;
+  z-index: 20;
+  
+.suggestions-container {
+}
 
 .no-suggestions {
   color: #999;
   padding: 0.5rem;
 }
 
+/*---The card suggestions dropdown---*/ 
 .suggestions {
   border: 1px solid #999;
   border-top-width: 0;
   list-style: none;
-  margin-top: 0;
-  max-height: 500px;
+  margin-top: 0px;
+  max-height: 300px;
   overflow-y: auto;
-  padding-left: 0;
-  width: 200px);
+  padding-left: 0px;
+  width: 220px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: white;
+  ::-webkit-scrollbar {
+    display: none;
+}
 }
 
 .suggestions li {
@@ -32,8 +54,8 @@ const StyledDiv = styled.div`
 
 .suggestion-active,
 .suggestions li:hover {
-  background-color: palevioletred;
-  color: #fae042;
+  background-color: #C0B9DD;
+  color: white;
   cursor: pointer;
   font-weight: 600;
 }
@@ -145,22 +167,24 @@ class Autocomplete extends Component {
     if (showSuggestions && userInput.length >= 3) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <ul className='suggestions'>
-            {filteredSuggestions.map((suggestion, index) => {
-              let className;
+          <div className="suggestions-container">
+            <ul className='suggestions'>
+              {filteredSuggestions.map((suggestion, index) => {
+                let className;
 
-              // Flag the active suggestion with a class
-              if (index === activeSuggestion) {
-                className = "suggestion-active";
-              }
+                // Flag the active suggestion with a class
+                if (index === activeSuggestion) {
+                  className = "suggestion-active";
+                }
 
-              return (
-                <li className={className} key={suggestion} onClick={onClick}>
-                  {suggestion}
-                </li>
-              );
-            })}
-          </ul>
+                return (
+                  <li className={className} key={suggestion} onClick={onClick}>
+                    {suggestion}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         );
       } else {
         suggestionsListComponent = (
