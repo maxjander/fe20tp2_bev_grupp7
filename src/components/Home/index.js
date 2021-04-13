@@ -561,7 +561,7 @@ const StyledModal = styled.div`
     transform: translate(-50%,-50%);
   }
 }
-
+              /*---MODAL SETTINGS---*/
 .display-block {
   display: block;
 }
@@ -623,7 +623,7 @@ const StyledCardContainer = styled.div`
   .single-card{
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 250px;
     height: 270px;
     border: 1px solid;
@@ -648,10 +648,8 @@ const StyledCardContainer = styled.div`
     .card-image{
       width: 150px;
     }
-
-    
-
   }
+
               /*---Style these to change between grid and list view---*/
   .display-grid {
     display: flex; 
@@ -661,9 +659,31 @@ const StyledCardContainer = styled.div`
   }
   
   .display-list {
-    display: none; 
+    display: flex; 
+    flex-direction: row;
     justify-content: space-between;
     list-style: none;
     flex-wrap: wrap;
+    
+    .single-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1000px;
+    height: 70px;
+    border: 1px solid;
+    background-color: white;
+    border-color: rgba(0,0,0,0.3);
+    margin: 4px;
+    padding: 4px;
+    border-radius: 8px;
   }
+
+  .card-specs{
+      display: flex;
+      flex-direction: row; 
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 6px;
+    }
 `
