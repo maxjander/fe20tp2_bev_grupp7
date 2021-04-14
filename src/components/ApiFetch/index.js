@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect} from "react";
 import { withFirebase } from "../Firebase";
 import 'firebase/auth'
 import 'firebase/database'
@@ -36,8 +36,8 @@ const ApiFetcher = (props) => {
                 if(userBuyPoint[k] < apiCardPrice || userBuyPoint[k] > apiCardPrice)
                 {
                     var delta = apiCardPrice - userBuyPoint[k];
-                props.firebase.card(userMainId[k]).child('priceChangeDeltaValueHistory').child(+ new Date).set(delta);
-                console.log("test batch: "+ new Date);
+                props.firebase.card(userMainId[k]).child('priceChangeDeltaValueHistory').child(+ new Date()).set(delta);
+                console.log("batch: "+ new Date());
                 }
             }
 

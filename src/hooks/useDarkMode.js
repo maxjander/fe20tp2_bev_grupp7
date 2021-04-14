@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import localPars from "./currTheme";
 
 export const useDarkMode = () => {
@@ -15,11 +15,11 @@ export const useDarkMode = () => {
     const [componentMounted, setComponentMounted] = useState(false);
 
 
-    const setMode = mode => {
+    const setMode = useCallback( (mode) => {
         localPars.theme = mode
         window.localStorage.setItem('authUser', JSON.stringify(localPars))
         setTheme(mode)
-    };
+    }, [],);
 
     const toggleTheme = () => {
         if (theme ==='light') {

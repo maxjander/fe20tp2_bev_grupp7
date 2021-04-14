@@ -4,7 +4,6 @@ import { AuthUserContext, withAuthorization } from "../Session";
 import { PasswordForgetForm } from "../PasswordForget";
 import PasswordChangeForm from "../PasswordChange";
 import { ListOfCards } from "../ListOfCards";
-import styled from "styled-components";
 import ThemeABC from "../TESTFORTHEME";
 
 const AccountPage = () => {

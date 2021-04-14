@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { compose } from "recompose";
 import styled from "styled-components";
-import ApiFetch from "../ApiFetch";
-import { Doughnut } from "react-chartjs-2";
 import PortfolioGraph from "../Graph";
 import { AuthUserContext, withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
@@ -10,6 +8,11 @@ import Autocomplete from "../Autocomplete";
 import infoData from "../../constants/listOfNames.json";
 import allData from "../../constants/data.json";
 import cardConditions from "../../constants/cardConditions";
+
+
+
+/* import ApiFetch from "../ApiFetch";  
+only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
 /*
   HomePage

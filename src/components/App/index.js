@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
 
-import ThemeABC from "../TESTFORTHEME";
 import { useDarkMode } from "./../../hooks/useDarkMode";
 import { lightTheme, darkTheme } from "./../../constants/theme";
 import Toggle from "./../Toggle/Toggle";
