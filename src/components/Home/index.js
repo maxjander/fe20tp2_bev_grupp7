@@ -19,10 +19,10 @@ import cardConditions from "../../constants/cardConditions";
 const HomePage = () => (
   <StyledHomeComponent>
     <div>
-        <h1>Home</h1>
-        <p>The Home Page is accessible by every signed in user.</p>
-        <Cards />
-      </div>
+      <h1>Home</h1>
+      <p>The Home Page is accessible by every signed in user.</p>
+      <Cards />
+    </div>
   </StyledHomeComponent>
 );
 
@@ -44,10 +44,10 @@ const CardsBase = (props) => {
   const [buyPoint, setBuyPoint] = useState(null);
   const [cards, setCards] = useState([]);
 
-  const [toggleModal, setToggleModal] = useState(false)
-  const node = useRef() //ref for modal to cancel onmousedown
+  const [toggleModal, setToggleModal] = useState(false);
+  const node = useRef(); //ref for modal to cancel onmousedown
 
-  const [toggleGridView, setToggleGridView] = useState(false) //grid: false //grid:true
+  const [toggleGridView, setToggleGridView] = useState(false); //grid: false //grid:true
 
   /*
   useEffect is react hooks version of componentdidmount
@@ -88,9 +88,9 @@ const CardsBase = (props) => {
     };
   }, [props.firebase]);
 
-  const handleToggleModal = () => setToggleModal(!toggleModal)
+  const handleToggleModal = () => setToggleModal(!toggleModal);
 
-  const handleToggleGridView = () => setToggleGridView(!toggleGridView) //grid: false -> grid: true
+  const handleToggleGridView = () => setToggleGridView(!toggleGridView); //grid: false -> grid: true
 
   const onChangeCardName = (event) => setCardName(event.target.value);
   //did not exist
@@ -165,8 +165,7 @@ const CardsBase = (props) => {
       setCardSet("");
       setCardCondition("");
       setApiCard(null);
-      setToggleModal(false)
-
+      setToggleModal(false);
 
       //This changes states on the autocomplete when Card is created
       autoCompleteElement.current.setState({
@@ -207,13 +206,12 @@ const CardsBase = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
-          { cards ? (<PortfolioGraph cards={cards} authUser={authUser} />) : null }
+          {cards ? <PortfolioGraph cards={cards} authUser={authUser} /> : null}
 
           {loading && <div>Loading...</div>}
           {/*messages*/}
           {cards /*MessageList*/ ? (
             <>
-            
               <CardList /*propmessages, oneditmessage, onremovemessage */
                 cards={cards}
                 onEditCard={onEditCard}
@@ -225,124 +223,121 @@ const CardsBase = (props) => {
               />
             </>
           ) : (
-              <div>There are no cards ...</div>
-            )}
-       
-      
-      <StyledModal>
-          <Modal ref={node} handleToggleModal={handleToggleModal} toggleModal={toggleModal} authUser={authUser}>
+            <div>There are no cards ...</div>
+          )}
 
-          <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
+          <StyledModal>
+            <Modal
+              ref={node}
+              handleToggleModal={handleToggleModal}
+              toggleModal={toggleModal}
+              authUser={authUser}
+            >
+              <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
+                <Autocomplete
+                  ref={autoCompleteElement}
+                  type="text"
+                  value={cardName}
+                  onChange={onChangeCardName}
+                  name="cardName"
+                  min="3"
+                  required="required"
+                  suggestions={infoData}
+                  autoCompleteCallback={autoCompleteCallback}
+                />
 
-            <Autocomplete
-              ref={autoCompleteElement}
-              type='text'
-              value={cardName}
-              onChange={onChangeCardName}
-              name='cardName'
-              min='3'
-              required='required'
-              suggestions={infoData}
-              autoCompleteCallback={autoCompleteCallback}
-            />
+                {apiCard && apiCard.card_sets.length > 0 && (
+                  <StyledSelect
+                    onChange={onChangeCardSet}
+                    value={cardSet.set_code || ""}
+                    required="required"
+                  >
+                    <option> Select a Card Set</option>
+                    {apiCard.card_sets.map((item, idx) => (
+                      <option key={idx} value={item.set_code}>
+                        {item.set_code} -{item.set_rarity_code}
+                      </option>
+                    ))}
+                  </StyledSelect>
+                )}
 
-            {apiCard && apiCard.card_sets.length > 0 && (
-              <StyledSelect
-                onChange={onChangeCardSet}
-                value={cardSet.set_code || ""}
-                required='required'>
-                <option> Select a Card Set</option>
-                {apiCard.card_sets.map((item, idx) => (
-                  <option key={idx} value={item.set_code}>
-                    {item.set_code} -{item.set_rarity_code}
-                  </option>
-                ))}
-              </StyledSelect>
-            )}
-
-            {/* 
+                {/* 
                             Renders datalist of cardsets after Card is chosen 
                             */}
 
-{cardSet && (
-              <StyledSelect
-                type='text'
-                value={cardCondition || ""}
-                onChange={onChangeCardCondition}
-                required='required'>
-                <option>What Condition is your card?</option>
-                {cardConditions.map((item, idx) => (
-                  <option key={idx} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </StyledSelect>
-            )}
-            {cardCondition && (
-              <StyledInput
-                type='number'
-                value={buyPoint || ""}
-                onChange={onChangeBuyPoint}
-                required='required'
-                placeholder='What did you pay?'
-              />
-            )}
+                {cardSet && (
+                  <StyledSelect
+                    type="text"
+                    value={cardCondition || ""}
+                    onChange={onChangeCardCondition}
+                    required="required"
+                  >
+                    <option>What Condition is your card?</option>
+                    {cardConditions.map((item, idx) => (
+                      <option key={idx} value={item}>
+                        {item}
+                      </option>
+                    ))}
+                  </StyledSelect>
+                )}
+                {cardCondition && (
+                  <StyledInput
+                    type="number"
+                    value={buyPoint || ""}
+                    onChange={onChangeBuyPoint}
+                    required="required"
+                    placeholder="What did you pay?"
+                  />
+                )}
 
-            {buyPoint && <button type='submit'>Add Card</button>}
-          </FlexForm>
-          </Modal>
-      </StyledModal>
-      
+                {buyPoint && <button type="submit">Add Card</button>}
+              </FlexForm>
+            </Modal>
+          </StyledModal>
 
-      <button type='button' onClick={handleToggleModal}>Open</button>
-     
-      </>
-      )} 
-      
-   
+          <button type="button" onClick={handleToggleModal}>
+            Open
+          </button>
+        </>
+      )}
     </AuthUserContext.Consumer>
-       
   );
 };
 
 const Modal = ({ handleToggleModal, toggleModal, children }) => {
-  const showHideClassName = toggleModal ? 'modal display-block' : 'modal display-none';
-  const node = useRef()
+  const showHideClassName = toggleModal
+    ? "modal display-block"
+    : "modal display-none";
+  const node = useRef();
   //const logTjena = () => {console.log('tjena')}
-
-  
 
   //const [toggleModal, setToggleModal] = useState(false)
 
-  const handleClick = e => {
+  const handleClick = (e) => {
     if (node.current.contains(e.target)) {
-      console.log('we are clicking inside if')
-      return
+      console.log("we are clicking inside if");
+      return;
     }
-    handleToggleModal()
-  }
+    handleToggleModal();
+  };
 
   useEffect(() => {
     if (toggleModal == true) {
-      window.addEventListener('mousedown', handleClick)
+      window.addEventListener("mousedown", handleClick);
     } else {
-      window.removeEventListener('mousedown', handleClick)
+      window.removeEventListener("mousedown", handleClick);
     }
     return () => {
-      window.removeEventListener('mousedown', handleClick)
+      window.removeEventListener("mousedown", handleClick);
     };
   }, [toggleModal]);
 
   return (
     <div className={showHideClassName}>
-      <section className='modal-main' ref={node}>
+      <section className="modal-main" ref={node}>
         {children}
         <br />
-        <button
-          onClick={handleToggleModal}
-        >
-          Close
-        </button>
+        <button onClick={handleToggleModal}>Close</button>
       </section>
     </div>
   );
@@ -352,8 +347,7 @@ const Modal = ({ handleToggleModal, toggleModal, children }) => {
 //   .addEventListener('mousedown', console.log('TJENA'))
 // }
 
-
-            /*---CARD LIST THAT SHOWS ALL CARDS USER OWNS---*/
+/*---CARD LIST THAT SHOWS ALL CARDS USER OWNS---*/
 const CardList = ({
   cards, //messages
   onEditCard, //oneditmessage
@@ -363,32 +357,34 @@ const CardList = ({
   handleToggleGridView, //toggle grid
   toggleGridView,
 }) => {
-  const showHideClassName = toggleGridView ? 'card-list display-list' : 'card-list display-grid'
+  const showHideClassName = toggleGridView
+    ? "card-list display-list"
+    : "card-list display-grid";
 
   return (
-    <StyledCardContainer>
-      <div className = {showHideClassName}>
-        <ul className="card-list">
-          {cards.map(
-            (card) =>
-              card.userId === authUser.uid && (
-                <CardItem //MessageItem
-                  key={card.uid} //message.uid
-                  card={card}
-                  onEditCard={onEditCard}
-                  onRemoveCard={onRemoveCard}
-                  props={props}
-                  authUser={authUser}
-                />
-              )
-          )}
-        </ul>
-      </div>
-      <button onClick={handleToggleGridView}>
-        grid
-      </button>
-    </StyledCardContainer>
-    
+    <>
+      <StyledCardContainer>
+        <div className={showHideClassName}>
+          <ul className="card-list">
+            {cards.map(
+              (card) =>
+                card.userId === authUser.uid && (
+                  <CardItem //MessageItem
+                    key={card.uid} //message.uid
+                    card={card}
+                    onEditCard={onEditCard}
+                    onRemoveCard={onRemoveCard}
+                    props={props}
+                    authUser={authUser}
+                  />
+                )
+            )}
+          </ul>
+        </div>
+      </StyledCardContainer>
+
+      <button onClick={handleToggleGridView}>grid</button>
+    </>
   );
 };
 const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
@@ -429,17 +425,18 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
       {editMode && apiCard ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type='text'
+            type="text"
             value={apiCard.name}
             onChange={onChangeEditCardName}
             readOnly
           />
           <StyledSelect
-            type='text'
+            type="text"
             value={editCardSet}
             onChange={onChangeEditCardSet}
-            required='required'>
-            <option key='1' value={card.cardSet.set_code}>
+            required="required"
+          >
+            <option key="1" value={card.cardSet.set_code}>
               {card.cardSet.set_code} - {card.cardSet.set_rarity.code}
             </option>
             -------
@@ -450,11 +447,12 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
             ))}
           </StyledSelect>
           <StyledSelect
-            type='text'
+            type="text"
             value={editCondition}
             onChange={onChangeEditCondition}
-            required='required'
-            placeholder='Condition'>
+            required="required"
+            placeholder="Condition"
+          >
             <option>What Condition is your card?</option>
             {cardConditions.map((item, idx) => (
               <option key={idx} value={item}>
@@ -468,33 +466,42 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
           </span>
         </FlexForm>
       ) : (
-          //{message.userId} {message.text} //message.editedAt
-          <li>
-            <div className="single-card">
-            <span>
-            {/* {card.userId} */}  
-            <div className="card-title"><span><strong>{card.cardName}</strong></span></div>
-              
-              <div className="card-specs"><p><strong>Card set:</strong> {card.cardSet.set_code}{" "}</p>
-              <em>{card.cardSet.set_rarity_code}</em> {card.cardCondition}</div> 
-              {card.editedAt && (
-                <span
-                  title={`Edited at: ${new Date(
-                    card.editedAt
-                  ).toLocaleTimeString()}`}>
-                  (Edited)
-                </span>
-              )}
-            </span>
-              <div className="card-buttons">
-                <span>
-                  <button onClick={onToggleEditMode}>Edit</button>
-                  <button onClick={() => onRemoveCard(card.uid, authUser)}>Delete</button>
-                </span>
-              </div>
+        //{message.userId} {message.text} //message.editedAt
+        <li>
+          <div className="single-card">
+            {/* {card.userId} */}
+            <div className="card-title">
+              <strong>{card.cardName}</strong>
             </div>
-          </li>
-        )}
+
+            <div className="card-specs">{card.cardSet.set_code}</div>
+            <div className="card-specs">
+              <em>{card.cardSet.set_rarity_code}</em>
+            </div>
+            <div className="card-specs">{card.cardCondition}</div>
+
+            {card.editedAt && (
+              <span
+                title={`Edited at: ${new Date(
+                  card.editedAt
+                ).toLocaleTimeString()}`}
+              >
+                (Edited)
+              </span>
+            )}
+
+            <button className="card-buttons" onClick={onToggleEditMode}>
+              Edit
+            </button>
+            <button
+              className="card-buttons"
+              onClick={() => onRemoveCard(card.uid, authUser)}
+            >
+              Delete
+            </button>
+          </div>
+        </li>
+      )}
     </>
   );
 };
@@ -505,72 +512,73 @@ export default compose(withAuthorization(condition))(HomePage);
 
 /*---THE ENTIRE HOME COMPONENT STYLE---*/
 const StyledHomeComponent = styled.div`
-  display: flex; 
+  display: flex;
   justify-content: center;
 
-  button{
-  position: relative;
-  display: block;
-  margin: 2px;
-  width: 120px;
-  height: 26px;
-  border-radius: 18px;
-  background-color: #1c89ff;
-  border: solid 1px transparent;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all .1s ease-in-out;
+  button {
+    position: relative;
+    display: block;
+    margin: 2px;
+    width: 120px;
+    height: 26px;
+    border-radius: 18px;
+    background-color: #1c89ff;
+    border: solid 1px transparent;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
     &:hover {
-      background-color: #39375B;
+      background-color: #39375b;
       border-color: #fff;
-      transition: all .1s ease-in-out;
+      transition: all 0.1s ease-in-out;
     }
   }
 
-  .card-buttons{
+  .card-buttons {
+    width: auto;
     margin-top: 4px;
     margin-bottom: 0px;
     align-self: center;
+    padding: 0 15px;
   }
 
-  .card-title{
+  .card-title {
     font-size: 20px;
-    margin:0px;
+    margin: 0px;
     align-self: center;
   }
-`
+`;
 
 const StyledModal = styled.div`
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width:100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
 
-  .modal-main {
-    position:fixed;
-    background: white;
-    width: 80%;
-    height: auto;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
+    .modal-main {
+      position: fixed;
+      background: white;
+      width: 80%;
+      height: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
-}
-              /*---MODAL SETTINGS---*/
-.display-block {
-  display: block;
-}
+  /*---MODAL SETTINGS---*/
+  .display-block {
+    display: block;
+  }
 
-.display-none {
-  display: none;
-}
-`
-
+  .display-none {
+    display: none;
+  }
+`;
 
 const FlexForm = styled.form`
   display: flex;
@@ -579,16 +587,16 @@ const FlexForm = styled.form`
   justify-content: center;
 `;
 
-/*---STYLED SELECTS, dropdowns---*/ 
+/*---STYLED SELECTS, dropdowns---*/
 const StyledSelect = styled.select`
   border-radius: 8px;
-  border: 1px solid; 
-  border-color: rgba(0,0,0,0.3);
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.3);
   width: 220px;
   padding: 10px;
   margin: 10px 0px 10px 0px;
   box-sizing: border-box;
-  
+
   :focus {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -598,8 +606,8 @@ const StyledSelect = styled.select`
 /*---STYLED INPUT, The search/add card field*/
 const StyledInput = styled.input`
   border-radius: 8px;
-  border: 1px solid; 
-  border-color: rgba(0,0,0,0.3);
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.3);
   width: 220px;
   padding: 10px;
   margin: 10px 0px 10px 0px;
@@ -619,9 +627,9 @@ const StyledCardContainer = styled.div`
     list-style: none;
     flex-wrap: wrap;
   }
-
+ /* display block when row */
   .single-card{
-    display: flex;
+    display: flex; /* flex */
     flex-direction: column;
     justify-content: space-between;
     width: 250px;
@@ -664,12 +672,14 @@ const StyledCardContainer = styled.div`
     justify-content: space-between;
     list-style: none;
     flex-wrap: wrap;
+    margin: 0;
     
-    .single-card{
+    .single-card {
     display: flex;
     flex-direction: row;
+    flex-grow: 1;
     justify-content: space-between;
-    width: 1000px;
+    width: 100%;
     height: 70px;
     border: 1px solid;
     background-color: white;
@@ -677,6 +687,7 @@ const StyledCardContainer = styled.div`
     margin: 4px;
     padding: 4px;
     border-radius: 8px;
+    flex-wrap: wrap;
   }
 
   .card-specs{
@@ -686,4 +697,4 @@ const StyledCardContainer = styled.div`
       align-items: center;
       margin-left: 6px;
     }
-`
+`;

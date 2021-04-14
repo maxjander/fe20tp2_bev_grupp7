@@ -28,6 +28,18 @@ html {
   scroll-behavior: smooth;
 }
 
+ul {
+  margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+
+ul, li {
+  margin: 0 !important;
+}
+
 *:focus {
     outline: none;
 }
