@@ -7,7 +7,7 @@ import PortfolioGraph from "../Graph";
 import { AuthUserContext, withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
 import Autocomplete from "../Autocomplete";
-import CardPresentation from '../CardPresentation'
+import CardPresentation from "../CardPresentation";
 import infoData from "../../constants/listOfNames.json";
 import allData from "../../constants/data.json";
 import cardConditions from "../../constants/cardConditions";
@@ -44,15 +44,17 @@ const CardsBase = (props) => {
   const [loading, setLoading] = useState(false);
   const [buyPoint, setBuyPoint] = useState(null);
   const [cards, setCards] = useState([]);
-  
 
   const [toggleModal, setToggleModal] = useState(false);
 
-  const [toggleCardPresentationModal, setToggleCardPresentationModal] = useState(false)
+  const [
+    toggleCardPresentationModal,
+    setToggleCardPresentationModal,
+  ] = useState(false);
   const [clickedCard, setClickedCard] = useState(null);
 
-  const node = useRef(); //ref for modal to cancel onmousedown
-  const presentationNode = useRef() //ref for presentationmodal cancel onmousedown
+  // const node = useRef(); //ref for modal to cancel onmousedown
+  // const presentationNode = useRef(); //ref for presentationmodal cancel onmousedown
 
   const [toggleGridView, setToggleGridView] = useState(false); //grid: false //grid:true
 
@@ -107,7 +109,10 @@ const CardsBase = (props) => {
     setToggleModal(!toggleModal);
   };
 
-  const handleCardPresentationToggleModal = () => setToggleCardPresentationModal(!toggleCardPresentationModal)
+  const handleCardPresentationToggleModal = () => {
+    console.log("i handlecardpresentation");
+    setToggleCardPresentationModal(!toggleCardPresentationModal);
+  };
 
   const handleToggleGridView = () => setToggleGridView(!toggleGridView); //grid: false -> grid: true
 
@@ -240,6 +245,9 @@ const CardsBase = (props) => {
                 toggleGridView={toggleGridView}
                 handleToggleGridView={handleToggleGridView}
                 setClickedCard={setClickedCard}
+                handleCardPresentationToggleModal={
+                  handleCardPresentationToggleModal
+                }
               />
             </>
           ) : (
@@ -247,19 +255,21 @@ const CardsBase = (props) => {
           )}
 
           <StyledModal>
-            {clickedCard && <CardPresentationModal
-              ref={presentationNode}
-              handleCardPresentationToggleModal={handleCardPresentationToggleModal}
+            <CardPresentationModal
+              // ref={presentationNode}
+              handleCardPresentationToggleModal={
+                handleCardPresentationToggleModal
+              }
               toggleCardPresentationModal={toggleCardPresentationModal}
               authUser={authUser}
             >
-            <CardPresentation card={clickedCard} />
-            </CardPresentationModal>}
+              {clickedCard && <CardPresentation card={clickedCard} />}
+            </CardPresentationModal>
           </StyledModal>
 
           <StyledModal>
             <AddCardModal
-              ref={node}
+              // ref={node}
               handleToggleModal={handleToggleModal}
               toggleModal={toggleModal}
               authUser={authUser}
@@ -335,20 +345,31 @@ const CardsBase = (props) => {
   );
 };
 
-const CardPresentationModal = ({ handleCardPresentationToggleModal, toggleCardPresentationModal, children }) => {
+const CardPresentationModal = ({
+  handleCardPresentationToggleModal,
+  toggleCardPresentationModal,
+  children,
+}) => {
   const showHideClassName = toggleCardPresentationModal
     ? "modal display-block"
-    : "modal display-none"
-  const presentationNode = useRef()
+    : "modal display-none";
+  const presentationNode = useRef();
 
-  const handleClick = (e) => {
-    if (presentationNode.current.contains(e.target)) {
-      return;
-    }
-    handleCardPresentationToggleModal()
-  }
-  
+  // const handleClick = (e) => {
+  //   if (presentationNode.current.contains(e.target)) {
+  //     return;
+  //   }
+  //   handleCardPresentationToggleModal();
+  // };
+
   useEffect(() => {
+    const handleClick = (e) => {
+      if (presentationNode.current.contains(e.target)) {
+        return;
+      }
+      handleCardPresentationToggleModal();
+    };
+
     if (toggleCardPresentationModal === true) {
       window.addEventListener("mousedown", handleClick);
     } else {
@@ -368,8 +389,7 @@ const CardPresentationModal = ({ handleCardPresentationToggleModal, toggleCardPr
       </section>
     </div>
   );
-
-}
+};
 
 const AddCardModal = ({ handleToggleModal, toggleModal, children }) => {
   const showHideClassName = toggleModal
@@ -377,14 +397,21 @@ const AddCardModal = ({ handleToggleModal, toggleModal, children }) => {
     : "modal display-none";
   const node = useRef();
 
-  const handleClick = (e) => {
-    if (node.current.contains(e.target)) {
-      return;
-    }
-    handleToggleModal();
-  };
+  // const handleClick = (e) => {
+  //   if (node.current.contains(e.target)) {
+  //     return;
+  //   }
+  //   handleToggleModal();
+  // };
 
   useEffect(() => {
+    const handleClick = (e) => {
+      if (node.current.contains(e.target)) {
+        return;
+      }
+      handleToggleModal();
+    };
+
     if (toggleModal === true) {
       window.addEventListener("mousedown", handleClick);
     } else {
@@ -420,6 +447,7 @@ const CardList = ({
   handleToggleGridView, //toggle grid
   toggleGridView,
   setClickedCard,
+  handleCardPresentationToggleModal,
 }) => {
   const showHideClassName = toggleGridView
     ? "card-list display-list"
@@ -428,7 +456,10 @@ const CardList = ({
   return (
     <>
       <StyledCardContainer>
-        <div className={showHideClassName}>
+        <div
+          className={showHideClassName}
+          onClick={handleCardPresentationToggleModal}
+        >
           <ul className="card-list">
             {cards.map(
               (card) =>
@@ -449,18 +480,23 @@ const CardList = ({
       </StyledCardContainer>
 
       <button onClick={handleToggleGridView}>grid</button>
-      
     </>
   );
 };
-const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser, setClickedCard }) => {
+const CardItem = ({
+  card,
+  onRemoveCard,
+  onEditCard,
+  props,
+  authUser,
+  setClickedCard,
+}) => {
   const [apiCard, setApiCard] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editCardName, setEditCardName] = useState(card.cardName);
   const [editCardSet, setEditCardSet] = useState(card.cardSet);
   const [editCard_sets, setEditCard_sets] = useState("");
   const [editCondition, setEditCondition] = useState(card.cardCondition);
-  
 
   const onChangeEditCardName = (event) => setEditCardName(event.target.value);
 
@@ -535,7 +571,7 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser, setClickedC
       ) : (
         //{message.userId} {message.text} //message.editedAt
         <li>
-          <div className="single-card" onClick={()=> setClickedCard(card)}>
+          <div className="single-card" onClick={() => setClickedCard(card)}>
             {/* {card.userId} */}
             <div className="card-title">
               <strong>{card.cardName}</strong>
@@ -570,7 +606,7 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser, setClickedC
         </li>
       )}
 
-     { /* clickedCard && <CardPresentation card={clickedCard}/> */ }
+      {/* clickedCard && <CardPresentation card={clickedCard}/> */}
     </>
   );
 };
