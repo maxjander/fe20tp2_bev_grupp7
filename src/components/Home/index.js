@@ -95,7 +95,17 @@ const CardsBase = (props) => {
     };
   }, [props.firebase]);
 
-  const handleToggleModal = () => setToggleModal(!toggleModal);
+  const handleToggleModal = () => {
+    setCardName("");
+    setCardSet("");
+    setCardCondition("");
+    setApiCard(null);
+    // setToggleModal(false);
+    autoCompleteElement.current.setState({
+      userInput: "",
+    });
+    setToggleModal(!toggleModal);
+  };
 
   const handleCardPresentationToggleModal = () => setToggleCardPresentationModal(!toggleCardPresentationModal)
 
@@ -366,13 +376,9 @@ const AddCardModal = ({ handleToggleModal, toggleModal, children }) => {
     ? "modal display-block"
     : "modal display-none";
   const node = useRef();
-  //const logTjena = () => {console.log('tjena')}
-
-  //const [toggleModal, setToggleModal] = useState(false)
 
   const handleClick = (e) => {
     if (node.current.contains(e.target)) {
-      console.log("we are clicking inside if");
       return;
     }
     handleToggleModal();
@@ -689,6 +695,7 @@ const StyledCardContainer = styled.div`
     justify-content: space-between;
     list-style: none;
     flex-wrap: wrap;
+    width: 100vh;
   }
  /* display block when row */
   .single-card{
@@ -736,13 +743,14 @@ const StyledCardContainer = styled.div`
     list-style: none;
     flex-wrap: wrap;
     margin: 0;
+    width: 100vh;
     
     .single-card {
     display: flex;
     flex-direction: row;
     flex-grow: 1;
     justify-content: space-between;
-    width: 100%;
+    width: 98vh;
     height: 70px;
     border: 1px solid;
     background-color: white;
