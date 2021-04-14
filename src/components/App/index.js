@@ -23,7 +23,8 @@ import { withAuthentication } from "../Session";
 
 const App = () => {
 
-  const [theme, toggleTheme, componentMounted, ThemeABC] = useDarkMode();
+
+  const [theme, toggleTheme, componentMounted] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
   if (!componentMounted) {
     return <div />;
@@ -53,7 +54,7 @@ const App = () => {
         </div>
       </Router>
 
-      <Toggle theme={theme} toggleTheme={toggleTheme} />
+    { theme &&  <Toggle theme={theme} toggleTheme={toggleTheme} /> }
     </ThemeProvider>
   );
 };

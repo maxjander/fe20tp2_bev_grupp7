@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import localPars from "./currTheme";
 
 export const useDarkMode = () => {
 
-    var authLocal = localStorage.getItem('authUser');
-    var localPars = JSON.parse(authLocal);
+
+
+  //  var authLocal = localStorage.getItem('authUser');
+   // var localPars = JSON.parse(authLocal);
 
 
 
@@ -27,7 +30,7 @@ export const useDarkMode = () => {
     };
 
     useEffect(() => {
-        const localTheme = JSON.parse(window.localStorage.getItem('authUser')).theme;
+        const localTheme = localPars.theme;
         window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localTheme ?
             setMode('dark') :
             localTheme ?
