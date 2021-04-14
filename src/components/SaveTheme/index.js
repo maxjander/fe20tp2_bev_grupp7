@@ -6,14 +6,8 @@ const ThemePush = (props) => {
     const updateTheme = useCallback(() => {
         const getuserFBID = localStorage.getItem('authUser');
         const getUserPars = JSON.parse(getuserFBID);
-        console.log(getUserPars.uid);
-        console.log(getUserPars.theme);
 
             props.firebase.users().child(getUserPars.uid).child('theme').set(getUserPars.theme);
-
-
-
-
 
     }, [props.firebase])
 
@@ -24,5 +18,5 @@ const ThemePush = (props) => {
     )
 }
 
-const ThemeABC = withFirebase(ThemePush);
-export default ThemeABC;
+const SaveTheme = withFirebase(ThemePush);
+export default SaveTheme;

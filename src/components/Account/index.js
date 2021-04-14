@@ -4,7 +4,7 @@ import { AuthUserContext, withAuthorization } from "../Session";
 import { PasswordForgetForm } from "../PasswordForget";
 import PasswordChangeForm from "../PasswordChange";
 import { ListOfCards } from "../ListOfCards";
-import ThemeABC from "../TESTFORTHEME";
+import SaveTheme from "../SaveTheme";
 
 const AccountPage = () => {
   return (
@@ -16,7 +16,7 @@ const AccountPage = () => {
           <PasswordChangeForm />
 
           <ListOfCards userId={authUser.uid} />
-          <ThemeABC/>
+          <SaveTheme/>
         </div>
       )}
 

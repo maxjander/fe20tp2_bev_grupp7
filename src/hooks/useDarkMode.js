@@ -3,17 +3,8 @@ import localPars from "./currTheme";
 
 export const useDarkMode = () => {
 
-
-
-  //  var authLocal = localStorage.getItem('authUser');
-   // var localPars = JSON.parse(authLocal);
-
-
-
     const [theme, setTheme] = useState(localPars.theme);
-    
     const [componentMounted, setComponentMounted] = useState(false);
-
 
     const setMode = useCallback( (mode) => {
         localPars.theme = mode

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { withFirebase } from "../Firebase";
 
 
-const PortfolioGraphXD = ({ cards, authUser }) => {
+const UserGraph = ({ cards, authUser }) => {
 
   const [data, setData] = useState(null);  
 
@@ -63,7 +63,7 @@ const PortfolioGraphXD = ({ cards, authUser }) => {
   
 };
 
-const PortfolioGraph = withFirebase(PortfolioGraphXD);
+const PortfolioGraph = withFirebase(UserGraph);
 export default PortfolioGraph;
 
 const StyledWrapper = styled.div`
