@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { compose } from "recompose";
 import styled from "styled-components";
 import ApiFetch from "../ApiFetch";
@@ -17,12 +17,13 @@ import cardConditions from "../../constants/cardConditions";
 */
 
 const HomePage = () => (
-  <div>
-
-    <h1>Home</h1>
-    <p>The Home Page is accessible by every signed in user.</p>
-    <Cards />
-  </div>
+  <StyledHomeComponent>
+    <div>
+        <h1>Home</h1>
+        <p>The Home Page is accessible by every signed in user.</p>
+        <Cards />
+      </div>
+  </StyledHomeComponent>
 );
 
 /*
@@ -42,6 +43,11 @@ const CardsBase = (props) => {
   const [loading, setLoading] = useState(false);
   const [buyPoint, setBuyPoint] = useState(null);
   const [cards, setCards] = useState([]);
+
+  const [toggleModal, setToggleModal] = useState(false)
+  const node = useRef() //ref for modal to cancel onmousedown
+
+  const [toggleGridView, setToggleGridView] = useState(false) //grid: false //grid:true
 
   /*
   useEffect is react hooks version of componentdidmount
@@ -81,6 +87,10 @@ const CardsBase = (props) => {
       props.firebase.cards().off();
     };
   }, [props.firebase]);
+
+  const handleToggleModal = () => setToggleModal(!toggleModal)
+
+  const handleToggleGridView = () => setToggleGridView(!toggleGridView) //grid: false -> grid: true
 
   const onChangeCardName = (event) => setCardName(event.target.value);
   //did not exist
@@ -155,6 +165,8 @@ const CardsBase = (props) => {
       setCardSet("");
       setCardCondition("");
       setApiCard(null);
+      setToggleModal(false)
+
 
       //This changes states on the autocomplete when Card is created
       autoCompleteElement.current.setState({
@@ -195,24 +207,33 @@ const CardsBase = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
+          { cards ? (<PortfolioGraph cards={cards} authUser={authUser} />) : null }
+
           {loading && <div>Loading...</div>}
           {/*messages*/}
           {cards /*MessageList*/ ? (
             <>
-              <PortfolioGraph cards={cards} authUser={authUser} />
+            
               <CardList /*propmessages, oneditmessage, onremovemessage */
                 cards={cards}
                 onEditCard={onEditCard}
                 onRemoveCard={onRemoveCard}
                 props={props}
                 authUser={authUser}
+                toggleGridView={toggleGridView}
+                handleToggleGridView={handleToggleGridView}
               />
             </>
           ) : (
               <div>There are no cards ...</div>
             )}
+       
+      
+      <StyledModal>
+          <Modal ref={node} handleToggleModal={handleToggleModal} toggleModal={toggleModal} authUser={authUser}>
 
           <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
+
             <Autocomplete
               ref={autoCompleteElement}
               type='text'
@@ -243,7 +264,7 @@ const CardsBase = (props) => {
                             Renders datalist of cardsets after Card is chosen 
                             */}
 
-            {cardSet && (
+{cardSet && (
               <StyledSelect
                 type='text'
                 value={cardCondition || ""}
@@ -269,35 +290,105 @@ const CardsBase = (props) => {
 
             {buyPoint && <button type='submit'>Add Card</button>}
           </FlexForm>
-        </>
-      )}
+          </Modal>
+      </StyledModal>
+      
+
+      <button type='button' onClick={handleToggleModal}>Open</button>
+     
+      </>
+      )} 
+      
+   
     </AuthUserContext.Consumer>
+       
   );
 };
 
+const Modal = ({ handleToggleModal, toggleModal, children }) => {
+  const showHideClassName = toggleModal ? 'modal display-block' : 'modal display-none';
+  const node = useRef()
+  //const logTjena = () => {console.log('tjena')}
+
+  
+
+  //const [toggleModal, setToggleModal] = useState(false)
+
+  const handleClick = e => {
+    if (node.current.contains(e.target)) {
+      console.log('we are clicking inside if')
+      return
+    }
+    handleToggleModal()
+  }
+
+  useEffect(() => {
+    if (toggleModal == true) {
+      window.addEventListener('mousedown', handleClick)
+    } else {
+      window.removeEventListener('mousedown', handleClick)
+    }
+    return () => {
+      window.removeEventListener('mousedown', handleClick)
+    };
+  }, [toggleModal]);
+
+  return (
+    <div className={showHideClassName}>
+      <section className='modal-main' ref={node}>
+        {children}
+        <br />
+        <button
+          onClick={handleToggleModal}
+        >
+          Close
+        </button>
+      </section>
+    </div>
+  );
+};
+
+// const CloseModal = (handleToggleModal, toggleModal) => {
+//   .addEventListener('mousedown', console.log('TJENA'))
+// }
+
+
+            /*---CARD LIST THAT SHOWS ALL CARDS USER OWNS---*/
 const CardList = ({
   cards, //messages
   onEditCard, //oneditmessage
   onRemoveCard,
   props,
   authUser, //onremovemessage
+  handleToggleGridView, //toggle grid
+  toggleGridView,
 }) => {
+  const showHideClassName = toggleGridView ? 'card-list display-list' : 'card-list display-grid'
+
   return (
-    <ul>
-      {cards.map(
-        (card) =>
-          card.userId === authUser.uid && (
-            <CardItem //MessageItem
-              key={card.uid} //message.uid
-              card={card}
-              onEditCard={onEditCard}
-              onRemoveCard={onRemoveCard}
-              props={props}
-              authUser={authUser}
-            />
-          )
-      )}
-    </ul>
+    <StyledCardContainer>
+      <div className = {showHideClassName}>
+        <ul className="card-list">
+          {cards.map(
+            (card) =>
+              card.userId === authUser.uid && (
+                <CardItem //MessageItem
+                  key={card.uid} //message.uid
+                  card={card}
+                  onEditCard={onEditCard}
+                  onRemoveCard={onRemoveCard}
+                  props={props}
+                  authUser={authUser}
+                />
+              )
+          )}
+        </ul>
+      </div>
+      <button onClick={handleToggleGridView}>
+        grid
+      </button>
+    </StyledCardContainer>
+    
   );
 };
 const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
@@ -379,25 +470,29 @@ const CardItem = ({ card, onRemoveCard, onEditCard, props, authUser }) => {
       ) : (
           //{message.userId} {message.text} //message.editedAt
           <li>
+            <div className="single-card">
             <span>
-              {/* {card.userId} */}
-              <strong> {card.cardName}</strong> {card.cardSet.set_code}{" "}
-              <em>{card.cardSet.set_rarity_code}</em> {card.cardCondition}
+            {/* {card.userId} */}  
+            <div className="card-title"><span><strong>{card.cardName}</strong></span></div>
+              
+              <div className="card-specs"><p><strong>Card set:</strong> {card.cardSet.set_code}{" "}</p>
+              <em>{card.cardSet.set_rarity_code}</em> {card.cardCondition}</div> 
               {card.editedAt && (
                 <span
                   title={`Edited at: ${new Date(
                     card.editedAt
                   ).toLocaleTimeString()}`}>
                   (Edited)
-              </span>
+                </span>
               )}
             </span>
-            <span>
-              <button onClick={onToggleEditMode}>Edit</button>
-              <button onClick={() => onRemoveCard(card.uid, authUser)}>
-                Delete
-            </button>
-            </span>
+              <div className="card-buttons">
+                <span>
+                  <button onClick={onToggleEditMode}>Edit</button>
+                  <button onClick={() => onRemoveCard(card.uid, authUser)}>Delete</button>
+                </span>
+              </div>
+            </div>
           </li>
         )}
     </>
@@ -408,6 +503,75 @@ const Cards = withFirebase(CardsBase);
 const condition = (authUser) => !!authUser;
 export default compose(withAuthorization(condition))(HomePage);
 
+/*---THE ENTIRE HOME COMPONENT STYLE---*/
+const StyledHomeComponent = styled.div`
+  display: flex; 
+  justify-content: center;
+
+  button{
+  position: relative;
+  display: block;
+  margin: 2px;
+  width: 120px;
+  height: 26px;
+  border-radius: 18px;
+  background-color: #1c89ff;
+  border: solid 1px transparent;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+    &:hover {
+      background-color: #39375B;
+      border-color: #fff;
+      transition: all .1s ease-in-out;
+    }
+  }
+
+  .card-buttons{
+    margin-top: 4px;
+    margin-bottom: 0px;
+    align-self: center;
+  }
+
+  .card-title{
+    font-size: 20px;
+    margin:0px;
+    align-self: center;
+  }
+`
+
+const StyledModal = styled.div`
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+
+  .modal-main {
+    position:fixed;
+    background: white;
+    width: 80%;
+    height: auto;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  }
+}
+              /*---MODAL SETTINGS---*/
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+`
+
+
 const FlexForm = styled.form`
   display: flex;
   flex-direction: column;
@@ -415,16 +579,111 @@ const FlexForm = styled.form`
   justify-content: center;
 `;
 
+/*---STYLED SELECTS, dropdowns---*/ 
 const StyledSelect = styled.select`
+  border-radius: 8px;
+  border: 1px solid; 
+  border-color: rgba(0,0,0,0.3);
+  width: 220px;
+  padding: 10px;
+  margin: 10px 0px 10px 0px;
+  box-sizing: border-box;
+  
+  :focus {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+`;
+
+/*---STYLED INPUT, The search/add card field*/
+const StyledInput = styled.input`
+  border-radius: 8px;
+  border: 1px solid; 
+  border-color: rgba(0,0,0,0.3);
   width: 220px;
   padding: 10px;
   margin: 10px 0px 10px 0px;
   box-sizing: border-box;
 `;
 
-const StyledInput = styled.input`
-  width: 220px;
-  padding: 10px;
-  margin: 10px 0px 10px 0px;
-  box-sizing: border-box;
-`;
+/*---CARD LIST, card list with all users card at the top of home component---*/
+const StyledCardContainer = styled.div`
+  display: flex;
+  z-index: 0;
+  justify-content: center;
+  max-width: 1000px;
+
+  .card-list{
+    display: flex; 
+    justify-content: space-between;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+
+  .single-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 250px;
+    height: 270px;
+    border: 1px solid;
+    background-color: white;
+    border-color: rgba(0,0,0,0.3);
+    margin: 4px;
+    padding: 4px;
+    border-radius: 8px;
+    transition: all .1s ease-in-out;
+
+    :hover{
+      box-shadow: 1px 1px 16px -6px #000000;
+    }
+    .card-specs{
+      margin: 0px;
+    }
+
+    .image-container{
+      margin: 2px;
+    }
+
+    .card-image{
+      width: 150px;
+    }
+  }
+
+              /*---Style these to change between grid and list view---*/
+  .display-grid {
+    display: flex; 
+    justify-content: space-between;
+    list-style: none;
+    flex-wrap: wrap;
+  }
+  
+  .display-list {
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-between;
+    list-style: none;
+    flex-wrap: wrap;
+    
+    .single-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1000px;
+    height: 70px;
+    border: 1px solid;
+    background-color: white;
+    border-color: rgba(0,0,0,0.3);
+    margin: 4px;
+    padding: 4px;
+    border-radius: 8px;
+  }
+
+  .card-specs{
+      display: flex;
+      flex-direction: row; 
+      justify-content: space-between;
+      align-items: center;
+      margin-left: 6px;
+    }
+`

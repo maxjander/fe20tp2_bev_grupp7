@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import styled from 'styled-components';
 
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
@@ -9,10 +10,12 @@ import * as ROUTES from '../../constants/routes';
 
 const SignInPage = () => (
   <div>
-    <h1>SignIn</h1>
-    <SignInForm />
-    <PasswordForgetLink />
-    <SignUpLink />
+    <StyledContainer>
+      <h1>SignIn</h1>
+      <SignInForm />
+      <PasswordForgetLink />
+      <SignUpLink />
+    </StyledContainer>
   </div>
 );
 
@@ -56,14 +59,14 @@ class SignInFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
+        <StyledInput
           name="email"
           value={email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
-        <input
+        <StyledInput
           name="password"
           value={password}
           onChange={this.onChange}
@@ -85,3 +88,41 @@ const SignInForm = compose(withRouter, withFirebase)(SignInFormBase);
 export default SignInPage;
 
 export { SignInForm };
+
+
+const StyledContainer = styled.div`
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+
+  button{
+  position: relative;
+  display: block;
+  margin: 2px;
+  width: 120px;
+  height: 26px;
+  border-radius: 18px;
+  background-color: #1c89ff;
+  border: solid 1px transparent;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all .1s ease-in-out;
+    &:hover {
+      background-color: #39375B;
+      border-color: #fff;
+      transition: all .1s ease-in-out;
+    }
+  }
+`
+
+const StyledInput = styled.input`
+  border-radius: 8px;
+  border: 1px solid; 
+  border-color: rgba(0,0,0,0.3);
+  width: 220px;
+  padding: 10px;
+  margin: 10px 0px 10px 0px;
+  box-sizing: border-box;
+`;

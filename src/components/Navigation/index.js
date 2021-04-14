@@ -66,8 +66,8 @@ const NavigationNonAuth = () => (
 export default Navigation;
 
 const NavContainer = styled.div`
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+  padding-top: 0px;
+  padding-bottom: 0px;
   /* ${breakpoints('background-color', '', [
     { 1200: 'palevioletred' },
     { 800: 'blue' },
@@ -77,13 +77,14 @@ const NavContainer = styled.div`
 `;
 
 const NavUl = styled.ul`
+  background-color: #C0B9DD;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 60px;
   margin: 0;
   padding: 0;
   list-style: none;
-
   @media (min-width: 609px) {
     flex-direction: row;
     justify-content: space-between;
@@ -96,17 +97,20 @@ const NavUl = styled.ul`
   }
 
   li {
-    padding: 10px 10px;
+    padding: 10px 10px 10px 10px;
     margin-right: 10px;
+    padding-bottom: 10px;
+    border-radius: 8px;
     text-transform: uppercase;
     text-align: center;
     display: flex;
     justify-content: center;
     font-weight: bold;
     width: 100px;
+    transition: ease-in 0.2s;
+
     &:hover {
-      background-color: lightblue;
-      border-radius: 10px;
+      background-color: white; 
     }
     &:first-child {
       align-self: left;
@@ -124,6 +128,7 @@ const NavUl = styled.ul`
     }
   }
 `;
+
 
 /*
 "
