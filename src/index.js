@@ -38,7 +38,7 @@ ul {
 
 ul, li {
   margin: 0 !important;
-}
+} 
 
 *:focus {
     outline: none;
