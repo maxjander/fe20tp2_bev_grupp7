@@ -110,7 +110,9 @@ const CardsBase = (props) => {
   };
 
   const handleCardPresentationToggleModal = () => {
-    console.log("i handlecardpresentation");
+    if (toggleCardPresentationModal === true) {
+      setClickedCard(null);
+    }
     setToggleCardPresentationModal(!toggleCardPresentationModal);
   };
 
@@ -261,8 +263,7 @@ const CardsBase = (props) => {
                 handleCardPresentationToggleModal
               }
               toggleCardPresentationModal={toggleCardPresentationModal}
-              authUser={authUser}
-            >
+              authUser={authUser}>
               {clickedCard && <CardPresentation card={clickedCard} />}
             </CardPresentationModal>
           </StyledModal>
@@ -272,17 +273,16 @@ const CardsBase = (props) => {
               // ref={node}
               handleToggleModal={handleToggleModal}
               toggleModal={toggleModal}
-              authUser={authUser}
-            >
+              authUser={authUser}>
               <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
                 <Autocomplete
                   ref={autoCompleteElement}
-                  type="text"
+                  type='text'
                   value={cardName}
                   onChange={onChangeCardName}
-                  name="cardName"
-                  min="3"
-                  required="required"
+                  name='cardName'
+                  min='3'
+                  required='required'
                   suggestions={infoData}
                   autoCompleteCallback={autoCompleteCallback}
                 />
@@ -291,8 +291,7 @@ const CardsBase = (props) => {
                   <StyledSelect
                     onChange={onChangeCardSet}
                     value={cardSet.set_code || ""}
-                    required="required"
-                  >
+                    required='required'>
                     <option> Select a Card Set</option>
                     {apiCard.card_sets.map((item, idx) => (
                       <option key={idx} value={item.set_code}>
@@ -308,11 +307,10 @@ const CardsBase = (props) => {
 
                 {cardSet && (
                   <StyledSelect
-                    type="text"
+                    type='text'
                     value={cardCondition || ""}
                     onChange={onChangeCardCondition}
-                    required="required"
-                  >
+                    required='required'>
                     <option>What Condition is your card?</option>
                     {cardConditions.map((item, idx) => (
                       <option key={idx} value={item}>
@@ -323,20 +321,20 @@ const CardsBase = (props) => {
                 )}
                 {cardCondition && (
                   <StyledInput
-                    type="number"
+                    type='number'
                     value={buyPoint || ""}
                     onChange={onChangeBuyPoint}
-                    required="required"
-                    placeholder="What did you pay?"
+                    required='required'
+                    placeholder='What did you pay?'
                   />
                 )}
 
-                {buyPoint && <button type="submit">Add Card</button>}
+                {buyPoint && <button type='submit'>Add Card</button>}
               </FlexForm>
             </AddCardModal>
           </StyledModal>
 
-          <button type="button" onClick={handleToggleModal}>
+          <button type='button' onClick={handleToggleModal}>
             Open
           </button>
         </>
@@ -382,7 +380,7 @@ const CardPresentationModal = ({
 
   return (
     <div className={showHideClassName}>
-      <section className="modal-main" ref={presentationNode}>
+      <section className='modal-main' ref={presentationNode}>
         {children}
         <br />
         <button onClick={handleCardPresentationToggleModal}>Close</button>
@@ -424,7 +422,7 @@ const AddCardModal = ({ handleToggleModal, toggleModal, children }) => {
 
   return (
     <div className={showHideClassName}>
-      <section className="modal-main" ref={node}>
+      <section className='modal-main' ref={node}>
         {children}
         <br />
         <button onClick={handleToggleModal}>Close</button>
@@ -458,9 +456,8 @@ const CardList = ({
       <StyledCardContainer>
         <div
           className={showHideClassName}
-          onClick={handleCardPresentationToggleModal}
-        >
-          <ul className="card-list">
+          onClick={handleCardPresentationToggleModal}>
+          <ul className='card-list'>
             {cards.map(
               (card) =>
                 card.userId === authUser.uid && (
@@ -528,18 +525,17 @@ const CardItem = ({
       {editMode && apiCard ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type="text"
+            type='text'
             value={apiCard.name}
             onChange={onChangeEditCardName}
             readOnly
           />
           <StyledSelect
-            type="text"
+            type='text'
             value={editCardSet}
             onChange={onChangeEditCardSet}
-            required="required"
-          >
-            <option key="1" value={card.cardSet.set_code}>
+            required='required'>
+            <option key='1' value={card.cardSet.set_code}>
               {card.cardSet.set_code} - {card.cardSet.set_rarity.code}
             </option>
             -------
@@ -550,12 +546,11 @@ const CardItem = ({
             ))}
           </StyledSelect>
           <StyledSelect
-            type="text"
+            type='text'
             value={editCondition}
             onChange={onChangeEditCondition}
-            required="required"
-            placeholder="Condition"
-          >
+            required='required'
+            placeholder='Condition'>
             <option>What Condition is your card?</option>
             {cardConditions.map((item, idx) => (
               <option key={idx} value={item}>
@@ -571,35 +566,33 @@ const CardItem = ({
       ) : (
         //{message.userId} {message.text} //message.editedAt
         <li>
-          <div className="single-card" onClick={() => setClickedCard(card)}>
+          <div className='single-card' onClick={() => setClickedCard(card)}>
             {/* {card.userId} */}
-            <div className="card-title">
+            <div className='card-title'>
               <strong>{card.cardName}</strong>
             </div>
 
-            <div className="card-specs">{card.cardSet.set_code}</div>
-            <div className="card-specs">
+            <div className='card-specs'>{card.cardSet.set_code}</div>
+            <div className='card-specs'>
               <em>{card.cardSet.set_rarity_code}</em>
             </div>
-            <div className="card-specs">{card.cardCondition}</div>
+            <div className='card-specs'>{card.cardCondition}</div>
 
             {card.editedAt && (
               <span
                 title={`Edited at: ${new Date(
                   card.editedAt
-                ).toLocaleTimeString()}`}
-              >
+                ).toLocaleTimeString()}`}>
                 (Edited)
               </span>
             )}
 
-            <button className="card-buttons" onClick={onToggleEditMode}>
+            <button className='card-buttons' onClick={onToggleEditMode}>
               Edit
             </button>
             <button
-              className="card-buttons"
-              onClick={() => onRemoveCard(card.uid, authUser)}
-            >
+              className='card-buttons'
+              onClick={() => onRemoveCard(card.uid, authUser)}>
               Delete
             </button>
           </div>
@@ -668,8 +661,9 @@ const StyledModal = styled.div`
     .modal-main {
       position: fixed;
       background: white;
-      width: 80%;
-      height: auto;
+      width: 80vw;
+      height: 80vh;
+      padding: 20px;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);

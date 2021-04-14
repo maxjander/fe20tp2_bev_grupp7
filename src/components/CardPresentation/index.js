@@ -19,12 +19,18 @@ const CardPresentation = ({ card }) => {
 
   return (
     <>
-      <h1>{card.cardId}</h1>
-      {apiCard && (
+      {loading ? (
+        <h1>Loading</h1>
+      ) : (
         <>
-          <h1>{apiCard.name}</h1>
+          <h1>{card.cardId}</h1>
+          {apiCard && (
+            <>
+              <h1>{apiCard.name}</h1>
 
-          <img src={apiCard.card_images[0].image_url_small} />
+              <img src={apiCard.card_images[0].image_url_small} />
+            </>
+          )}
         </>
       )}
     </>
