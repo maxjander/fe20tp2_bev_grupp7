@@ -15,7 +15,7 @@ const AccountPage = () => {
           <PasswordForgetForm />
           <PasswordChangeForm />
 
-          <ListOfCards userId={authUser.uid} />
+         { /* <ListOfCards userId={authUser.uid} /> */}
           <SaveTheme/>
         </div>
       )}
