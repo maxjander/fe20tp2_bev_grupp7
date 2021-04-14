@@ -12,7 +12,7 @@ fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?id=${card.cardId}`)
 .then(res => res.json())
 .then(res => setApiCard(res.data[0]))
 .then(setLoading(false))
-}, []
+}, [card]
 )
     console.log(apiCard)
 
