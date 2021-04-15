@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { compose } from "recompose";
 import styled from "styled-components";
 import PortfolioGraph from "../Graph";
@@ -9,24 +9,36 @@ import CardPresentation from "../CardPresentation";
 import infoData from "../../constants/listOfNames.json";
 import allData from "../../constants/data.json";
 import cardConditions from "../../constants/cardConditions";
-
-/* import ApiFetch from "../ApiFetch";  
-only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
+import LineGraph from "../LineChart";
+import { CardContext } from '../CardContext'
+import ApiFetch from "../ApiFetch";  
+//only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
 /*
   HomePage
   functional component that renders card component
 */
 
-const HomePage = () => (
+const HomePage = () => {
+  const cardContext = useContext(CardContext)
+  const allCards = cardContext.cards
+  console.log(allCards)
+
+  return (
+   
   <StyledHomeComponent>
     <div>
       <h1>Home</h1>
       <p>The Home Page is accessible by every signed in user.</p>
       <Cards />
+      {allCards[0] &&
+      <LineGraph data={allCards[1].priceChangeDeltaValueHistory} />}
+      {/* <ApiFetch /> */}
     </div>
   </StyledHomeComponent>
+
 );
+  }
 
 /*
   Cards component is CardsBase component withFirebaseContext
@@ -225,6 +237,7 @@ const CardsBase = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
+        <LineGraph/>
           {cards ? <PortfolioGraph cards={cards} authUser={authUser} /> : null}
 
           {loading && <div>Loading...</div>}
