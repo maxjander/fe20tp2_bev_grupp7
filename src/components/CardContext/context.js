@@ -18,9 +18,9 @@ const CardContextProvider = (props) => {
           ...cardObject[key],
           uid: key,
         }));
-        const filteredCards = cardList.filter(card => card.userId == authUser.uid)
+        const filteredCards = cardList.filter(card => card.userId === authUser.uid)
         //Set CardList to state
-        setCards(cardList);
+        setCards(filteredCards);
         //approves loading of page
 
       } else {
