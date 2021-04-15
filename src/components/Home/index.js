@@ -173,6 +173,7 @@ const CardsBase = (props) => {
           marketPrice: {
             marketPriceDateAdded: setPrice,
           },
+          priceChangeDeltaValueHistory: [{[0]: 0},],
           userId: authUser.uid,
           createdAt: props.firebase.serverValue.TIMESTAMP,
         })

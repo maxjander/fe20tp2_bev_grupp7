@@ -13,6 +13,8 @@ var sumObj = {};
 var allDates = [];
 var allPrices = [];
 
+
+
 for(var m = 0; m < allCards.length; m++)
 {
     var cardDeltaObj = allCards[m].priceChangeDeltaValueHistory;
@@ -23,16 +25,25 @@ for(var m = 0; m < allCards.length; m++)
 
     for(j =0; j < cardTime.length; j++)
     {
-        if(!allDates.includes(cardTime[j]))
-        {
-            allDates.push(cardTime[j]);
-            allPrices[allDates.indexOf(cardTime[j])] = cardValue[j]
+
+
+        var InitroundTime = new Date(cardTime[j]*1);
+        InitroundTime.setUTCHours(0,0,0,0);
+        var roundTime = Number(InitroundTime);
+
+        if(!allDates.includes(roundTime))
+        {   
+            
+  
+            allDates.push(roundTime);
+            allPrices[allDates.indexOf(roundTime)] = cardValue[j]
             allDates.sort();
             
         }
-        else if(allDates.includes(cardTime[j]))
+        else if(allDates.includes(roundTime))
         {
-            allPrices[allDates.indexOf(cardTime[j])] += cardValue[j]
+            allPrices[allDates.indexOf(roundTime)] += cardValue[j]
+            console.log("cheese");
         }
     }
     allDates.sort();
@@ -40,10 +51,12 @@ for(var m = 0; m < allCards.length; m++)
 }
 
 for(n = 0; n < allDates.length; n++)
-{
+{   
+    
     var numDates = Number(allDates[n]);
 
     sumObj = Object.assign({...sumObj}, {[numDates] : allPrices[n]});
+    console.log(sumObj);
 }
 return sumObj;
 }
