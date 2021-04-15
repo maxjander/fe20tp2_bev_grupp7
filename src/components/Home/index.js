@@ -10,8 +10,6 @@ import infoData from "../../constants/listOfNames.json";
 import allData from "../../constants/data.json";
 import cardConditions from "../../constants/cardConditions";
 
-
-
 /* import ApiFetch from "../ApiFetch";  
 only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
@@ -21,14 +19,13 @@ only run this ^ when you want to push delta data into firebase, make sure only o
 */
 
 const HomePage = () => (
-
   <StyledHomeComponent>
     <div>
-    <h1>Home</h1>
-    <p>The Home Page is accessible by every signed in user.</p>
-    <Cards />
+      <h1>Home</h1>
+      <p>The Home Page is accessible by every signed in user.</p>
+      <Cards />
+    </div>
   </StyledHomeComponent>
-
 );
 
 /*

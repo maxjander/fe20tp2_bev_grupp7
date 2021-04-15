@@ -21,14 +21,11 @@ import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
 
 const App = () => {
-
-
   const [theme, toggleTheme, componentMounted] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
   if (!componentMounted) {
     return <div />;
   }
-
 
   return (
     <ThemeProvider theme={themeMode}>
@@ -46,14 +43,18 @@ const App = () => {
               component={PasswordForgetPage}
             />
             <Route path={ROUTES.HOME} component={HomePage} />
-            <Route path={ROUTES.ACCOUNT} component={AccountPage} />
+            <Route
+              path={ROUTES.ACCOUNT}
+              render={(props) => (
+                <AccountPage theme={theme} toggleTheme={toggleTheme} />
+              )}
+            />
             <Route path={ROUTES.ADMIN} component={AdminPage} />
             <Route path={ROUTES.GRAPH} component={Graph} />
+            {/* {theme && <Toggle theme={theme} toggleTheme={toggleTheme} />} */}
           </FlexContainer>
         </div>
       </Router>
-
-    { theme &&  <Toggle theme={theme} toggleTheme={toggleTheme} /> }
     </ThemeProvider>
   );
 };
