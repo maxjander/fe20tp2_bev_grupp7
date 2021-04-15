@@ -161,9 +161,6 @@ const CardsBase = (props) => {
           marketPrice: {
             marketPriceDateAdded: setPrice,
           },
-          priceChangeDeltaValueHistory: [
-            { x: props.firebase.serverValue.TIMESTAMP, y: 0 },
-          ],
           userId: authUser.uid,
           createdAt: props.firebase.serverValue.TIMESTAMP,
         })
@@ -176,11 +173,6 @@ const CardsBase = (props) => {
             .userCardArray(authUser.uid)
             .child(createdCardId)
             .set(true);
-          console.log(
-            "card " + createdCardId,
-            " + user " + authUser.uid,
-            "responsebody " + res
-          );
         });
       /* 
         Above takes the response from the push and gets the new uid for the card
