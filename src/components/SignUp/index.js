@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  theme: 'light',
   isAdmin: false,
   theme: 'light',
   error: null,
