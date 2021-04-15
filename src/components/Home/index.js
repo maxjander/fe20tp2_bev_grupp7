@@ -173,9 +173,6 @@ const CardsBase = (props) => {
           marketPrice: {
             marketPriceDateAdded: setPrice,
           },
-//          priceChangeDeltaValueHistory: [
-//            { x: props.firebase.serverValue.TIMESTAMP, y: 0 },
-//          ],
           userId: authUser.uid,
           createdAt: props.firebase.serverValue.TIMESTAMP,
         })
@@ -188,11 +185,6 @@ const CardsBase = (props) => {
             .userCardArray(authUser.uid)
             .child(createdCardId)
             .set(true);
-          console.log(
-            "card " + createdCardId,
-            " + user " + authUser.uid,
-            "responsebody " + res
-          );
         });
       /* 
         Above takes the response from the push and gets the new uid for the card
@@ -373,15 +365,14 @@ const CardPresentationModal = ({
   //   }
   //   handleCardPresentationToggleModal();
   // };
+  const handleClick = (e) => {
+    if (presentationNode.current.contains(e.target)) {
+      return;
+    }
+    handleCardPresentationToggleModal();
+  };
 
   useEffect(() => {
-    const handleClick = (e) => {
-      if (presentationNode.current.contains(e.target)) {
-        return;
-      }
-      handleCardPresentationToggleModal();
-    };
-
     if (toggleCardPresentationModal === true) {
       window.addEventListener("mousedown", handleClick);
     } else {
@@ -390,7 +381,7 @@ const CardPresentationModal = ({
     return () => {
       window.removeEventListener("mousedown", handleClick);
     };
-  }, [toggleCardPresentationModal]);
+  }, [toggleCardPresentationModal, handleCardPresentationToggleModal]);
 
   return (
     <div className={showHideClassName}>
@@ -468,9 +459,8 @@ const CardList = ({
   return (
     <>
       <StyledCardContainer>
-        <div
-          className={showHideClassName}
-          onClick={handleCardPresentationToggleModal}>
+        <div className={showHideClassName}>
+          {/* onClick={handleCardPresentationToggleModal}> */}
           <ul className='card-list'>
             {cards.map(
               (card) =>
@@ -483,6 +473,9 @@ const CardList = ({
                     onRemoveCard={onRemoveCard}
                     props={props}
                     authUser={authUser}
+                    handleCardPresentationToggleModal={
+                      handleCardPresentationToggleModal
+                    }
                   />
                 )
             )}
@@ -501,6 +494,7 @@ const CardItem = ({
   props,
   authUser,
   setClickedCard,
+  handleCardPresentationToggleModal,
 }) => {
   const [apiCard, setApiCard] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -513,7 +507,21 @@ const CardItem = ({
 
   //did not exist
   const onChangeEditCardSet = (event) => {
-    setEditCardSet(event.target.value);
+    //Function for setting Cardset to state, it's a callback from input field when adding cards.
+
+    //setting index for selecting the right cardset
+    let index = event.target.options.selectedIndex - 1;
+
+    /*
+    if the index is above or equal to zero it defines the state
+    with an object with set_code and set_rarity_code.
+    */
+    if (index >= 0) {
+      setEditCardSet({
+        set_code: apiCard.card_sets[index].set_code,
+        set_rarity_code: apiCard.card_sets[index].set_rarity_code,
+      });
+    }
   };
   //did not exist
   const onChangeEditCondition = (event) => setEditCondition(event.target.value);
@@ -546,13 +554,13 @@ const CardItem = ({
           />
           <StyledSelect
             type='text'
-            value={editCardSet}
+            value={editCard_sets}
             onChange={onChangeEditCardSet}
             required='required'>
-            <option key='1' value={card.cardSet.set_code}>
-              {card.cardSet.set_code} - {card.cardSet.set_rarity.code}
+            <option key='1' value={card.cardSet}>
+              {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
             </option>
-            -------
+            ------- }
             {apiCard.card_sets.map((item, idx) => (
               <option key={idx} value={item.card_set}>
                 {item.set_code} - {item.set_rarity_code}
@@ -580,27 +588,32 @@ const CardItem = ({
       ) : (
         //{message.userId} {message.text} //message.editedAt
         <li>
-          <div className='single-card' onClick={() => setClickedCard(card)}>
+          <div
+            className='single-card'
+            onClick={() => {
+              setClickedCard(card);
+            }}>
             {/* {card.userId} */}
-            <div className='card-title'>
-              <strong>{card.cardName}</strong>
-            </div>
+            <span onClick={handleCardPresentationToggleModal}>
+              <div className='card-title'>
+                <strong>{card.cardName}</strong>
+              </div>
 
-            <div className='card-specs'>{card.cardSet.set_code}</div>
-            <div className='card-specs'>
-              <em>{card.cardSet.set_rarity_code}</em>
-            </div>
-            <div className='card-specs'>{card.cardCondition}</div>
+              <div className='card-specs'>{card.cardSet.set_code}</div>
+              <div className='card-specs'>
+                <em>{card.cardSet.set_rarity_code}</em>
+              </div>
+              <div className='card-specs'>{card.cardCondition}</div>
 
-            {card.editedAt && (
-              <span
-                title={`Edited at: ${new Date(
-                  card.editedAt
-                ).toLocaleTimeString()}`}>
-                (Edited)
-              </span>
-            )}
-
+              {card.editedAt && (
+                <span
+                  title={`Edited at: ${new Date(
+                    card.editedAt
+                  ).toLocaleTimeString()}`}>
+                  <em>(Edited)</em>
+                </span>
+              )}
+            </span>
             <button className='card-buttons' onClick={onToggleEditMode}>
               Edit
             </button>
@@ -736,7 +749,7 @@ const StyledCardContainer = styled.div`
 
   .card-list{
     display: flex; 
-    justify-content: space-between;
+    justify-content: space-around;
     list-style: none;
     flex-wrap: wrap;
     width: 100vh;
@@ -755,6 +768,11 @@ const StyledCardContainer = styled.div`
     padding: 4px;
     border-radius: 8px;
     transition: all .1s ease-in-out;
+    span {
+      display:flex;
+      flex-direction:column;
+      flex-grow:1
+    }
 
     :hover{
       box-shadow: 1px 1px 16px -6px #000000;
@@ -775,7 +793,7 @@ const StyledCardContainer = styled.div`
               /*---Style these to change between grid and list view---*/
   .display-grid {
     display: flex; 
-    justify-content: space-between;
+    justify-content: space-around;
     list-style: none;
     flex-wrap: wrap;
   }
@@ -803,6 +821,11 @@ const StyledCardContainer = styled.div`
     padding: 4px;
     border-radius: 8px;
     flex-wrap: wrap;
+    span {
+      display:flex;
+      flex-direction:row;
+      flex-grow:1
+    }
   }
 
   .card-specs{

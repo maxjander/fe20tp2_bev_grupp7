@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-import SignOutButton from '../SignOut';
-import * as ROUTES from '../../constants/routes';
-import * as ROLES from '../../constants/roles';
+import SignOutButton from "../SignOut";
+import * as ROUTES from "../../constants/routes";
+import * as ROLES from "../../constants/roles";
 
-import { AuthUserContext } from '../Session';
-import { breakpoints } from '../../constants/breakpoints.js';
+import { AuthUserContext } from "../Session";
+import { breakpoints } from "../../constants/breakpoints.js";
 
 const Navigation = () => (
   <div>
@@ -26,19 +26,19 @@ const Navigation = () => (
 const NavigationAuth = ({ authUser }) => (
   <NavContainer>
     <NavUl>
-      <li>TCG Empire</li>
-      <li>
+      <li className='logo'>TCG Empire</li>
+      {/* <li>
         <Link to={ROUTES.LANDING}>Landing</Link>
-      </li>
+      </li> */}
       <li>
         <Link to={ROUTES.HOME}>Home</Link>
       </li>
       <li>
         <Link to={ROUTES.ACCOUNT}>Account</Link>
       </li>
-      <li>
-      <Link to={ROUTES.GRAPH}>Graph</Link>
-      </li>
+      {/* <li>
+        <Link to={ROUTES.GRAPH}>Graph</Link>
+      </li> */}
       {!!authUser.roles[ROLES.ADMIN] && (
         <li>
           <Link to={ROUTES.ADMIN}>Admin</Link>
@@ -52,10 +52,8 @@ const NavigationAuth = ({ authUser }) => (
 const NavigationNonAuth = () => (
   <NavContainer>
     <NavUl>
-      <li>TCG Empire</li>
-      <li>
-        <Link to={ROUTES.LANDING}>Landing</Link>
-      </li>{' '}
+      <li className='logo'>TCG Empire</li>
+
       <li>
         <Link to={ROUTES.SIGN_IN}>Sign In</Link>
       </li>
@@ -68,54 +66,48 @@ export default Navigation;
 const NavContainer = styled.div`
   padding-top: 0px;
   padding-bottom: 0px;
-  /* ${breakpoints('background-color', '', [
-    { 1200: 'palevioletred' },
-    { 800: 'blue' },
-    { 600: 'yellow' },
-    { 450: 'red' },
+  padding-right: 20px;
+  /* ${breakpoints("background-color", "", [
+    { 1200: "palevioletred" },
+    { 800: "blue" },
+    { 600: "yellow" },
+    { 450: "red" },
   ])} */
 `;
 
 const NavUl = styled.ul`
-  background-color: #C0B9DD;
+  background-color: #c0b9dd;
   display: flex;
   flex-direction: column;
+  text-transform: uppercase;
   align-items: center;
-  height: 60px;
   margin: 0;
-  padding: 0;
+  padding: 10px;
   list-style: none;
+  width: 100%;
   @media (min-width: 609px) {
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0 auto;
-
-    @media (min-width: 1025px) {
-      justify-content: space-around;
+    justify-content: space-around;
+    .logo {
+      margin-right: auto;
+      flex-grow: 1;
+      justify-content: flex-start;
+      &:hover {
+        background-color: transparent;
+      }
     }
   }
+    li {
+      padding: 10px 10px 10px 10px;
+      margin: 10px;
+      border-radius: 8px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      font-weight: bold;
+      width: 100px;
+      transition: ease-in 0.2s;
 
-  li {
-    padding: 10px 10px 10px 10px;
-    margin-right: 10px;
-    padding-bottom: 10px;
-    border-radius: 8px;
-    text-transform: uppercase;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    font-weight: bold;
-    width: 100px;
-    transition: ease-in 0.2s;
-
-    &:hover {
-      background-color: white; 
-    }
-    &:first-child {
-      align-self: left;
-      margin-right: auto;
-      margin-left: 10px;
       &:hover {
         background-color: white;
       }
@@ -123,12 +115,10 @@ const NavUl = styled.ul`
 
     a {
       color: black;
-      text-transform: uppercase;
       text-decoration: none;
     }
   }
 `;
-
 
 /*
 "

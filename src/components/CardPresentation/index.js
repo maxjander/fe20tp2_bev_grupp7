@@ -10,8 +10,6 @@ const CardPresentation = ({ card }) => {
       .then((res) => res.json())
       .then((res) => setApiCard(res.data[0]))
       .then(setLoading(false));
-
-    console.log(apiCard);
     return () => {
       setApiCard(null);
     };
