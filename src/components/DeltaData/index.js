@@ -50,14 +50,51 @@ for(var m = 0; m < allCards.length; m++)
 
 }
 
-for(n = 0; n < allDates.length; n++)
+if(allDates.length > 7)
+{
+    var revAllDates = allDates.reverse();
+    var revAllPrices = allPrices.reverse();
+
+    var holdDates = [];
+    var holdPrices = [];
+
+    for(l = 0; l <= 6;l++)
+    {
+    holdDates.push(revAllDates[l]);
+    holdPrices.push(revAllPrices[l]);
+    }
+
+    holdDates.reverse();
+    holdPrices.reverse();
+
+    for(n = 0; n < holdDates.length; n++)
+{   
+    
+    var numDates = Number(holdDates[n]);
+
+    sumObj = Object.assign({...sumObj}, {[numDates] : holdPrices[n]});
+    console.log(holdDates);
+    console.log(holdPrices);
+   // console.log(sumObj);
+}
+
+}
+else
+{
+    for(n = 0; n < allDates.length; n++)
 {   
     
     var numDates = Number(allDates[n]);
 
     sumObj = Object.assign({...sumObj}, {[numDates] : allPrices[n]});
-    console.log(sumObj);
+
+   // console.log(sumObj);
 }
+}
+
+
+
+
 return sumObj;
 }
 export default LinDat 
