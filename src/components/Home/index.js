@@ -10,8 +10,8 @@ import infoData from "../../constants/listOfNames.json";
 import allData from "../../constants/data.json";
 import cardConditions from "../../constants/cardConditions";
 import LineGraph from "../LineChart";
-import { CardContext } from '../CardContext'
-import ApiFetch from "../ApiFetch";  
+import { CardContext } from "../CardContext";
+import ApiFetch from "../ApiFetch";
 //only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
 /*
@@ -20,25 +20,23 @@ import ApiFetch from "../ApiFetch";
 */
 
 const HomePage = () => {
-  const cardContext = useContext(CardContext)
-  const allCards = cardContext.cards
-  console.log(allCards)
+  const cardContext = useContext(CardContext);
+  const allCards = cardContext.cards;
+  console.log(allCards);
 
   return (
-   
-  <StyledHomeComponent>
-    <div>
-      <h1>Home</h1>
-      <p>The Home Page is accessible by every signed in user.</p>
-      <Cards />
-      {allCards[0] &&
-      <LineGraph data={allCards[1].priceChangeDeltaValueHistory} />}
-      {/* <ApiFetch /> */}
-    </div>
-  </StyledHomeComponent>
+    <StyledHomeComponent>
+      <div>
+        {allCards[0] && (
+          <LineGraph data={allCards[1].priceChangeDeltaValueHistory} />
+        )}
+        <Cards />
 
-);
-  }
+        {/* <ApiFetch /> */}
+      </div>
+    </StyledHomeComponent>
+  );
+};
 
 /*
   Cards component is CardsBase component withFirebaseContext
@@ -237,10 +235,10 @@ const CardsBase = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
-        <LineGraph/>
-          {cards ? <PortfolioGraph cards={cards} authUser={authUser} /> : null}
+          <LineGraph />
+          {/* {cards ? <PortfolioGraph cards={cards} authUser={authUser} /> : null} */}
 
-          {loading && <div>Loading...</div>}
+          {loading && <div>Loading.2..</div>}
           {/*messages*/}
           {cards /*MessageList*/ ? (
             <>
