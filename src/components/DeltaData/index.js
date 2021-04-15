@@ -28,7 +28,7 @@ for(var m = 0; m < allCards.length; m++)
 
 
         var InitroundTime = new Date(cardTime[j]*1);
-        InitroundTime.setUTCHours(0,0,0,0);
+        InitroundTime.setUTCHours(1,0,0,0);
         var roundTime = Number(InitroundTime);
 
         if(!allDates.includes(roundTime))
