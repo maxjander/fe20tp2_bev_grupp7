@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   passwordTwo: '',
   theme: 'light',
   isAdmin: false,
+  theme: 'light',
   error: null,
 };
 
