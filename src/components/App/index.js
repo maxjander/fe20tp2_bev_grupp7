@@ -5,10 +5,8 @@ import { ThemeProvider } from "styled-components";
 
 import { useDarkMode } from "./../../hooks/useDarkMode";
 import { lightTheme, darkTheme } from "./../../constants/theme";
-import Toggle from "./../Toggle/Toggle";
 
 import Navigation from "../Navigation";
-import LandingPage from "../Landing";
 import SignUpPage from "../SignUp";
 import SignInPage from "../SignIn";
 import PasswordForgetPage from "../PasswordForget";
@@ -29,15 +27,15 @@ const App = () => {
 
   return (
     <ThemeProvider theme={themeMode}>
-      <Router>
-        <div>
+      <Wrapper>
+        <Router>
           <Navigation />
 
-          <hr />
           <FlexContainer>
-            <Route exact path={ROUTES.LANDING} component={LandingPage} />
+            {/* <Route exact path={ROUTES.LANDING} component={LandingPage} /> */}
+            <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
             <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route path={ROUTES.SIGN_IN} component={SignInPage} />
+
             <Route
               path={ROUTES.PASSWORD_FORGET}
               component={PasswordForgetPage}
@@ -50,11 +48,11 @@ const App = () => {
               )}
             />
             <Route path={ROUTES.ADMIN} component={AdminPage} />
-            <Route path={ROUTES.GRAPH} component={Graph} />
+            {/* <Route path={ROUTES.GRAPH} component={Graph} /> */}
             {/* {theme && <Toggle theme={theme} toggleTheme={toggleTheme} />} */}
           </FlexContainer>
-        </div>
-      </Router>
+        </Router>
+      </Wrapper>
     </ThemeProvider>
   );
 };
@@ -66,6 +64,9 @@ const FlexContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   padding: 40px;
-  background: ${({ theme }) => theme.body};
   color: ${({ theme }) => theme.text};
+`;
+const Wrapper = styled.div`
+  height: 100vh;
+  background: ${({ theme }) => theme.body};
 `;

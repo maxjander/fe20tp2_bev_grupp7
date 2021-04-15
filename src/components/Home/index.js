@@ -360,15 +360,14 @@ const CardPresentationModal = ({
   //   }
   //   handleCardPresentationToggleModal();
   // };
+  const handleClick = (e) => {
+    if (presentationNode.current.contains(e.target)) {
+      return;
+    }
+    handleCardPresentationToggleModal();
+  };
 
   useEffect(() => {
-    const handleClick = (e) => {
-      if (presentationNode.current.contains(e.target)) {
-        return;
-      }
-      handleCardPresentationToggleModal();
-    };
-
     if (toggleCardPresentationModal === true) {
       window.addEventListener("mousedown", handleClick);
     } else {
@@ -377,7 +376,7 @@ const CardPresentationModal = ({
     return () => {
       window.removeEventListener("mousedown", handleClick);
     };
-  }, [toggleCardPresentationModal]);
+  }, [toggleCardPresentationModal, handleCardPresentationToggleModal]);
 
   return (
     <div className={showHideClassName}>
@@ -500,7 +499,21 @@ const CardItem = ({
 
   //did not exist
   const onChangeEditCardSet = (event) => {
-    setEditCardSet(event.target.value);
+    //Function for setting Cardset to state, it's a callback from input field when adding cards.
+
+    //setting index for selecting the right cardset
+    let index = event.target.options.selectedIndex - 1;
+
+    /*
+    if the index is above or equal to zero it defines the state
+    with an object with set_code and set_rarity_code.
+    */
+    if (index >= 0) {
+      setEditCard_sets({
+        set_code: apiCard.card_sets[index].set_code,
+        set_rarity_code: apiCard.card_sets[index].set_rarity_code,
+      });
+    }
   };
   //did not exist
   const onChangeEditCondition = (event) => setEditCondition(event.target.value);
@@ -517,7 +530,7 @@ const CardItem = ({
 
   const onSaveEditCard = () => {
     //this.props.message, this.state.editText
-    onEditCard(card, editCardName, editCardSet, editCondition);
+    onEditCard(card, editCardName, editCard_sets, editCondition);
 
     setEditMode(false);
   };
@@ -533,13 +546,13 @@ const CardItem = ({
           />
           <StyledSelect
             type='text'
-            value={editCardSet}
+            value={editCard_sets}
             onChange={onChangeEditCardSet}
             required='required'>
-            <option key='1' value={card.cardSet.set_code}>
-              {card.cardSet.set_code} - {card.cardSet.set_rarity.code}
+            <option key='1' value={card.cardSet}>
+              {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
             </option>
-            -------
+            ------- }
             {apiCard.card_sets.map((item, idx) => (
               <option key={idx} value={item.card_set}>
                 {item.set_code} - {item.set_rarity_code}
