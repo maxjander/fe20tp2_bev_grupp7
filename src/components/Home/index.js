@@ -11,6 +11,7 @@ import allData from "../../constants/data.json";
 import cardConditions from "../../constants/cardConditions";
 import LineGraph from "../LineChart";
 import { CardContext } from "../CardContext";
+import LinDat from "../DeltaData"
 import ApiFetch from "../ApiFetch";
 //only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
@@ -22,13 +23,14 @@ import ApiFetch from "../ApiFetch";
 const HomePage = () => {
   const cardContext = useContext(CardContext);
   const allCards = cardContext.cards;
+  const linG = LinDat();
   console.log(allCards);
 
   return (
     <StyledHomeComponent>
       <div>
         {allCards[0] && (
-          <LineGraph data={allCards[1].priceChangeDeltaValueHistory} />
+          <LineGraph data={linG} />
         )}
         <Cards />
 
@@ -558,7 +560,7 @@ const CardItem = ({
             <option key='1' value={card.cardSet}>
               {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
             </option>
-            ------- }
+            ------- 
             {apiCard.card_sets.map((item, idx) => (
               <option key={idx} value={item.card_set}>
                 {item.set_code} - {item.set_rarity_code}
