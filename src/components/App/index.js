@@ -19,6 +19,7 @@ import Graph from "../Graph";
 
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
+import CardContextProvider from '../CardContext'
 
 const App = () => {
   const [theme, toggleTheme, componentMounted] = useDarkMode();
@@ -29,6 +30,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={themeMode}>
+      <CardContextProvider>
       <Router>
         <div>
           <Navigation />
@@ -55,6 +57,7 @@ const App = () => {
           </FlexContainer>
         </div>
       </Router>
+      </CardContextProvider>
     </ThemeProvider>
   );
 };
