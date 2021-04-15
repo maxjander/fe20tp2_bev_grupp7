@@ -454,9 +454,8 @@ const CardList = ({
   return (
     <>
       <StyledCardContainer>
-        <div
-          className={showHideClassName}
-          onClick={handleCardPresentationToggleModal}>
+        <div className={showHideClassName}>
+          {/* onClick={handleCardPresentationToggleModal}> */}
           <ul className='card-list'>
             {cards.map(
               (card) =>
@@ -469,6 +468,9 @@ const CardList = ({
                     onRemoveCard={onRemoveCard}
                     props={props}
                     authUser={authUser}
+                    handleCardPresentationToggleModal={
+                      handleCardPresentationToggleModal
+                    }
                   />
                 )
             )}
@@ -487,6 +489,7 @@ const CardItem = ({
   props,
   authUser,
   setClickedCard,
+  handleCardPresentationToggleModal,
 }) => {
   const [apiCard, setApiCard] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -509,7 +512,7 @@ const CardItem = ({
     with an object with set_code and set_rarity_code.
     */
     if (index >= 0) {
-      setEditCard_sets({
+      setEditCardSet({
         set_code: apiCard.card_sets[index].set_code,
         set_rarity_code: apiCard.card_sets[index].set_rarity_code,
       });
@@ -530,7 +533,7 @@ const CardItem = ({
 
   const onSaveEditCard = () => {
     //this.props.message, this.state.editText
-    onEditCard(card, editCardName, editCard_sets, editCondition);
+    onEditCard(card, editCardName, editCardSet, editCondition);
 
     setEditMode(false);
   };
@@ -580,27 +583,32 @@ const CardItem = ({
       ) : (
         //{message.userId} {message.text} //message.editedAt
         <li>
-          <div className='single-card' onClick={() => setClickedCard(card)}>
+          <div
+            className='single-card'
+            onClick={() => {
+              setClickedCard(card);
+            }}>
             {/* {card.userId} */}
-            <div className='card-title'>
-              <strong>{card.cardName}</strong>
-            </div>
+            <span onClick={handleCardPresentationToggleModal}>
+              <div className='card-title'>
+                <strong>{card.cardName}</strong>
+              </div>
 
-            <div className='card-specs'>{card.cardSet.set_code}</div>
-            <div className='card-specs'>
-              <em>{card.cardSet.set_rarity_code}</em>
-            </div>
-            <div className='card-specs'>{card.cardCondition}</div>
+              <div className='card-specs'>{card.cardSet.set_code}</div>
+              <div className='card-specs'>
+                <em>{card.cardSet.set_rarity_code}</em>
+              </div>
+              <div className='card-specs'>{card.cardCondition}</div>
 
-            {card.editedAt && (
-              <span
-                title={`Edited at: ${new Date(
-                  card.editedAt
-                ).toLocaleTimeString()}`}>
-                (Edited)
-              </span>
-            )}
-
+              {card.editedAt && (
+                <span
+                  title={`Edited at: ${new Date(
+                    card.editedAt
+                  ).toLocaleTimeString()}`}>
+                  <em>(Edited)</em>
+                </span>
+              )}
+            </span>
             <button className='card-buttons' onClick={onToggleEditMode}>
               Edit
             </button>
@@ -736,7 +744,7 @@ const StyledCardContainer = styled.div`
 
   .card-list{
     display: flex; 
-    justify-content: space-between;
+    justify-content: space-around;
     list-style: none;
     flex-wrap: wrap;
     width: 100vh;
@@ -755,6 +763,11 @@ const StyledCardContainer = styled.div`
     padding: 4px;
     border-radius: 8px;
     transition: all .1s ease-in-out;
+    span {
+      display:flex;
+      flex-direction:column;
+      flex-grow:1
+    }
 
     :hover{
       box-shadow: 1px 1px 16px -6px #000000;
@@ -775,7 +788,7 @@ const StyledCardContainer = styled.div`
               /*---Style these to change between grid and list view---*/
   .display-grid {
     display: flex; 
-    justify-content: space-between;
+    justify-content: space-around;
     list-style: none;
     flex-wrap: wrap;
   }
@@ -803,6 +816,11 @@ const StyledCardContainer = styled.div`
     padding: 4px;
     border-radius: 8px;
     flex-wrap: wrap;
+    span {
+      display:flex;
+      flex-direction:row;
+      flex-grow:1
+    }
   }
 
   .card-specs{
