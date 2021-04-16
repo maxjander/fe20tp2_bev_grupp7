@@ -17,7 +17,7 @@ import Graph from "../Graph";
 
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
-import CardContextProvider from '../CardContext'
+import CardContextProvider from "../CardContext";
 
 const App = () => {
   const [theme, toggleTheme, componentMounted] = useDarkMode();
@@ -29,38 +29,35 @@ const App = () => {
   return (
     <ThemeProvider theme={themeMode}>
       <CardContextProvider>
-    <Wrapper>
-      <Router>
-        <div>
+        <Wrapper>
+          <Router>
+            <div>
+              <Navigation />
 
-          <Navigation />
+              <FlexContainer>
+                {/* <Route exact path={ROUTES.LANDING} component={LandingPage} /> */}
+                <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+                <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
 
-          <FlexContainer>
-            {/* <Route exact path={ROUTES.LANDING} component={LandingPage} /> */}
-            <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-            <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
-
-            <Route
-              path={ROUTES.PASSWORD_FORGET}
-              component={PasswordForgetPage}
-            />
-            <Route path={ROUTES.HOME} component={HomePage} />
-            <Route
-              path={ROUTES.ACCOUNT}
-              render={(props) => (
-                <AccountPage theme={theme} toggleTheme={toggleTheme} />
-              )}
-            />
-            <Route path={ROUTES.ADMIN} component={AdminPage} />
-            {/* <Route path={ROUTES.GRAPH} component={Graph} /> */}
-            {/* {theme && <Toggle theme={theme} toggleTheme={toggleTheme} />} */}
-          </FlexContainer>
-
-        </div>
-      </Router>
-</Wrapper>
+                <Route
+                  path={ROUTES.PASSWORD_FORGET}
+                  component={PasswordForgetPage}
+                />
+                <Route path={ROUTES.HOME} component={HomePage} />
+                <Route
+                  path={ROUTES.ACCOUNT}
+                  render={(props) => (
+                    <AccountPage theme={theme} toggleTheme={toggleTheme} />
+                  )}
+                />
+                <Route path={ROUTES.ADMIN} component={AdminPage} />
+                {/* <Route path={ROUTES.GRAPH} component={Graph} /> */}
+                {/* {theme && <Toggle theme={theme} toggleTheme={toggleTheme} />} */}
+              </FlexContainer>
+            </div>
+          </Router>
+        </Wrapper>
       </CardContextProvider>
-
     </ThemeProvider>
   );
 };
@@ -75,6 +72,6 @@ const FlexContainer = styled.div`
   color: ${({ theme }) => theme.text};
 `;
 const Wrapper = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   background: ${({ theme }) => theme.body};
 `;
