@@ -620,20 +620,23 @@ const CardItem = ({
                   title={`Edited at: ${new Date(
                     card.editedAt
                   ).toLocaleTimeString()}`}
+                  className="card-specs"
                 >
                   <em>(Edited)</em>
                 </span>
               )}
             </span>
-            <button className="card-buttons" onClick={onToggleEditMode}>
-              Edit
-            </button>
-            <button
-              className="card-buttons"
-              onClick={() => onRemoveCard(card.uid, authUser)}
-            >
-              Delete
-            </button>
+            <StyledEditAndDeleteButton>
+              <button className="card-buttons" onClick={onToggleEditMode}>
+                Edit
+              </button>
+              <button
+                className="card-buttons"
+                onClick={() => onRemoveCard(card.uid, authUser)}
+              >
+                Delete
+              </button>
+            </StyledEditAndDeleteButton>
           </div>
         </li>
       )}
@@ -688,7 +691,7 @@ const StyledHomeComponent = styled.div`
     align-self: center;
   }
   .card-specs {
-    color: #000000
+    color: #000000;
   }
 `;
 
@@ -706,7 +709,7 @@ const StyledModal = styled.div`
       position: fixed;
       background: white;
       width: 80vw;
-      height: 80vh;
+      /* height: 80vh; */
       padding: 20px;
       top: 50%;
       left: 50%;
@@ -715,7 +718,7 @@ const StyledModal = styled.div`
   }
   /*---MODAL SETTINGS---*/
   .display-block {
-    display: block;
+    display: flex;
   }
 
   .display-none {
@@ -764,94 +767,100 @@ const StyledCardContainer = styled.div`
   justify-content: center;
   max-width: 1000px;
 
-  .card-list{
-    display: flex; 
+  .card-list {
+    display: flex;
     justify-content: space-around;
     list-style: none;
     flex-wrap: wrap;
     width: 100vh;
   }
- /* display block when row */
-  .single-card{
+  /* display block when row */
+  .single-card {
     display: flex; /* flex */
     flex-direction: column;
     justify-content: space-between;
     width: 250px;
-    height: 270px;
+    /* height: 270px; */
     border: 1px solid;
     background-color: #d9d9d9;
-    border-color: rgba(0,0,0,0.3);
+    border-color: rgba(0, 0, 0, 0.3);
     margin: 4px;
     padding: 4px;
-    
+
     border-radius: 8px;
-    transition: all .1s ease-in-out;
+    transition: all 0.1s ease-in-out;
     span {
-      display:flex;
-      flex-direction:column;
-      flex-grow:1
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
     }
 
-    :hover{
+    :hover {
       box-shadow: 1px 1px 16px -6px #000000;
     }
-    .card-specs{
+    .card-specs {
       margin: 0px;
     }
 
-    .image-container{
+    .image-container {
       margin: 2px;
     }
 
-    .card-image{
+    .card-image {
       width: 150px;
     }
   }
 
-              /*---Style these to change between grid and list view---*/
+  /*---Style these to change between grid and list view---*/
   .display-grid {
-    display: flex; 
+    display: flex;
     justify-content: space-around;
     list-style: none;
     flex-wrap: wrap;
-    
   }
-  
+
   .display-list {
-    display: flex; 
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     list-style: none;
     flex-wrap: wrap;
     margin: 0;
     width: 100vh;
-    
-    .single-card {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    justify-content: space-between;
-    width: 98vh;
-    height: 70px;
-    border: 1px solid;
-    background-color: white;
-    border-color: rgba(0,0,0,0.3);
-    margin: 4px;
-    padding: 4px;
-    border-radius: 8px;
-    flex-wrap: wrap;
-    span {
-      display:flex;
-      flex-direction:row;
-      flex-grow:1
-    }
-  }
 
-  .card-specs{
+    .single-card {
       display: flex;
-      flex-direction: row; 
+      flex-direction: row;
+      flex-grow: 1;
+      justify-content: space-between;
+      width: 98vh;
+      height: 70px;
+      border: 1px solid;
+      background-color: white;
+      border-color: rgba(0, 0, 0, 0.3);
+      margin: 4px;
+      padding: 4px;
+      border-radius: 8px;
+      flex-wrap: wrap;
+      span {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+      }
+    }
+
+    .card-specs {
+      display: flex;
+      flex-direction: row;
       justify-content: space-between;
       align-items: center;
       margin-left: 6px;
     }
+  }
+`;
+
+const StyledEditAndDeleteButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 `;

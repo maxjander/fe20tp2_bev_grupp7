@@ -14,27 +14,27 @@ const LineGraph = (props) => {
     return <></>;
   } else {
     return (
-      <StyledWrapper>
-        <Line
-          data={{
-            labels: Object.keys(props.data).map((timestamp) =>
-              new Date(Number(timestamp)).toLocaleDateString()
-            ),
-            datasets: [
-              {
-                label: "Card Value",
-                data: Object.values(props.data),
-                borderColor: "palevioletred",
-              },
-            ],
-          }}
-          // height={100}
-          // width={600}
-          options={{
-            maintainAspectRatio: true,
-          }}
-        />
-      </StyledWrapper>
+      // <StyledWrapper>
+      <Line
+        data={{
+          labels: Object.keys(props.data).map((timestamp) =>
+            new Date(Number(timestamp)).toLocaleDateString()
+          ),
+          datasets: [
+            {
+              label: "Value representation over time of total inventory",
+              data: Object.values(props.data),
+              borderColor: "palevioletred",
+            },
+          ],
+        }}
+        // height={100}
+        // width={600}
+        options={{
+          maintainAspectRatio: true,
+        }}
+      />
+      /* </StyledWrapper> */
     );
   }
 };

@@ -24,7 +24,6 @@ const CardPresentation = ({ card }) => {
       ) : (
         <>
           <StyledWrapper>
-            <StyledHeader>{card.cardId}</StyledHeader>
             {apiCard && (
               <>
                 <h1>{apiCard.name}</h1>
@@ -35,7 +34,9 @@ const CardPresentation = ({ card }) => {
                     src={apiCard.card_images[0].image_url}
                   />
                   {card && (
-                    <LineGraph data={card.priceChangeDeltaValueHistory} />
+                    <StyledGraph>
+                      <LineGraph data={card.priceChangeDeltaValueHistory} />
+                    </StyledGraph>
                   )}
                 </StyledCardImageAndGraph>
               </>
@@ -53,6 +54,15 @@ const StyledWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  width: 100%;
+`;
+
+const StyledImage = styled.img`
+  flex-grow: 1;
+`;
+
+const StyledGraph = styled.div`
+  flex-grow: 2;
 `;
 
 const StyledCardImageAndGraph = styled.div`
@@ -60,6 +70,7 @@ const StyledCardImageAndGraph = styled.div`
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-around;
+  width: 100%;
 `;
 
 const StyledHeader = styled.h1`
