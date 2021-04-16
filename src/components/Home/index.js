@@ -356,6 +356,7 @@ const CardPresentationModal = ({
   handleCardPresentationToggleModal,
   toggleCardPresentationModal,
   children,
+  card,
 }) => {
   const cardContext = useContext(CardContext);
   const allCards = cardContext.cards;
@@ -372,6 +373,7 @@ const CardPresentationModal = ({
   // };
   const handleClick = (e) => {
     if (presentationNode.current.contains(e.target)) {
+      console.log(card);
       return;
     }
     handleCardPresentationToggleModal();
@@ -392,9 +394,6 @@ const CardPresentationModal = ({
     <div className={showHideClassName}>
       <section className="modal-main" ref={presentationNode}>
         {children}
-        {allCards[0] && (
-          <LineGraph data={allCards[1].priceChangeDeltaValueHistory} />
-        )}
         <br />
         <button onClick={handleCardPresentationToggleModal}>Close</button>
       </section>
