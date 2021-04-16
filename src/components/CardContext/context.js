@@ -1,30 +1,28 @@
-import React, { useState, createContext, useEffect, useContext } from 'react'
-import { AuthUserContext } from '../Session';
-import { withFirebase } from '../Firebase';
+import React, { useState, createContext, useEffect, useContext } from "react";
+import { AuthUserContext } from "../Session";
+import { withFirebase } from "../Firebase";
 
-export const CardContext = createContext()
+export const CardContext = createContext();
 
 const CardContextProvider = (props) => {
-  const [users, setUsers] = useState(false)
-  const [cards, setCards] = useState(false)
-  const authUser = useContext(AuthUserContext)
+  const [users, setUsers] = useState(false);
+  const [cards, setCards] = useState(false);
+  const authUser = useContext(AuthUserContext);
   useEffect(() => {
-
     props.firebase.cards().on("value", (snapshot) => {
       const cardObject = snapshot.val();
       if (cardObject) {
-
         const cardList = Object.keys(cardObject).map((key) => ({
           ...cardObject[key],
           uid: key,
         }));
-        const filteredCards = cardList.filter(card => card.userId === authUser.uid)
+        const filteredCards = cardList.filter(
+          (card) => card.userId === authUser.uid
+        );
         //Set CardList to state
         setCards(filteredCards);
         //approves loading of page
-
       } else {
-
       }
     });
 
@@ -35,14 +33,14 @@ const CardContextProvider = (props) => {
     };
   }, [props.firebase]);
 
-    console.log(authUser)
-// returnera en users deltan på ett visst kort
+  console.log(authUser);
+  // returnera en users deltan på ett visst kort
 
   return (
-    <CardContext.Provider value={{users, cards}}>
-        {props.children}
+    <CardContext.Provider value={{ users, cards }}>
+      {props.children}
     </CardContext.Provider>
-  )
-}
+  );
+};
 
-export default withFirebase(CardContextProvider)
+export default withFirebase(CardContextProvider);

@@ -235,10 +235,7 @@ const CardsBase = (props) => {
     setCardName(cardNameFromAutoComplete);
     setCardSet("");
   };
-  const doesGridExist = document.getElementsByClassName("display-grid");
-  const doesRowExist = document.getElementsByClassName("display-row");
-  console.log(doesGridExist);
-  console.log(doesRowExist);
+
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
@@ -249,7 +246,7 @@ const CardsBase = (props) => {
             <button type="button" onClick={handleToggleModal}>
               Add Card
             </button>
-            {doesGridExist.length != doesRowExist.length ? (
+            {toggleGridView ? (
               <button onClick={handleToggleGridView}>
                 <BsFillGridFill />
               </button>

@@ -13,6 +13,7 @@ import PasswordForgetPage from "../PasswordForget";
 import HomePage from "../Home";
 import AccountPage from "../Account";
 import AdminPage from "../Admin";
+import LandingPage from "../Landing";
 import Graph from "../Graph";
 
 import * as ROUTES from "../../constants/routes";
@@ -35,8 +36,8 @@ const App = () => {
               <Navigation />
 
               <FlexContainer>
-                {/* <Route exact path={ROUTES.LANDING} component={LandingPage} /> */}
-                <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+                <Route exact path={ROUTES.LANDING} component={LandingPage} />
+                <Route path={ROUTES.SIGN_IN} component={SignInPage} />
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
 
                 <Route

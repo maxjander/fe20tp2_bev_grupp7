@@ -33,14 +33,14 @@ const LinDat = () => {
     }
     allDates.sort();
   }
-
+  // 7
   if (allDates.length > 7) {
     var revAllDates = allDates.reverse();
     var revAllPrices = allPrices.reverse();
 
     var holdDates = [];
     var holdPrices = [];
-
+    // <= 6
     for (l = 0; l <= 6; l++) {
       holdDates.push(revAllDates[l]);
       holdPrices.push(revAllPrices[l]);
