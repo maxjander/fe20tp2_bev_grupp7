@@ -40,4 +40,4 @@ Insert info or logo
 * React-Router
 * Styled Components
 * Firebase
-* Rechart
+* React-ChartJs-2
