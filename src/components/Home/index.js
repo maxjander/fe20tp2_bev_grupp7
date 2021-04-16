@@ -12,6 +12,8 @@ import cardConditions from "../../constants/cardConditions";
 import LineGraph from "../LineChart";
 import { CardContext } from "../CardContext";
 import LinDat from "../DeltaData";
+import { BsFillGridFill } from "react-icons/bs";
+import { CgRowFirst } from "react-icons/cg";
 import ApiFetch from "../ApiFetch";
 //only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
@@ -30,6 +32,7 @@ const HomePage = () => {
     <StyledHomeComponent>
       <div>
         {allCards[0] && <LineGraph data={linG} />}
+        <StyledInventoryHeader>Inventory</StyledInventoryHeader>
         <Cards />
 
         {/* <ApiFetch /> */}
@@ -232,12 +235,30 @@ const CardsBase = (props) => {
     setCardName(cardNameFromAutoComplete);
     setCardSet("");
   };
+  const doesGridExist = document.getElementsByClassName("display-grid");
+  const doesRowExist = document.getElementsByClassName("display-row");
+  console.log(doesGridExist);
+  console.log(doesRowExist);
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
           <LineGraph />
           {/* {cards ? <PortfolioGraph cards={cards} authUser={authUser} /> : null} */}
+          <StyledAddCardAndGridButton>
+            <button type="button" onClick={handleToggleModal}>
+              Add Card
+            </button>
+            {doesGridExist.length != doesRowExist.length ? (
+              <button onClick={handleToggleGridView}>
+                <BsFillGridFill />
+              </button>
+            ) : (
+              <button onClick={handleToggleGridView}>
+                <CgRowFirst />
+              </button>
+            )}
+          </StyledAddCardAndGridButton>
 
           {loading && <div>Loading.2..</div>}
           {/*messages*/}
@@ -343,9 +364,9 @@ const CardsBase = (props) => {
             </AddCardModal>
           </StyledModal>
 
-          <button type="button" onClick={handleToggleModal}>
+          {/* <button type="button" onClick={handleToggleModal}>
             Add Card
-          </button>
+          </button> */}
         </>
       )}
     </AuthUserContext.Consumer>
@@ -490,7 +511,7 @@ const CardList = ({
         </div>
       </StyledCardContainer>
 
-      <button onClick={handleToggleGridView}>grid</button>
+      {/* <button onClick={handleToggleGridView}>grid</button> */}
     </>
   );
 };
@@ -863,4 +884,18 @@ const StyledEditAndDeleteButton = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+`;
+
+const StyledAddCardAndGridButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border-bottom: solid black 1px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+`;
+
+const StyledInventoryHeader = styled.h1`
+  font-size: 24px;
+  text-align: center;
 `;
