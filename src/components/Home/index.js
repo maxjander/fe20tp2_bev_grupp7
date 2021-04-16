@@ -344,7 +344,7 @@ const CardsBase = (props) => {
           </StyledModal>
 
           <button type="button" onClick={handleToggleModal}>
-            Open
+            Add Card
           </button>
         </>
       )}
@@ -660,15 +660,15 @@ const StyledHomeComponent = styled.div`
     width: 120px;
     height: 26px;
     border-radius: 18px;
-    background-color: #1c89ff;
+    background-color: #969696;
     border: solid 1px transparent;
     color: #fff;
     font-size: 18px;
-    font-weight: 300;
+    font-weight: 450;
     cursor: pointer;
     transition: all 0.1s ease-in-out;
     &:hover {
-      background-color: #39375b;
+      background-color: #4d4d4d;
       border-color: #fff;
       transition: all 0.1s ease-in-out;
     }
@@ -683,9 +683,13 @@ const StyledHomeComponent = styled.div`
   }
 
   .card-title {
+    color: #000000;
     font-size: 20px;
     margin: 0px;
     align-self: center;
+  }
+  .card-specs {
+    color: #000000
   }
 `;
 
@@ -696,6 +700,7 @@ const StyledModal = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
+    color: #000000;
     background: rgba(0, 0, 0, 0.6);
 
     .modal-main {
@@ -775,10 +780,11 @@ const StyledCardContainer = styled.div`
     width: 250px;
     height: 270px;
     border: 1px solid;
-    background-color: white;
+    background-color: #d9d9d9;
     border-color: rgba(0,0,0,0.3);
     margin: 4px;
     padding: 4px;
+    
     border-radius: 8px;
     transition: all .1s ease-in-out;
     span {
@@ -809,6 +815,7 @@ const StyledCardContainer = styled.div`
     justify-content: space-around;
     list-style: none;
     flex-wrap: wrap;
+    
   }
   
   .display-list {
