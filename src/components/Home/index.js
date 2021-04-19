@@ -14,6 +14,7 @@ import { CardContext } from "../CardContext";
 import LinDat from "../DeltaData";
 import { BsFillGridFill } from "react-icons/bs";
 import { CgRowFirst } from "react-icons/cg";
+import Slider from "../Slider";
 import ApiFetch from "../ApiFetch";
 //only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
@@ -28,14 +29,29 @@ const HomePage = () => {
   // const linG = LinDat(allCards);
   // console.log(allCards);
 
+  const [rangeValue, setRangeValue] = useState(2);
+  const onChangeSlider = (e) => {
+    setRangeValue(parseInt(e.target.value, 10));
+  };
+
   return (
     <CardContext.Consumer>
       {(context) => (
         <StyledHomeComponent>
           <div>
+            <Slider
+              min={0}
+              max={14}
+              step={1}
+              defaultLength={rangeValue}
+              value={rangeValue}
+              onChangeValue={onChangeSlider}
+            />
             <StyledStyledGraphContainer>
               <StyledGraphContainer>
-                {context.cards[0] && <LineGraph data={LinDat(context.cards)} />}
+                {context.cards[0] && (
+                  <LineGraph data={LinDat(context.cards, rangeValue)} />
+                )}
               </StyledGraphContainer>
             </StyledStyledGraphContainer>
 
@@ -293,8 +309,7 @@ const CardsBase = (props) => {
                 handleCardPresentationToggleModal
               }
               toggleCardPresentationModal={toggleCardPresentationModal}
-              authUser={authUser}
-            >
+              authUser={authUser}>
               {clickedCard && <CardPresentation card={clickedCard} />}
             </CardPresentationModal>
           </StyledModal>
@@ -304,17 +319,16 @@ const CardsBase = (props) => {
               // ref={node}
               handleToggleModal={handleToggleModal}
               toggleModal={toggleModal}
-              authUser={authUser}
-            >
+              authUser={authUser}>
               <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
                 <Autocomplete
                   ref={autoCompleteElement}
-                  type="text"
+                  type='text'
                   value={cardName}
                   onChange={onChangeCardName}
-                  name="cardName"
-                  min="3"
-                  required="required"
+                  name='cardName'
+                  min='3'
+                  required='required'
                   suggestions={infoData}
                   autoCompleteCallback={autoCompleteCallback}
                 />
@@ -323,8 +337,7 @@ const CardsBase = (props) => {
                   <StyledSelect
                     onChange={onChangeCardSet}
                     value={cardSet.set_code || ""}
-                    required="required"
-                  >
+                    required='required'>
                     <option> Select a Card Set</option>
                     {apiCard.card_sets.map((item, idx) => (
                       <option key={idx} value={item.set_code}>
@@ -340,11 +353,10 @@ const CardsBase = (props) => {
 
                 {cardSet && (
                   <StyledSelect
-                    type="text"
+                    type='text'
                     value={cardCondition || ""}
                     onChange={onChangeCardCondition}
-                    required="required"
-                  >
+                    required='required'>
                     <option>What Condition is your card?</option>
                     {cardConditions.map((item, idx) => (
                       <option key={idx} value={item}>
@@ -355,16 +367,16 @@ const CardsBase = (props) => {
                 )}
                 {cardCondition && (
                   <StyledInput
-                    type="number"
+                    type='number'
                     value={buyPoint || ""}
                     onChange={onChangeBuyPoint}
-                    required="required"
-                    placeholder="What did you pay?"
+                    required='required'
+                    placeholder='What did you pay?'
                   />
                 )}
 
                 {buyPoint && (
-                  <StyledButton type="submit">Add Card</StyledButton>
+                  <StyledButton type='submit'>Add Card</StyledButton>
                 )}
               </FlexForm>
             </AddCardModal>
@@ -419,7 +431,7 @@ const CardPresentationModal = ({
 
   return (
     <div className={showHideClassName}>
-      <section className="modal-main" ref={presentationNode}>
+      <section className='modal-main' ref={presentationNode}>
         {children}
         <br />
         <StyledButton onClick={handleCardPresentationToggleModal}>
@@ -463,7 +475,7 @@ const AddCardModal = ({ handleToggleModal, toggleModal, children }) => {
 
   return (
     <div className={showHideClassName}>
-      <section className="modal-main" ref={node}>
+      <section className='modal-main' ref={node}>
         {children}
         <br />
         <StyledButton onClick={handleToggleModal}>Close</StyledButton>
@@ -497,6 +509,7 @@ const CardList = ({
       <StyledCardContainer>
         <div className={showHideClassName}>
           {/* onClick={handleCardPresentationToggleModal}> */}
+
           <StyledCardList>
             {cards.map(
               (card) =>
@@ -583,18 +596,17 @@ const CardItem = ({
       {editMode && apiCard ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type="text"
+            type='text'
             value={apiCard.name}
             onChange={onChangeEditCardName}
             readOnly
           />
           <StyledSelect
-            type="text"
+            type='text'
             value={editCard_sets}
             onChange={onChangeEditCardSet}
-            required="required"
-          >
-            <option key="1" value={card.cardSet}>
+            required='required'>
+            <option key='1' value={card.cardSet}>
               {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
             </option>
             -------
@@ -605,12 +617,11 @@ const CardItem = ({
             ))}
           </StyledSelect>
           <StyledSelect
-            type="text"
+            type='text'
             value={editCondition}
             onChange={onChangeEditCondition}
-            required="required"
-            placeholder="Condition"
-          >
+            required='required'
+            placeholder='Condition'>
             <option>What Condition is your card?</option>
             {cardConditions.map((item, idx) => (
               <option key={idx} value={item}>
@@ -625,6 +636,8 @@ const CardItem = ({
         </FlexForm>
       ) : (
         //{message.userId} {message.text} //message.editedAt
+
+
         <li
           className="single-card"
           onClick={() => {
