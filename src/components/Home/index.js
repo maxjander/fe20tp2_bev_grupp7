@@ -51,7 +51,7 @@ const HomePage = () => {
             <StyledStyledGraphContainer>
               <StyledGraphContainer>
                 {context.cards[0] && (
-                  <LineGraph data={LinDat(context.cards, rangeValue)} label={'hej2'} />
+                  <LineGraph data={LinDat(context.cards, rangeValue)} label={'Total value of inventory'} />
                 )}
               </StyledGraphContainer>
             </StyledStyledGraphContainer>
