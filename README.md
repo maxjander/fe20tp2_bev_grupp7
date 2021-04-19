@@ -1,5 +1,5 @@
 # B-E-V
-Insert info or logo
+A portfolio tracker for the card game 'Yugioh'.
 
 ## Table of Contents
   - [Table of Contents](#table-of-contents)
