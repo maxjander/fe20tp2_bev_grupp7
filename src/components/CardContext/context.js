@@ -13,12 +13,15 @@ const CardContextProvider = (props) => {
     props.firebase.cards().on("value", (snapshot) => {
       const cardObject = snapshot.val();
       if (cardObject) {
-
+        
+        
         const cardList = Object.keys(cardObject).map((key) => ({
           ...cardObject[key],
           uid: key,
         }));
+
         const filteredCards = cardList.filter(card => card.userId === authUser.uid)
+        
         //Set CardList to state
         setCards(filteredCards);
         //approves loading of page
