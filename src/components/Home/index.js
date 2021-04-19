@@ -497,7 +497,7 @@ const CardList = ({
       <StyledCardContainer>
         <div className={showHideClassName}>
           {/* onClick={handleCardPresentationToggleModal}> */}
-          <ul className="card-list">
+          <StyledCardList>
             {cards.map(
               (card) =>
                 card.userId === authUser.uid && (
@@ -515,7 +515,7 @@ const CardList = ({
                   />
                 )
             )}
-          </ul>
+          </StyledCardList>
         </div>
       </StyledCardContainer>
 
@@ -625,48 +625,46 @@ const CardItem = ({
         </FlexForm>
       ) : (
         //{message.userId} {message.text} //message.editedAt
-        <li>
-          <div
-            className="single-card"
-            onClick={() => {
-              setClickedCard(card);
-            }}
-          >
-            {/* {card.userId} */}
-            <span onClick={handleCardPresentationToggleModal}>
-              <StyledCardTitle>
-                <strong>{card.cardName}</strong>
-              </StyledCardTitle>
+        <li
+          className="single-card"
+          onClick={() => {
+            setClickedCard(card);
+          }}
+        >
+          {/* {card.userId} */}
+          <span onClick={handleCardPresentationToggleModal}>
+            <StyledCardTitle>
+              <strong>{card.cardName}</strong>
+            </StyledCardTitle>
 
-              <StyledCardSpecs>{card.cardSet.set_code}</StyledCardSpecs>
-              <StyledCardSpecs>
-                <em>{card.cardSet.set_rarity_code}</em>
-              </StyledCardSpecs>
-              <StyledCardSpecs>{card.cardCondition}</StyledCardSpecs>
+            <StyledCardSpecs>{card.cardSet.set_code}</StyledCardSpecs>
+            <StyledCardSpecs>
+              <em>{card.cardSet.set_rarity_code}</em>
+            </StyledCardSpecs>
+            <StyledCardSpecs>{card.cardCondition}</StyledCardSpecs>
 
-              {card.editedAt && (
-                <span
-                  title={`Edited at: ${new Date(
-                    card.editedAt
-                  ).toLocaleTimeString()}`}
-                  className="card-specs"
-                >
-                  <em>(Edited)</em>
-                </span>
-              )}
-            </span>
-            <StyledEditAndDeleteButtonContainer>
-              <StyledButton className="card-buttons" onClick={onToggleEditMode}>
-                Edit
-              </StyledButton>
-              <StyledButton
-                className="card-buttons"
-                onClick={() => onRemoveCard(card.uid, authUser)}
+            {card.editedAt && (
+              <span
+                title={`Edited at: ${new Date(
+                  card.editedAt
+                ).toLocaleTimeString()}`}
+                className="card-specs"
               >
-                Delete
-              </StyledButton>
-            </StyledEditAndDeleteButtonContainer>
-          </div>
+                <em>(Edited)</em>
+              </span>
+            )}
+          </span>
+          <StyledEditAndDeleteButtonContainer>
+            <StyledButton className="card-buttons" onClick={onToggleEditMode}>
+              Edit
+            </StyledButton>
+            <StyledButton
+              className="card-buttons"
+              onClick={() => onRemoveCard(card.uid, authUser)}
+            >
+              Delete
+            </StyledButton>
+          </StyledEditAndDeleteButtonContainer>
         </li>
       )}
 
@@ -782,6 +780,14 @@ const StyledInput = styled.input`
   box-sizing: border-box;
 `;
 
+const StyledCardList = styled.ul`
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  flex-wrap: wrap;
+  width: 100%;
+`;
+
 /*---CARD LIST, card list with all users card at the top of home component---*/
 const StyledCardContainer = styled.div`
   display: flex;
@@ -849,14 +855,13 @@ const StyledCardContainer = styled.div`
     list-style: none;
     flex-wrap: wrap;
     margin: 0;
-    width: 100vh;
 
     .single-card {
       display: flex;
       flex-direction: row;
       flex-grow: 1;
       justify-content: space-between;
-      width: 98vh;
+      width: 100%;
       height: 70px;
       border: 1px solid;
       background-color: white;
