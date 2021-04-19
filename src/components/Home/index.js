@@ -321,7 +321,8 @@ const CardsBase = (props) => {
                 handleCardPresentationToggleModal
               }
               toggleCardPresentationModal={toggleCardPresentationModal}
-              authUser={authUser}>
+              authUser={authUser}
+            >
               {clickedCard && <CardPresentation card={clickedCard} />}
             </CardPresentationModal>
           </StyledModal>
@@ -331,16 +332,17 @@ const CardsBase = (props) => {
               // ref={node}
               handleToggleModal={handleToggleModal}
               toggleModal={toggleModal}
-              authUser={authUser}>
+              authUser={authUser}
+            >
               <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
                 <Autocomplete
                   ref={autoCompleteElement}
-                  type='text'
+                  type="text"
                   value={cardName}
                   onChange={onChangeCardName}
-                  name='cardName'
-                  min='3'
-                  required='required'
+                  name="cardName"
+                  min="3"
+                  required="required"
                   suggestions={infoData}
                   autoCompleteCallback={autoCompleteCallback}
                 />
@@ -349,7 +351,8 @@ const CardsBase = (props) => {
                   <StyledSelect
                     onChange={onChangeCardSet}
                     value={cardSet.set_code || ""}
-                    required='required'>
+                    required="required"
+                  >
                     <option> Select a Card Set</option>
                     {apiCard.card_sets.map((item, idx) => (
                       <option key={idx} value={item.set_code}>
@@ -365,10 +368,11 @@ const CardsBase = (props) => {
 
                 {cardSet && (
                   <StyledSelect
-                    type='text'
+                    type="text"
                     value={cardCondition || ""}
                     onChange={onChangeCardCondition}
-                    required='required'>
+                    required="required"
+                  >
                     <option>What Condition is your card?</option>
                     {cardConditions.map((item, idx) => (
                       <option key={idx} value={item}>
@@ -379,16 +383,16 @@ const CardsBase = (props) => {
                 )}
                 {cardCondition && (
                   <StyledInput
-                    type='number'
+                    type="number"
                     value={buyPoint || ""}
                     onChange={onChangeBuyPoint}
-                    required='required'
-                    placeholder='What did you pay?'
+                    required="required"
+                    placeholder="What did you pay?"
                   />
                 )}
 
                 {buyPoint && (
-                  <StyledButton type='submit'>Add Card</StyledButton>
+                  <StyledButton type="submit">Add Card</StyledButton>
                 )}
               </FlexForm>
             </AddCardModal>
@@ -443,7 +447,7 @@ const CardPresentationModal = ({
 
   return (
     <div className={showHideClassName}>
-      <section className='modal-main' ref={presentationNode}>
+      <section className="modal-main" ref={presentationNode}>
         {children}
         <br />
         <StyledButton onClick={handleCardPresentationToggleModal}>
@@ -487,7 +491,7 @@ const AddCardModal = ({ handleToggleModal, toggleModal, children }) => {
 
   return (
     <div className={showHideClassName}>
-      <section className='modal-main' ref={node}>
+      <section className="modal-main" ref={node}>
         {children}
         <br />
         <StyledButton onClick={handleToggleModal}>Close</StyledButton>
@@ -614,18 +618,19 @@ const CardItem = ({
       {editMode && apiCard ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type='text'
+            type="text"
             value={apiCard.name}
             onChange={onChangeEditCardName}
             readOnly
           />
 
           <StyledSelect
-            type='text'
+            type="text"
             value={editCard_sets}
             onChange={onChangeEditCardSet}
-            required='required'>
-            <option key='1' value={card.cardSet}>
+            required="required"
+          >
+            <option key="1" value={card.cardSet}>
               {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
             </option>
             -------
@@ -636,11 +641,12 @@ const CardItem = ({
             ))}
           </StyledSelect>
           <StyledSelect
-            type='text'
+            type="text"
             value={editCondition}
             onChange={onChangeEditCondition}
-            required='required'
-            placeholder='Condition'>
+            required="required"
+            placeholder="Condition"
+          >
             <option>What Condition is your card?</option>
             {cardConditions.map((item, idx) => (
               <option key={idx} value={item}>
@@ -657,10 +663,11 @@ const CardItem = ({
         //{message.userId} {message.text} //message.editedAt
 
         <li
-          className='single-card'
+          className="single-card"
           onClick={() => {
             setClickedCard(card);
-          }}>
+          }}
+        >
           {/* {card.userId} */}
           <span onClick={handleCardPresentationToggleModal}>
             <StyledCardTitle>
@@ -673,23 +680,25 @@ const CardItem = ({
             </StyledCardSpecs>
             <StyledCardSpecs>{card.cardCondition}</StyledCardSpecs>
 
-            {card.editedAt && (
+            {/* {card.editedAt && (
               <span
                 title={`Edited at: ${new Date(
                   card.editedAt
                 ).toLocaleTimeString()}`}
-                className='card-specs'>
+                className="card-specs"
+              >
                 <em>(Edited)</em>
               </span>
-            )}
+            )} */}
           </span>
           <StyledEditAndDeleteButtonContainer>
-            <StyledButton className='card-buttons' onClick={onToggleEditMode}>
+            <StyledButton className="card-buttons" onClick={onToggleEditMode}>
               Edit
             </StyledButton>
             <StyledButton
-              className='card-buttons'
-              onClick={() => onRemoveCard(card.uid, authUser)}>
+              className="card-buttons"
+              onClick={() => onRemoveCard(card.uid, authUser)}
+            >
               Delete
             </StyledButton>
           </StyledEditAndDeleteButtonContainer>
@@ -706,18 +715,23 @@ const condition = (authUser) => !!authUser;
 export default compose(withAuthorization(condition))(HomePage);
 
 /*---THE ENTIRE HOME COMPONENT STYLE---*/
+
 const StyledHomeComponent = styled.div`
   display: flex;
   justify-content: center;
 `;
 
 const StyledCardSpecs = styled.div`
+  display: flex;
   color: #000000;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 const StyledCardTitle = styled.div`
   color: #000000;
   font-size: 20px;
+  width: 40%;
   margin: 0px;
   align-self: center;
 `;
@@ -890,9 +904,9 @@ const StyledCardContainer = styled.div`
       flex-grow: 1;
       justify-content: space-between;
       width: 100%;
-      height: 70px;
+      /* height: 100%; */
       border: 1px solid;
-      background-color: white;
+      background-color: #d9d9d9;
       border-color: rgba(0, 0, 0, 0.3);
       margin: 4px;
       padding: 4px;
@@ -902,6 +916,10 @@ const StyledCardContainer = styled.div`
         display: flex;
         flex-direction: row;
         flex-grow: 1;
+        justify-content: space-between;
+        /* @media (max-width: 920px) {
+          flex-direction: column;
+        } */
       }
     }
 
@@ -909,7 +927,7 @@ const StyledCardContainer = styled.div`
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
       margin-left: 6px;
     }
   }
@@ -924,6 +942,9 @@ const StyledEditAndDeleteButtonContainer = styled.div`
   margin-bottom: 0px;
   align-self: center;
   padding: 0 15px;
+  @media (max-width: 920px) {
+    flex-direction: column;
+  }
 `;
 
 const StyledAddCardAndGridButtonContainer = styled.div`
