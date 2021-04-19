@@ -5,7 +5,7 @@ import { AuthUserContext, withAuthorization } from "../Session";
 import { PasswordForgetForm } from "../PasswordForget";
 import Toggle from "./../Toggle/Toggle";
 import PasswordChangeForm from "../PasswordChange";
-import { ListOfCards } from "../ListOfCards";
+// import { ListOfCards } from "../ListOfCards";
 import SaveTheme from "../SaveTheme";
 
 const AccountPage = ({ theme, toggleTheme }) => {

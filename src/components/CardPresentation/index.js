@@ -35,7 +35,10 @@ const CardPresentation = ({ card }) => {
                   />
                   {card && (
                     <StyledGraph>
-                      <LineGraph data={card.priceChangeDeltaValueHistory} label={apiCard.name} />
+                      <LineGraph
+                        data={card.priceChangeDeltaValueHistory}
+                        label={apiCard.name}
+                      />
                     </StyledGraph>
                   )}
                 </StyledCardImageAndGraph>
@@ -84,6 +87,6 @@ const StyledCardImageAndGraph = styled.div`
   }
 `;
 
-const StyledHeader = styled.h1`
-  display: block;
-`;
+// const StyledHeader = styled.h1`
+//   display: block;
+// `;

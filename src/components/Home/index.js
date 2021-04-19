@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { compose } from "recompose";
 import styled from "styled-components";
-import PortfolioGraph from "../Graph";
+// import PortfolioGraph from "../Graph";
 import { AuthUserContext, withAuthorization } from "../Session";
 import { withFirebase } from "../Firebase";
-import Autocomplete from "../Autocomplete";
+// import Autocomplete from "../Autocomplete";
 import CardPresentation from "../CardPresentation";
 import infoData from "../../constants/listOfNames.json";
 import allData from "../../constants/data.json";
@@ -15,7 +15,15 @@ import LinDat from "../DeltaData";
 import { BsFillGridFill } from "react-icons/bs";
 import { CgRowFirst } from "react-icons/cg";
 import Slider from "../Slider";
-import ApiFetch from "../ApiFetch";
+// import ApiFetch from "../ApiFetch";
+
+import CardList from "./CardList";
+import AddCardModal from "./AddCardModal";
+import CardPresentationModal from "./CardPresentationModal";
+import {
+  StyledButton,
+  StyledAddCardAndGridButtonContainer,
+} from "./styledComponents";
 //only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
 /*
@@ -58,7 +66,7 @@ const HomePage = () => {
               </StyledGraphContainer>
             </StyledStyledGraphContainer>
 
-            <StyledInventoryHeader>Inventory</StyledInventoryHeader>
+            <StyledInventoryHeader children='Inventory' />
             <Cards />
 
             {/* <ApiFetch /> */}
@@ -77,7 +85,7 @@ const CardsBase = (props) => {
   /*
   autocompletelement creates ref to this state to Autocomplete Component
   */
-  const autoCompleteElement = React.createRef();
+  // const autoCompleteElement = React.createRef();
   const [cardName, setCardName] = useState("");
   const [apiCard, setApiCard] = useState(null);
   const [cardSet, setCardSet] = useState("");
@@ -154,9 +162,9 @@ const CardsBase = (props) => {
     setCardCondition("");
     setApiCard(null);
     // setToggleModal(false);
-    autoCompleteElement.current.setState({
-      userInput: "",
-    });
+    // autoCompleteElement.current.setState({
+    //   userInput: "",
+    // });
     setToggleModal(!toggleModal);
   };
 
@@ -238,9 +246,9 @@ const CardsBase = (props) => {
       setToggleModal(false);
 
       //This changes states on the autocomplete when Card is created
-      autoCompleteElement.current.setState({
-        userInput: "",
-      });
+      // autoCompleteElement.current.setState({
+      //   userInput: "",
+      // });
     }
     event.preventDefault();
   };
@@ -277,7 +285,7 @@ const CardsBase = (props) => {
     <AuthUserContext.Consumer>
       {(authUser) => (
         <>
-          <LineGraph />
+          {/* <LineGraph /> */}
           {/* {cards ? <PortfolioGraph cards={cards} authUser={authUser} /> : null} */}
           <StyledAddCardAndGridButtonContainer>
             <StyledButton onClick={handleToggleModal}>Add Card</StyledButton>
@@ -292,107 +300,52 @@ const CardsBase = (props) => {
             )}
           </StyledAddCardAndGridButtonContainer>
 
-          {loading && <div>Loading.2..</div>}
+          {loading && <div>Loading...</div>}
           {/*messages*/}
-          {cards /*MessageList*/ ? (
-            <>
-              <CardList /*propmessages, oneditmessage, onremovemessage */
-                cards={cards}
-                onEditCard={onEditCard}
-                onRemoveCard={onRemoveCard}
-                props={props}
-                authUser={authUser}
-                toggleGridView={toggleGridView}
-                handleToggleGridView={handleToggleGridView}
-                setClickedCard={setClickedCard}
-                handleCardPresentationToggleModal={
-                  handleCardPresentationToggleModal
-                }
-              />
-            </>
-          ) : (
-            <div>There are no cards ...</div>
-          )}
 
-          <StyledModal>
-            <CardPresentationModal
-              // ref={presentationNode}
-              handleCardPresentationToggleModal={
-                handleCardPresentationToggleModal
-              }
-              toggleCardPresentationModal={toggleCardPresentationModal}
-              authUser={authUser}>
-              {clickedCard && <CardPresentation card={clickedCard} />}
-            </CardPresentationModal>
-          </StyledModal>
+          <CardList /*propmessages, oneditmessage, onremovemessage */
+            cards={cards}
+            onEditCard={onEditCard}
+            onRemoveCard={onRemoveCard}
+            props={props}
+            authUser={authUser}
+            toggleGridView={toggleGridView}
+            handleToggleGridView={handleToggleGridView}
+            setClickedCard={setClickedCard}
+            handleCardPresentationToggleModal={
+              handleCardPresentationToggleModal
+            }
+          />
 
-          <StyledModal>
-            <AddCardModal
-              // ref={node}
-              handleToggleModal={handleToggleModal}
-              toggleModal={toggleModal}
-              authUser={authUser}>
-              <FlexForm onSubmit={(event) => onCreateCard(event, authUser)}>
-                <Autocomplete
-                  ref={autoCompleteElement}
-                  type='text'
-                  value={cardName}
-                  onChange={onChangeCardName}
-                  name='cardName'
-                  min='3'
-                  required='required'
-                  suggestions={infoData}
-                  autoCompleteCallback={autoCompleteCallback}
-                />
+          <CardPresentationModal
+            // ref={presentationNode}
+            handleCardPresentationToggleModal={
+              handleCardPresentationToggleModal
+            }
+            toggleCardPresentationModal={toggleCardPresentationModal}
+            authUser={authUser}>
+            {clickedCard && <CardPresentation card={clickedCard} />}
+          </CardPresentationModal>
 
-                {apiCard && apiCard.card_sets.length > 0 && (
-                  <StyledSelect
-                    onChange={onChangeCardSet}
-                    value={cardSet.set_code || ""}
-                    required='required'>
-                    <option> Select a Card Set</option>
-                    {apiCard.card_sets.map((item, idx) => (
-                      <option key={idx} value={item.set_code}>
-                        {item.set_code} -{item.set_rarity_code}
-                      </option>
-                    ))}
-                  </StyledSelect>
-                )}
-
-                {/* 
-                            Renders datalist of cardsets after Card is chosen 
-                            */}
-
-                {cardSet && (
-                  <StyledSelect
-                    type='text'
-                    value={cardCondition || ""}
-                    onChange={onChangeCardCondition}
-                    required='required'>
-                    <option>What Condition is your card?</option>
-                    {cardConditions.map((item, idx) => (
-                      <option key={idx} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                  </StyledSelect>
-                )}
-                {cardCondition && (
-                  <StyledInput
-                    type='number'
-                    value={buyPoint || ""}
-                    onChange={onChangeBuyPoint}
-                    required='required'
-                    placeholder='What did you pay?'
-                  />
-                )}
-
-                {buyPoint && (
-                  <StyledButton type='submit'>Add Card</StyledButton>
-                )}
-              </FlexForm>
-            </AddCardModal>
-          </StyledModal>
+          <AddCardModal
+            // ref={node}
+            handleToggleModal={handleToggleModal}
+            toggleModal={toggleModal}
+            authUser={authUser}
+            onCreateCard={onCreateCard}
+            cardName={cardName}
+            onChangeCardName={onChangeCardName}
+            infoData={infoData}
+            autoCompleteCallback={autoCompleteCallback}
+            apiCard={apiCard}
+            onChangeCardSet={onChangeCardSet}
+            cardSet={cardSet}
+            cardCondition={cardCondition}
+            onChangeCardCondition={onChangeCardCondition}
+            cardConditions={cardConditions}
+            buyPoint={buyPoint}
+            onChangeBuyPoint={onChangeBuyPoint}
+          />
 
           {/* <button type="button" onClick={handleToggleModal}>
             Add Card
@@ -400,310 +353,6 @@ const CardsBase = (props) => {
         </>
       )}
     </AuthUserContext.Consumer>
-  );
-};
-
-const CardPresentationModal = ({
-  handleCardPresentationToggleModal,
-  toggleCardPresentationModal,
-  children,
-  card,
-}) => {
-  const cardContext = useContext(CardContext);
-  const allCards = cardContext.cards;
-  const showHideClassName = toggleCardPresentationModal
-    ? "modal display-block"
-    : "modal display-none";
-  const presentationNode = useRef();
-
-  // const handleClick = (e) => {
-  //   if (presentationNode.current.contains(e.target)) {
-  //     return;
-  //   }
-  //   handleCardPresentationToggleModal();
-  // };
-  const handleClick = (e) => {
-    if (presentationNode.current.contains(e.target)) {
-      console.log(card);
-      return;
-    }
-    handleCardPresentationToggleModal();
-  };
-
-  useEffect(() => {
-    if (toggleCardPresentationModal === true) {
-      window.addEventListener("mousedown", handleClick);
-    } else {
-      window.removeEventListener("mousedown", handleClick);
-    }
-    return () => {
-      window.removeEventListener("mousedown", handleClick);
-    };
-  }, [toggleCardPresentationModal, handleCardPresentationToggleModal]);
-
-  return (
-    <div className={showHideClassName}>
-      <section className='modal-main' ref={presentationNode}>
-        {children}
-        <br />
-        <StyledButton onClick={handleCardPresentationToggleModal}>
-          Close
-        </StyledButton>
-      </section>
-    </div>
-  );
-};
-
-const AddCardModal = ({ handleToggleModal, toggleModal, children }) => {
-  const showHideClassName = toggleModal
-    ? "modal display-block"
-    : "modal display-none";
-  const node = useRef();
-
-  // const handleClick = (e) => {
-  //   if (node.current.contains(e.target)) {
-  //     return;
-  //   }
-  //   handleToggleModal();
-  // };
-
-  useEffect(() => {
-    const handleClick = (e) => {
-      if (node.current.contains(e.target)) {
-        return;
-      }
-      handleToggleModal();
-    };
-
-    if (toggleModal === true) {
-      window.addEventListener("mousedown", handleClick);
-    } else {
-      window.removeEventListener("mousedown", handleClick);
-    }
-    return () => {
-      window.removeEventListener("mousedown", handleClick);
-    };
-  }, [toggleModal]);
-
-  return (
-    <div className={showHideClassName}>
-      <section className='modal-main' ref={node}>
-        {children}
-        <br />
-        <StyledButton onClick={handleToggleModal}>Close</StyledButton>
-      </section>
-    </div>
-  );
-};
-
-// const CloseModal = (handleToggleModal, toggleModal) => {
-//   .addEventListener('mousedown', console.log('TJENA'))
-// }
-
-/*---CARD LIST THAT SHOWS ALL CARDS USER OWNS---*/
-const CardList = ({
-  cards, //messages
-  onEditCard, //oneditmessage
-  onRemoveCard,
-  props,
-  authUser, //onremovemessage
-  handleToggleGridView, //toggle grid
-  toggleGridView,
-  setClickedCard,
-  handleCardPresentationToggleModal,
-}) => {
-  const showHideClassName = toggleGridView
-    ? "card-list display-list"
-    : "card-list display-grid";
-
-  return (
-    <>
-      <StyledCardContainer>
-        <div className={showHideClassName}>
-          {/* onClick={handleCardPresentationToggleModal}> */}
-
-          <StyledCardList>
-            {cards.map(
-              (card) =>
-                card.userId === authUser.uid && (
-                  <CardItem //MessageItem
-                    key={card.uid} //message.uid
-                    card={card}
-                    setClickedCard={setClickedCard}
-                    onEditCard={onEditCard}
-                    onRemoveCard={onRemoveCard}
-                    props={props}
-                    authUser={authUser}
-                    handleCardPresentationToggleModal={
-                      handleCardPresentationToggleModal
-                    }
-                    image={card.image}
-                    toggleGridView={toggleGridView}
-                  />
-                )
-            )}
-          </StyledCardList>
-        </div>
-      </StyledCardContainer>
-
-      {/* <button onClick={handleToggleGridView}>grid</button> */}
-    </>
-  );
-};
-const CardItem = ({
-  card,
-  onRemoveCard,
-  onEditCard,
-  props,
-  authUser,
-  setClickedCard,
-  handleCardPresentationToggleModal,
-  image,
-  toggleGridView,
-}) => {
-  const [apiCard, setApiCard] = useState(null);
-  const [editMode, setEditMode] = useState(false);
-  const [editCardName, setEditCardName] = useState(card.cardName);
-  const [editCardSet, setEditCardSet] = useState(card.cardSet);
-  const [editCard_sets, setEditCard_sets] = useState("");
-  const [editCondition, setEditCondition] = useState(card.cardCondition);
-
-  const LoadImage = toggleGridView ? null : <img src={image} />;
-  const showHideClassName = toggleGridView ? "display-list" : "display-grid";
-
-  const onChangeEditCardName = (event) => setEditCardName(event.target.value);
-
-  //did not exist
-  const onChangeEditCardSet = (event) => {
-    //Function for setting Cardset to state, it's a callback from input field when adding cards.
-
-    //setting index for selecting the right cardset
-    let index = event.target.options.selectedIndex - 1;
-
-    /*
-    if the index is above or equal to zero it defines the state
-    with an object with set_code and set_rarity_code.
-    */
-    if (index >= 0) {
-      setEditCardSet({
-        set_code: apiCard.card_sets[index].set_code,
-        set_rarity_code: apiCard.card_sets[index].set_rarity_code,
-      });
-    }
-  };
-  //did not exist
-  const onChangeEditCondition = (event) => setEditCondition(event.target.value);
-  //onsaveedittext
-
-  const onToggleEditMode = () => {
-    setEditMode(!editMode);
-    const innerApiCard = allData.data.find((item) => item.id === card.cardId);
-    innerApiCard && console.log(innerApiCard);
-    //temporary array to push to state
-
-    setApiCard(innerApiCard);
-  };
-
-  const onSaveEditCard = () => {
-    //this.props.message, this.state.editText
-    onEditCard(card, editCardName, editCardSet, editCondition);
-
-    setEditMode(false);
-  };
-  return (
-    <>
-      {editMode && apiCard ? (
-        <FlexForm>
-          <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type='text'
-            value={apiCard.name}
-            onChange={onChangeEditCardName}
-            readOnly
-          />
-
-          <StyledSelect
-            type='text'
-            value={editCard_sets}
-            onChange={onChangeEditCardSet}
-            required='required'>
-            <option key='1' value={card.cardSet}>
-              {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
-            </option>
-            -------
-            {apiCard.card_sets.map((item, idx) => (
-              <option key={idx} value={item.card_set}>
-                {item.set_code} - {item.set_rarity_code}
-              </option>
-            ))}
-          </StyledSelect>
-          <StyledSelect
-            type='text'
-            value={editCondition}
-            onChange={onChangeEditCondition}
-            required='required'
-            placeholder='Condition'>
-            <option>What Condition is your card?</option>
-            {cardConditions.map((item, idx) => (
-              <option key={idx} value={item}>
-                {item}
-              </option>
-            ))}
-          </StyledSelect>
-          <span>
-            <StyledButton onClick={onSaveEditCard}>Save</StyledButton>
-            <StyledButton onClick={onToggleEditMode}>Reset</StyledButton>
-          </span>
-        </FlexForm>
-      ) : (
-        //{message.userId} {message.text} //message.editedAt
-
-        <li
-          className='single-card'
-          onClick={() => {
-            setClickedCard(card);
-          }}>
-          {/* {card.userId} */}
-          <span onClick={handleCardPresentationToggleModal}>
-            <StyledCardTitle className={showHideClassName}>
-              <strong>{card.cardName}</strong>
-            </StyledCardTitle>
-            {LoadImage}
-            <StyledCardSpecs className={showHideClassName}>
-              {card.cardSet.set_code}
-            </StyledCardSpecs>
-            <StyledCardSpecs className={showHideClassName}>
-              <em>{card.cardSet.set_rarity_code}</em>
-            </StyledCardSpecs>
-            <StyledCardSpecs className={showHideClassName}>
-              {card.cardCondition}
-            </StyledCardSpecs>
-
-            {/* {card.editedAt && (
-              <span
-                title={`Edited at: ${new Date(
-                  card.editedAt
-                ).toLocaleTimeString()}`}
-                className="card-specs"
-              >
-                <em>(Edited)</em>
-              </span>
-            )} */}
-          </span>
-          <StyledEditAndDeleteButtonContainer className={showHideClassName}>
-            <StyledButton className='card-buttons' onClick={onToggleEditMode}>
-              Edit
-            </StyledButton>
-            <StyledButton
-              className='card-buttons'
-              onClick={() => onRemoveCard(card.uid, authUser)}>
-              Delete
-            </StyledButton>
-          </StyledEditAndDeleteButtonContainer>
-        </li>
-      )}
-
-      {/* clickedCard && <CardPresentation card={clickedCard}/> */}
-    </>
   );
 };
 
@@ -716,246 +365,6 @@ export default compose(withAuthorization(condition))(HomePage);
 const StyledHomeComponent = styled.div`
   display: flex;
   justify-content: center;
-  .display-list {
-  }
-  .display-grid {
-    background-color: pink;
-  }
-`;
-
-const StyledCardSpecs = styled.div`
-  display: flex;
-  color: #000000;
-  justify-content: flex-end;
-  align-items: center;
-`;
-
-const StyledCardTitle = styled.div`
-  color: #000000;
-  font-size: 20px;
-  width: 40%;
-  margin: 0px;
-  align-self: center;
-`;
-
-const StyledButton = styled.button`
-  position: relative;
-  display: block;
-  margin: 2px;
-  width: 120px;
-  height: 26px;
-  border-radius: 18px;
-  background-color: #969696;
-  border: solid 1px transparent;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 450;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #4d4d4d;
-    border-color: #fff;
-    transition: all 0.1s ease-in-out;
-  }
-`;
-
-const StyledModal = styled.div`
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    color: #000000;
-    background: rgba(0, 0, 0, 0.6);
-
-    .modal-main {
-      position: fixed;
-      background: white;
-      width: 80vw;
-      /* height: 80vh; */
-      padding: 20px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-  /*---MODAL SETTINGS---*/
-  .display-block {
-    display: flex;
-  }
-
-  .display-none {
-    display: none;
-  }
-`;
-
-const FlexForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-/*---STYLED SELECTS, dropdowns---*/
-const StyledSelect = styled.select`
-  border-radius: 8px;
-  border: 1px solid;
-  border-color: rgba(0, 0, 0, 0.3);
-  width: 220px;
-  padding: 10px;
-  margin: 10px 0px 10px 0px;
-  box-sizing: border-box;
-
-  :focus {
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-  }
-`;
-
-/*---STYLED INPUT, The search/add card field*/
-const StyledInput = styled.input`
-  border-radius: 8px;
-  border: 1px solid;
-  border-color: rgba(0, 0, 0, 0.3);
-  width: 220px;
-  padding: 10px;
-  margin: 10px 0px 10px 0px;
-  box-sizing: border-box;
-`;
-
-const StyledCardList = styled.ul`
-  display: flex;
-  justify-content: space-around;
-  list-style: none;
-  flex-wrap: wrap;
-  width: 100%;
-`;
-
-/*---CARD LIST, card list with all users card at the top of home component---*/
-const StyledCardContainer = styled.div`
-  display: flex;
-  z-index: 0;
-  justify-content: center;
-  /* max-width: 1000px; */
-  flex-wrap: wrap;
-
-  .card-list {
-    display: flex;
-    justify-content: space-around;
-    list-style: none;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-  /* display block when row */
-  .single-card {
-    display: flex; /* flex */
-    flex-direction: column;
-    justify-content: space-between;
-    width: 250px;
-    /* height: 270px; */
-    border: 1px solid;
-    background-color: #d9d9d9;
-    border-color: rgba(0, 0, 0, 0.3);
-    margin: 4px;
-    padding: 4px;
-
-    border-radius: 8px;
-    transition: all 0.1s ease-in-out;
-    span {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    :hover {
-      box-shadow: 1px 1px 16px -6px #000000;
-    }
-    /* .card-specs {
-      margin: 0px;
-    } */
-
-    .image-container {
-      margin: 2px;
-    }
-
-    .card-image {
-      width: 150px;
-    }
-  }
-
-  /*---Style these to change between grid and list view---*/
-  .display-grid {
-    display: flex;
-    justify-content: space-around;
-    list-style: none;
-    flex-wrap: wrap;
-  }
-
-  .display-list {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    list-style: none;
-    flex-wrap: wrap;
-    margin: 0;
-
-    .single-card {
-      display: flex;
-      flex-direction: row;
-      flex-grow: 1;
-      justify-content: space-between;
-      width: 100%;
-      /* height: 100%; */
-      border: 1px solid;
-      background-color: #d9d9d9;
-      border-color: rgba(0, 0, 0, 0.3);
-      margin: 4px;
-      padding: 4px;
-      border-radius: 8px;
-      flex-wrap: wrap;
-      span {
-        display: flex;
-        flex-direction: row;
-        flex-grow: 1;
-        justify-content: space-between;
-        /* @media (max-width: 920px) {
-          flex-direction: column;
-        } */
-      }
-    }
-
-    .card-specs {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-left: 6px;
-    }
-  }
-`;
-
-const StyledEditAndDeleteButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: auto;
-  margin-top: 4px;
-  margin-bottom: 0px;
-  align-self: center;
-  padding: 0 15px;
-  @media (max-width: 920px) {
-    flex-direction: column;
-  }
-`;
-
-const StyledAddCardAndGridButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  border-bottom: solid black 1px;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
 `;
 
 const StyledInventoryHeader = styled.h1`
@@ -967,6 +376,7 @@ const StyledStyledGraphContainer = styled.div`
   display: flex;
   /* max-width: 99%; */
   justify-content: center;
+  background-color: lightgrey;
 `;
 
 const StyledGraphContainer = styled.div`
