@@ -13,6 +13,11 @@ A portfolio tracker for the card game 'Yugioh'.
 * [Simon Lindqvist](https://github.com/simonlindqvist)
 * [Mehrab Norouzi ](https://github.com/MehrabNorouzi)
 
+## Description
+A group project built around "big-data" representation through APIs, using ReactJS, Firebase Realtime Database,
+and the YGOPRODECK api.
+
+
 <a name="tech-stack"></a>
 ## Dependecies
 * React.JS
