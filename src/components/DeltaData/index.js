@@ -1,16 +1,20 @@
 import { useContext } from "react";
 import { CardContext } from "../CardContext";
 
-const LinDat = () => {
-  const cardContext = useContext(CardContext);
-  const allCards = cardContext.cards;
-
+const LinDat = (allCards) => {
+  //   const cardContext = useContext(CardContext);
+  //   const allCards = cardContext.cards;
+  //   console.log(cardContext);
   var m;
   var n;
   var sumObj = {};
   var allDates = [];
   var allPrices = [];
-
+  if (!allCards) {
+    console.log("nocardsfound ehhehehehe");
+    return null;
+  }
+  console.log(allCards);
   for (var m = 0; m < allCards.length; m++) {
     var cardDeltaObj = allCards[m].priceChangeDeltaValueHistory;
     var j;

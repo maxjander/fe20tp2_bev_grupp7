@@ -23,21 +23,32 @@ import ApiFetch from "../ApiFetch";
 */
 
 const HomePage = () => {
-  const cardContext = useContext(CardContext);
-  const allCards = cardContext.cards;
-  const linG = LinDat();
-  console.log(allCards);
-
+  // const cardContext = useContext(CardContext);
+  // const allCards = cardContext.cards;
+  // const linG = LinDat(allCards);
+  // console.log(allCards);
+  const [data, setData] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setData(true);
+    }, 500);
+  }, []);
   return (
-    <StyledHomeComponent>
-      <div>
-        {allCards[0] && <LineGraph data={linG} />}
-        <StyledInventoryHeader>Inventory</StyledInventoryHeader>
-        <Cards />
+    <CardContext.Consumer>
+      {(context) => (
+        <StyledHomeComponent>
+          <div>
+            {context.cards[0] && (
+              <LineGraph dummy={data} data={LinDat(context.cards)} />
+            )}
+            <StyledInventoryHeader>Inventory</StyledInventoryHeader>
+            <Cards />
 
-        {/* <ApiFetch /> */}
-      </div>
-    </StyledHomeComponent>
+            {/* <ApiFetch /> */}
+          </div>
+        </StyledHomeComponent>
+      )}
+    </CardContext.Consumer>
   );
 };
 

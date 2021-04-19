@@ -3,12 +3,21 @@ import { Line } from "react-chartjs-2";
 import styled from "styled-components";
 import lineChartDat from "../XD/index";
 
-import { CardContext } from "../CardContext";
+// import { CardContext } from "../CardContext";
+
+const StyledWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
 
 const LineGraph = (props) => {
-  const cardContext = useContext(CardContext);
-  const allCards = cardContext.cards;
-  console.log(allCards);
+  // const cardContext = useContext(CardContext);
+  // const allCards = cardContext.cards;
+  console.log(props);
 
   if (!props.data) {
     return <></>;
@@ -41,14 +50,6 @@ const LineGraph = (props) => {
 
 export default LineGraph;
 
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
 /*
 const LineGraph = () => {
   return (
