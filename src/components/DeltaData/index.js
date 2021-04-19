@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { CardContext } from "../CardContext";
+//import { useContext } from "react";
+//import { CardContext } from "../CardContext";
 
 const LinDat = (allCards) => {
   //   const cardContext = useContext(CardContext);

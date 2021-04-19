@@ -2,12 +2,12 @@ import React, { useState, createContext, useEffect, useContext } from "react";
 import { AuthUserContext } from "../Session";
 import { withFirebase } from "../Firebase";
 
-export const CardContext = createContext({});
+export const CardContext = createContext({users: false, cards: false});
 
 const CardContextProvider = (props) => {
   const [users, setUsers] = useState(false);
   const [cards, setCards] = useState(false);
-  const authUser = useContext(AuthUserContext);
+  const authUser = props.authUser;
   console.log(authUser);
   useEffect(() => {
     props.firebase.cards().on("value", (snapshot) => {
@@ -25,6 +25,7 @@ const CardContextProvider = (props) => {
         setCards(filteredCards);
         //approves loading of page
       } else {
+        console.log("cardObject: " + cardObject + ", authuser: " + authUser)
       }
     });
 

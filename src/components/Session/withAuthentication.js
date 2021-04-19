@@ -2,6 +2,7 @@ import React from "react";
 
 import AuthUserContext from "./context";
 import { withFirebase } from "../Firebase";
+import CardContextProvider from "../CardContext";
 
 const withAuthentication = (Component) => {
   class WithAuthentication extends React.Component {
@@ -35,11 +36,21 @@ const withAuthentication = (Component) => {
     Takes a component, and its props, and wraps it within the AuthUserContext. 
 */
     render() {
+      if (this.state.authUser) {
+      return (
+        <CardContextProvider authUser={this.state.authUser}>
+        <AuthUserContext.Provider value={this.state.authUser}>
+          <Component {...this.props} />
+        </AuthUserContext.Provider>
+        </CardContextProvider>
+      );
+    } else {
       return (
         <AuthUserContext.Provider value={this.state.authUser}>
           <Component {...this.props} />
         </AuthUserContext.Provider>
-      );
+      )
+    }
     }
   }
 

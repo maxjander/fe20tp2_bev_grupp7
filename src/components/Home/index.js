@@ -27,19 +27,14 @@ const HomePage = () => {
   // const allCards = cardContext.cards;
   // const linG = LinDat(allCards);
   // console.log(allCards);
-  const [data, setData] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setData(true);
-    }, 500);
-  }, []);
+
   return (
     <CardContext.Consumer>
       {(context) => (
         <StyledHomeComponent>
           <div>
             {context.cards[0] && (
-              <LineGraph dummy={data} data={LinDat(context.cards)} />
+              <LineGraph data={LinDat(context.cards)} />
             )}
             <StyledInventoryHeader>Inventory</StyledInventoryHeader>
             <Cards />
