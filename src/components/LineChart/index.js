@@ -15,9 +15,9 @@ import lineChartDat from "../XD/index";
 // `;
 
 const LineGraph = (props) => {
+  
   // const cardContext = useContext(CardContext);
   // const allCards = cardContext.cards;
-  console.log(props);
 
   if (!props.data) {
     return <></>;
@@ -31,7 +31,7 @@ const LineGraph = (props) => {
           ),
           datasets: [
             {
-              label: "Value representation over time of total inventory",
+              label: props.label,
               data: Object.values(props.data),
               borderColor: "palevioletred",
             },

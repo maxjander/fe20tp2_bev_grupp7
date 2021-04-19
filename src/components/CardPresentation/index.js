@@ -35,7 +35,7 @@ const CardPresentation = ({ card }) => {
                   />
                   {card && (
                     <StyledGraph>
-                      <LineGraph data={card.priceChangeDeltaValueHistory} />
+                      <LineGraph data={card.priceChangeDeltaValueHistory} label={'Hej'} />
                     </StyledGraph>
                   )}
                 </StyledCardImageAndGraph>

@@ -18,6 +18,7 @@ import Slider from "../Slider";
 import ApiFetch from "../ApiFetch";
 //only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
+
 /*
   HomePage
   functional component that renders card component
@@ -50,7 +51,7 @@ const HomePage = () => {
             <StyledStyledGraphContainer>
               <StyledGraphContainer>
                 {context.cards[0] && (
-                  <LineGraph data={LinDat(context.cards, rangeValue)} />
+                  <LineGraph data={LinDat(context.cards, rangeValue)} label={'hej2'} />
                 )}
               </StyledGraphContainer>
             </StyledStyledGraphContainer>
@@ -119,9 +120,16 @@ const CardsBase = (props) => {
           ...cardObject[key],
           uid: key,
         }));
-
+        const cardsWithImages = cardList.map(card => {
+          const tempCardObject = {...card}
+          let allDataCard = allData.data.find(item => Number(item.id) === Number(card.cardId))
+          //console.log(card.id)
+          //console.log(allDataCard)
+          tempCardObject.image = allDataCard['card_images'][0].image_url
+          return tempCardObject
+        })
         //Set CardList to state
-        setCards(cardList);
+        setCards(cardsWithImages);
         //approves loading of page
         setLoading(false);
       } else {
@@ -199,7 +207,7 @@ const CardsBase = (props) => {
           marketPrice: {
             marketPriceDateAdded: setPrice,
           },
-          priceChangeDeltaValueHistory: [{ [0]: 0 }],
+          priceChangeDeltaValueHistory: { [Date.now()]: 0 },
           userId: authUser.uid,
           createdAt: props.firebase.serverValue.TIMESTAMP,
         })
@@ -529,6 +537,7 @@ const CardList = ({
                     handleCardPresentationToggleModal={
                       handleCardPresentationToggleModal
                     }
+                    image={card.image}
                   />
                 )
             )}
@@ -548,6 +557,7 @@ const CardItem = ({
   authUser,
   setClickedCard,
   handleCardPresentationToggleModal,
+  image
 }) => {
   const [apiCard, setApiCard] = useState(null);
   const [editMode, setEditMode] = useState(false);
@@ -605,6 +615,7 @@ const CardItem = ({
             onChange={onChangeEditCardName}
             readOnly
           />
+          
           <StyledSelect
             type="text"
             value={editCard_sets}
@@ -654,7 +665,7 @@ const CardItem = ({
             <StyledCardTitle>
               <strong>{card.cardName}</strong>
             </StyledCardTitle>
-
+            <img src={image} />
             <StyledCardSpecs>{card.cardSet.set_code}</StyledCardSpecs>
             <StyledCardSpecs>
               <em>{card.cardSet.set_rarity_code}</em>
