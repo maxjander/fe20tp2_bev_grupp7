@@ -23,21 +23,27 @@ import ApiFetch from "../ApiFetch";
 */
 
 const HomePage = () => {
-  const cardContext = useContext(CardContext);
-  const allCards = cardContext.cards;
-  const linG = LinDat();
-  console.log(allCards);
+  // const cardContext = useContext(CardContext);
+  // const allCards = cardContext.cards;
+  // const linG = LinDat(allCards);
+  // console.log(allCards);
 
   return (
-    <StyledHomeComponent>
-      <div>
-        {allCards[0] && <LineGraph data={linG} />}
-        <StyledInventoryHeader>Inventory</StyledInventoryHeader>
-        <Cards />
+    <CardContext.Consumer>
+      {(context) => (
+        <StyledHomeComponent>
+          <div>
+            {context.cards[0] && (
+              <LineGraph data={LinDat(context.cards)} />
+            )}
+            <StyledInventoryHeader>Inventory</StyledInventoryHeader>
+            <Cards />
 
-        {/* <ApiFetch /> */}
-      </div>
-    </StyledHomeComponent>
+            {/* <ApiFetch /> */}
+          </div>
+        </StyledHomeComponent>
+      )}
+    </CardContext.Consumer>
   );
 };
 
@@ -235,10 +241,7 @@ const CardsBase = (props) => {
     setCardName(cardNameFromAutoComplete);
     setCardSet("");
   };
-  const doesGridExist = document.getElementsByClassName("display-grid");
-  const doesRowExist = document.getElementsByClassName("display-row");
-  console.log(doesGridExist);
-  console.log(doesRowExist);
+
   return (
     <AuthUserContext.Consumer>
       {(authUser) => (
@@ -249,7 +252,7 @@ const CardsBase = (props) => {
             <button type="button" onClick={handleToggleModal}>
               Add Card
             </button>
-            {doesGridExist.length != doesRowExist.length ? (
+            {toggleGridView ? (
               <button onClick={handleToggleGridView}>
                 <BsFillGridFill />
               </button>

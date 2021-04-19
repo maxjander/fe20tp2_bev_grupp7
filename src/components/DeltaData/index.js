@@ -1,16 +1,20 @@
-import { useContext } from "react";
-import { CardContext } from "../CardContext";
+//import { useContext } from "react";
+//import { CardContext } from "../CardContext";
 
-const LinDat = () => {
-  const cardContext = useContext(CardContext);
-  const allCards = cardContext.cards;
-
+const LinDat = (allCards) => {
+  //   const cardContext = useContext(CardContext);
+  //   const allCards = cardContext.cards;
+  //   console.log(cardContext);
   var m;
   var n;
   var sumObj = {};
   var allDates = [];
   var allPrices = [];
-
+  if (!allCards) {
+    console.log("nocardsfound ehhehehehe");
+    return null;
+  }
+  console.log(allCards);
   for (var m = 0; m < allCards.length; m++) {
     var cardDeltaObj = allCards[m].priceChangeDeltaValueHistory;
     var j;
@@ -33,14 +37,14 @@ const LinDat = () => {
     }
     allDates.sort();
   }
-
+  // 7
   if (allDates.length > 7) {
     var revAllDates = allDates.reverse();
     var revAllPrices = allPrices.reverse();
 
     var holdDates = [];
     var holdPrices = [];
-
+    // <= 6
     for (l = 0; l <= 6; l++) {
       holdDates.push(revAllDates[l]);
       holdPrices.push(revAllPrices[l]);
