@@ -33,9 +33,12 @@ const HomePage = () => {
       {(context) => (
         <StyledHomeComponent>
           <div>
-            {context.cards[0] && (
-              <LineGraph data={LinDat(context.cards)} />
-            )}
+            <StyledStyledGraphContainer>
+              <StyledGraphContainer>
+                {context.cards[0] && <LineGraph data={LinDat(context.cards)} />}
+              </StyledGraphContainer>
+            </StyledStyledGraphContainer>
+
             <StyledInventoryHeader>Inventory</StyledInventoryHeader>
             <Cards />
 
@@ -248,20 +251,18 @@ const CardsBase = (props) => {
         <>
           <LineGraph />
           {/* {cards ? <PortfolioGraph cards={cards} authUser={authUser} /> : null} */}
-          <StyledAddCardAndGridButton>
-            <button type="button" onClick={handleToggleModal}>
-              Add Card
-            </button>
+          <StyledAddCardAndGridButtonContainer>
+            <StyledButton onClick={handleToggleModal}>Add Card</StyledButton>
             {toggleGridView ? (
-              <button onClick={handleToggleGridView}>
+              <StyledButton onClick={handleToggleGridView}>
                 <BsFillGridFill />
-              </button>
+              </StyledButton>
             ) : (
-              <button onClick={handleToggleGridView}>
+              <StyledButton onClick={handleToggleGridView}>
                 <CgRowFirst />
-              </button>
+              </StyledButton>
             )}
-          </StyledAddCardAndGridButton>
+          </StyledAddCardAndGridButtonContainer>
 
           {loading && <div>Loading.2..</div>}
           {/*messages*/}
@@ -362,7 +363,9 @@ const CardsBase = (props) => {
                   />
                 )}
 
-                {buyPoint && <button type="submit">Add Card</button>}
+                {buyPoint && (
+                  <StyledButton type="submit">Add Card</StyledButton>
+                )}
               </FlexForm>
             </AddCardModal>
           </StyledModal>
@@ -419,7 +422,9 @@ const CardPresentationModal = ({
       <section className="modal-main" ref={presentationNode}>
         {children}
         <br />
-        <button onClick={handleCardPresentationToggleModal}>Close</button>
+        <StyledButton onClick={handleCardPresentationToggleModal}>
+          Close
+        </StyledButton>
       </section>
     </div>
   );
@@ -461,7 +466,7 @@ const AddCardModal = ({ handleToggleModal, toggleModal, children }) => {
       <section className="modal-main" ref={node}>
         {children}
         <br />
-        <button onClick={handleToggleModal}>Close</button>
+        <StyledButton onClick={handleToggleModal}>Close</StyledButton>
       </section>
     </div>
   );
@@ -614,8 +619,8 @@ const CardItem = ({
             ))}
           </StyledSelect>
           <span>
-            <button onClick={onSaveEditCard}>Save</button>
-            <button onClick={onToggleEditMode}>Reset</button>
+            <StyledButton onClick={onSaveEditCard}>Save</StyledButton>
+            <StyledButton onClick={onToggleEditMode}>Reset</StyledButton>
           </span>
         </FlexForm>
       ) : (
@@ -629,15 +634,15 @@ const CardItem = ({
           >
             {/* {card.userId} */}
             <span onClick={handleCardPresentationToggleModal}>
-              <div className="card-title">
+              <StyledCardTitle>
                 <strong>{card.cardName}</strong>
-              </div>
+              </StyledCardTitle>
 
-              <div className="card-specs">{card.cardSet.set_code}</div>
-              <div className="card-specs">
+              <StyledCardSpecs>{card.cardSet.set_code}</StyledCardSpecs>
+              <StyledCardSpecs>
                 <em>{card.cardSet.set_rarity_code}</em>
-              </div>
-              <div className="card-specs">{card.cardCondition}</div>
+              </StyledCardSpecs>
+              <StyledCardSpecs>{card.cardCondition}</StyledCardSpecs>
 
               {card.editedAt && (
                 <span
@@ -650,17 +655,17 @@ const CardItem = ({
                 </span>
               )}
             </span>
-            <StyledEditAndDeleteButton>
-              <button className="card-buttons" onClick={onToggleEditMode}>
+            <StyledEditAndDeleteButtonContainer>
+              <StyledButton className="card-buttons" onClick={onToggleEditMode}>
                 Edit
-              </button>
-              <button
+              </StyledButton>
+              <StyledButton
                 className="card-buttons"
                 onClick={() => onRemoveCard(card.uid, authUser)}
               >
                 Delete
-              </button>
-            </StyledEditAndDeleteButton>
+              </StyledButton>
+            </StyledEditAndDeleteButtonContainer>
           </div>
         </li>
       )}
@@ -678,44 +683,37 @@ export default compose(withAuthorization(condition))(HomePage);
 const StyledHomeComponent = styled.div`
   display: flex;
   justify-content: center;
+`;
 
-  button {
-    position: relative;
-    display: block;
-    margin: 2px;
-    width: 120px;
-    height: 26px;
-    border-radius: 18px;
-    background-color: #969696;
-    border: solid 1px transparent;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 450;
-    cursor: pointer;
+const StyledCardSpecs = styled.div`
+  color: #000000;
+`;
+
+const StyledCardTitle = styled.div`
+  color: #000000;
+  font-size: 20px;
+  margin: 0px;
+  align-self: center;
+`;
+
+const StyledButton = styled.button`
+  position: relative;
+  display: block;
+  margin: 2px;
+  width: 120px;
+  height: 26px;
+  border-radius: 18px;
+  background-color: #969696;
+  border: solid 1px transparent;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 450;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    background-color: #4d4d4d;
+    border-color: #fff;
     transition: all 0.1s ease-in-out;
-    &:hover {
-      background-color: #4d4d4d;
-      border-color: #fff;
-      transition: all 0.1s ease-in-out;
-    }
-  }
-
-  .card-buttons {
-    width: auto;
-    margin-top: 4px;
-    margin-bottom: 0px;
-    align-self: center;
-    padding: 0 15px;
-  }
-
-  .card-title {
-    color: #000000;
-    font-size: 20px;
-    margin: 0px;
-    align-self: center;
-  }
-  .card-specs {
-    color: #000000;
   }
 `;
 
@@ -789,14 +787,15 @@ const StyledCardContainer = styled.div`
   display: flex;
   z-index: 0;
   justify-content: center;
-  max-width: 1000px;
+  /* max-width: 1000px; */
+  flex-wrap: wrap;
 
   .card-list {
     display: flex;
     justify-content: space-around;
     list-style: none;
     flex-wrap: wrap;
-    width: 100vh;
+    width: 100%;
   }
   /* display block when row */
   .single-card {
@@ -883,13 +882,18 @@ const StyledCardContainer = styled.div`
   }
 `;
 
-const StyledEditAndDeleteButton = styled.div`
+const StyledEditAndDeleteButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  width: auto;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  align-self: center;
+  padding: 0 15px;
 `;
 
-const StyledAddCardAndGridButton = styled.div`
+const StyledAddCardAndGridButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -901,4 +905,18 @@ const StyledAddCardAndGridButton = styled.div`
 const StyledInventoryHeader = styled.h1`
   font-size: 24px;
   text-align: center;
+`;
+
+const StyledStyledGraphContainer = styled.div`
+  display: flex;
+  /* max-width: 99%; */
+  justify-content: center;
+`;
+
+const StyledGraphContainer = styled.div`
+  display: flex;
+  width: 99%;
+  @media screen and (min-width: 1000px) {
+    max-width: 999px;
+  }
 `;

@@ -5,14 +5,14 @@ import lineChartDat from "../XD/index";
 
 // import { CardContext } from "../CardContext";
 
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
+// const StyledWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   max-width: 960px;
+//   height: 100%;
+// `;
 
 const LineGraph = (props) => {
   // const cardContext = useContext(CardContext);
@@ -38,7 +38,7 @@ const LineGraph = (props) => {
           ],
         }}
         // height={100}
-        // width={600}
+        // max-width={960}
         options={{
           maintainAspectRatio: true,
         }}
