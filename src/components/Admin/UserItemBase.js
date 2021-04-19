@@ -27,7 +27,7 @@ const UserItemBase = (props) => {
     });
   }, [user, props.firebase, props.match.params.id]);
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <div>

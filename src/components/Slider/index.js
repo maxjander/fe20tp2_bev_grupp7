@@ -18,7 +18,7 @@ const Slider = (props) => {
         value={value}
         onChange={handleChange(max)}
       />
-      {value}
+      {/* {value} */}
     </div>
   );
 };

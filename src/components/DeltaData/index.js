@@ -1,7 +1,7 @@
 //import { useContext } from "react";
 //import { CardContext } from "../CardContext";
 
-const LinDat = (allCards,donk) => {
+const LinDat = (allCards, donk) => {
   //   const cardContext = useContext(CardContext);
   //   const allCards = cardContext.cards;
   //   console.log(cardContext);
@@ -11,10 +11,10 @@ const LinDat = (allCards,donk) => {
   var allDates = [];
   var allPrices = [];
   if (!allCards) {
-    console.log("nocardsfound ehhehehehe");
+    // console.log("nocardsfound ehhehehehe");
     return null;
   }
-  console.log(allCards);
+  // console.log(allCards);
   for (var m = 0; m < allCards.length; m++) {
     var cardDeltaObj = allCards[m].priceChangeDeltaValueHistory;
     var j;
@@ -45,7 +45,7 @@ const LinDat = (allCards,donk) => {
     var holdDates = [];
     var holdPrices = [];
     // <= 6
-    for (l = 0; l <= donk-1; l++) {
+    for (l = 0; l <= donk - 1; l++) {
       holdDates.push(revAllDates[l]);
       holdPrices.push(revAllPrices[l]);
     }
@@ -57,8 +57,8 @@ const LinDat = (allCards,donk) => {
       var numDates = Number(holdDates[n]);
 
       sumObj = Object.assign({ ...sumObj }, { [numDates]: holdPrices[n] });
-      console.log(holdDates);
-      console.log(holdPrices);
+      // console.log(holdDates);
+      // console.log(holdPrices);
       // console.log(sumObj);
     }
   } else {
@@ -70,7 +70,7 @@ const LinDat = (allCards,donk) => {
       // console.log(sumObj);
     }
   }
-  console.log(donk);
+  // console.log(donk);
   return sumObj;
 };
 export default LinDat;

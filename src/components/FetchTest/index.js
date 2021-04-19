@@ -9,7 +9,7 @@ export default class FetchRandCard extends React.Component {
     const url = "https://db.ygoprodeck.com/api/v7/cardinfo.php";
     const response = await fetch(url);
     const cardData = await response.json();
-    console.log(cardData);
+    // console.log(cardData);
     this.setState({ loading: false });
   }
 
