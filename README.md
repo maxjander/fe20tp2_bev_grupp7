@@ -5,6 +5,7 @@ A portfolio tracker for the card game 'Yugioh'.
   - [Table of Contents](#table-of-contents)
   - [Team Members:](#team-members)
   - [Dependecies](#dependecies)
+  - [Description](#description)
 <a name="team-members"></a>
  ## Team Members:
 * [Raulf Haidari](https://github.com/Raulf02)
