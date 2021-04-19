@@ -1,7 +1,7 @@
 //import { useContext } from "react";
 //import { CardContext } from "../CardContext";
 
-const LinDat = (allCards) => {
+const LinDat = (allCards,donk) => {
   //   const cardContext = useContext(CardContext);
   //   const allCards = cardContext.cards;
   //   console.log(cardContext);
@@ -38,14 +38,14 @@ const LinDat = (allCards) => {
     allDates.sort();
   }
   // 7
-  if (allDates.length > 7) {
+  if (allDates.length > donk) {
     var revAllDates = allDates.reverse();
     var revAllPrices = allPrices.reverse();
 
     var holdDates = [];
     var holdPrices = [];
     // <= 6
-    for (l = 0; l <= 6; l++) {
+    for (l = 0; l <= donk-1; l++) {
       holdDates.push(revAllDates[l]);
       holdPrices.push(revAllPrices[l]);
     }
@@ -70,7 +70,7 @@ const LinDat = (allCards) => {
       // console.log(sumObj);
     }
   }
-
+  console.log(donk);
   return sumObj;
 };
 export default LinDat;

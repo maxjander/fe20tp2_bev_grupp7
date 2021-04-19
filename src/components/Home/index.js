@@ -14,6 +14,7 @@ import { CardContext } from "../CardContext";
 import LinDat from "../DeltaData";
 import { BsFillGridFill } from "react-icons/bs";
 import { CgRowFirst } from "react-icons/cg";
+import Slider from "../Slider";
 import ApiFetch from "../ApiFetch";
 //only run this ^ when you want to push delta data into firebase, make sure only one person is running it so you don't duplicate data.    */
 
@@ -28,14 +29,28 @@ const HomePage = () => {
   // const linG = LinDat(allCards);
   // console.log(allCards);
 
+  const [rangeValue, setRangeValue] = useState(10);
+  const onChangeSlider = e => 
+  {
+      setRangeValue(parseInt(e.target.value, 10));
+  }
+
   return (
     <CardContext.Consumer>
       {(context) => (
         <StyledHomeComponent>
           <div>
+          <Slider
+          min={0}
+          max={14}
+          step={1}
+          defaultLength={rangeValue}
+          value={rangeValue}
+          onChangeValue={onChangeSlider}
+          />
             <StyledStyledGraphContainer>
               <StyledGraphContainer>
-                {context.cards[0] && <LineGraph data={LinDat(context.cards)} />}
+                {context.cards[0] && <LineGraph data={LinDat(context.cards,rangeValue)} />}
               </StyledGraphContainer>
             </StyledStyledGraphContainer>
 
@@ -46,6 +61,7 @@ const HomePage = () => {
           </div>
         </StyledHomeComponent>
       )}
+
     </CardContext.Consumer>
   );
 };
