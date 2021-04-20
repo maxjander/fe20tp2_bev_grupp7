@@ -10,12 +10,14 @@ const ListItemRender = ({ condition, card, image }) =>
 
 const ListItemList = ({ card }) => (
   <>
-    <StyledCardTitleList children={card.cardName} />
-    <StyledUtilDiv>
-    <StyledCardSpecsCardSet children={card.cardSet.set_code} />
-    <StyledCardSpecsRarityList children={card.cardSet.set_rarity_code} />
-    <StyledCardSpecsConditionList children={card.cardCondition} />
-    </StyledUtilDiv>
+    <StyledContainerInfoList>
+      <StyledCardTitleList children={card.cardName} />
+      <StyledUtilDiv>
+        <StyledCardSpecsCardSet children={card.cardSet.set_code} />
+        <StyledCardSpecsRarityList children={card.cardSet.set_rarity_code} />
+        <StyledCardSpecsConditionList children={card.cardCondition} />
+      </StyledUtilDiv>
+    </StyledContainerInfoList>
   </>
 );
 const ListItemGrid = ({ card, image }) => (
@@ -30,7 +32,7 @@ const ListItemGrid = ({ card, image }) => (
 export default ListItemRender;
 
 const StyledCardSpecs = styled.div`
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   color: #000000;
   justify-content: flex-start;
@@ -38,36 +40,46 @@ const StyledCardSpecs = styled.div`
 `;
 
 const StyledCardSpecsCardSet = styled(StyledCardSpecs)`
-display:flex;
-  width: 40%;
-  justify-content: flex-end;
+  display: flex;
+  /* width: 40%; */
+  justify-content: flex-end !important;
+  @media (max-width: 500px) {
+    justify-content: flex-start !important;
+  }
   ${breakpoints("font-size", "px", [
-    { 1200: "17" },
-    { 800: "16" },
+    // { 1200: "17" },
+    // { 800: "16" },
     { 700: "13" },
     { 650: "12" },
     { 600: "10" },
   ])}
 `;
 const StyledCardSpecsRarityList = styled(StyledCardSpecs)`
-display:flex;
-  width: 20%;
-  justify-content: flex-end;
+  display: flex;
+  /* width: 20%; */
+  justify-content: flex-end !important;
+  @media (max-width: 500px) {
+    justify-content: flex-start !important;
+  }
   ${breakpoints("font-size", "px", [
-    { 1200: "17" },
-    { 800: "16" },
+    // { 1200: "17" },
+    // { 800: "16" },
     { 700: "13" },
     { 650: "12" },
     { 600: "10" },
   ])}
 `;
 const StyledCardSpecsConditionList = styled(StyledCardSpecs)`
-display:flex;
-  width: 40%;
-  justify-content: flex-end;
+  display: flex;
+  /* width: 40%; */
+  justify-content: flex-end !important;
+  @media (max-width: 500px) {
+    justify-content: flex-start !important;
+    flex-grow: 2;
+  }
   ${breakpoints("font-size", "px", [
-    { 1200: "17" },
-    { 800: "16" },
+    // { 1200: "17" },
+    // { 800: "16" },
     { 700: "13" },
     { 650: "12" },
     { 600: "10" },
@@ -75,7 +87,6 @@ display:flex;
 `;
 
 const StyledCardSpecsNameGrid = styled(StyledCardSpecs)`
-
   font-weight: bold;
 `;
 
@@ -89,27 +100,34 @@ const StyledCardTitle = styled.div`
 `;
 
 const StyledCardTitleList = styled(StyledCardTitle)`
-flex-grow:3;
-@media (max-width: 700px) {
-
-  width:100%};
+  display: flex;
+  /* width: 80%; */
+  @media (max-width: 500px) {
+    width: 100%;
+    justify-content: flex-start;
+  }
   ${breakpoints("font-size", "px", [
-    { 1200: "17" },
-    { 800: "16" },
+    // { 1200: "17" },
+    // { 800: "16" },
     { 700: "15" },
     { 650: "14" },
     { 600: "13" },
-    
   ])}
-
-
 `;
 
 const StyledUtilDiv = styled.div`
-display:flex;
-justify-content:center;
-flex-grow:2;
-flex-direction:row;
+  display: flex;
+  justify-content: center;
+  /* flex-grow: 2; */
+  flex-direction: row;
+`;
 
-`
-
+const StyledContainerInfoList = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
