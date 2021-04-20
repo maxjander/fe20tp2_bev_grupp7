@@ -33,14 +33,14 @@ const PasswordForgetFormBase = (props) => {
   return (
     <FlexForm onSubmit={onSubmit}>
       <StyledInput
-        name='email'
+        name="email"
         value={email}
         onChange={onChange}
-        type='text'
-        placeholder='Email Address'
-        autoComplete='current-password'
+        type="text"
+        placeholder="Email Address"
+        autoComplete="current-password"
       />
-      <button disabled={isInvalid} type='submit'>
+      <button disabled={isInvalid} type="submit">
         Reset My Password
       </button>
 
@@ -51,13 +51,17 @@ const PasswordForgetFormBase = (props) => {
 
 const PasswordForgetLink = () => (
   <p>
-    <Link to={ROUTES.PASSWORD_FORGET}>Forgot Password?</Link>
+    <StyledLink to={ROUTES.PASSWORD_FORGET}>Forgot Password?</StyledLink>
   </p>
 );
 
 export default PasswordForgetPage;
 const PasswordForgetForm = withFirebase(PasswordForgetFormBase);
 export { PasswordForgetForm, PasswordForgetLink };
+
+const StyledLink = styled(Link)`
+  color: hotpink;
+`;
 
 const FlexForm = styled.form`
   display: flex;
