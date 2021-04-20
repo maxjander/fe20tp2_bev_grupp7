@@ -32,7 +32,7 @@ import {
 */
 
 const HomePage = () => {
-  const [rangeValue, setRangeValue] = useState(2);
+  const [rangeValue, setRangeValue] = useState(1);
   const onChangeSlider = (e) => {
     setRangeValue(parseInt(e.target.value, 10));
   };
@@ -42,14 +42,14 @@ const HomePage = () => {
       {(context) => (
         <StyledHomeComponent>
           <div>
-            <Slider
-              min={0}
-              max={14}
+           {context.cards[0] && <Slider
+              min={1}
+              max={localStorage.getItem("totalDays")}
               step={1}
               defaultLength={rangeValue}
               value={rangeValue}
               onChangeValue={onChangeSlider}
-            />
+            />}
             <StyledStyledGraphContainer>
               <StyledGraphContainer>
                 {context.cards[0] && (

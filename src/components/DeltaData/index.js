@@ -31,19 +31,14 @@ const LinDat = (allCards, donk) => {
   }
 
   if (allDates.length > donk) {
-    var revAllDates = allDates.reverse();
-    var revAllPrices = allPrices.reverse();
 
     var holdDates = [];
     var holdPrices = [];
 
     for (l = 0; l <= donk - 1; l++) {
-      holdDates.push(revAllDates[l]);
-      holdPrices.push(revAllPrices[l]);
+      holdDates.push(allDates[l]);
+      holdPrices.push(allPrices[l]);
     }
-
-    holdDates.reverse();
-    holdPrices.reverse();
 
     for (n = 0; n < holdDates.length; n++) {
       var numDates = Number(holdDates[n]);
@@ -55,7 +50,10 @@ const LinDat = (allCards, donk) => {
       sumObj = Object.assign({ ...sumObj }, { [numDates]: allPrices[n] });
     }
   }
-
+  var compDates = Object.keys(sumObj);
+  localStorage.setItem("startDate", new Date(Number(compDates[0])).toLocaleDateString());
+  localStorage.setItem("endDate",new Date(Number(compDates[compDates.length -1])).toLocaleDateString());
+  localStorage.setItem("totalDays", allDates.length);
   return sumObj;
 };
 export default LinDat;
