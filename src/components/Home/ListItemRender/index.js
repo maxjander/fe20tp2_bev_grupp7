@@ -72,7 +72,7 @@ const ListItemGrid = ({
   <>
     <StyledGridItem>
       <span onClick={handleCardPresentationToggleModal}>
-        <img src={image} width="100%" height="auto" alt={card.cardName} />
+        <img src={image} width='100%' height='auto' alt={card.cardName} />
         <StyledCardSpecsNameGrid children={card.cardName} />
         <StyledCardSpecs children={card.cardSet.set_code} />
         <StyledCardSpecs children={card.cardSet.set_rarity_code} />
@@ -171,8 +171,7 @@ const StyledCardTitleList = styled(StyledCardTitle)`
 `;
 
 const StyledUtilDiv = styled.div`
-  /* width: 100%; */
-  width: auto;
+  width: 80%;
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
@@ -186,30 +185,23 @@ const StyledContainerInfoList = styled.div`
 `;
 
 const StyledListItem = styled.li`
-  display: flex;
-  margin-top: 1px !important;
   width: 100%;
   flex-wrap: wrap;
   flex-direction: column;
   border-bottom: 1px solid black;
   margin-bottom: 5px;
   padding-bottom: 5px;
+  cursor: pointer;
 `;
 
 const StyledGridItem = styled.li`
   display: flex;
-  margin-top: 1px !important;
   /* width: 100%; */
   flex-wrap: wrap;
   flex-direction: column;
-  /* border-bottom: 1px solid black; */
-  /* margin-bottom: 5px; */
-  /* padding-bottom: 5px; */
-  /* display: flex; */
-  /* flex-direction: column; */
   justify-content: space-between;
   width: 250px;
-  /* height: 270px; */
+
   border: 1px solid;
   background-color: #d9d9d9;
   border-color: rgba(0, 0, 0, 0.3);
@@ -220,6 +212,6 @@ const StyledGridItem = styled.li`
   transition: all 0.1s ease-in-out;
 
   &:hover {
-    box-shadow: 1px 1px 16px -6px #000000;
+    box-shadow: 1px 1px 16px -6px black;
   }
 `;
