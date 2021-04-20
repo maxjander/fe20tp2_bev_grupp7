@@ -11,9 +11,15 @@ import * as ROUTES from "../../constants/routes";
 const SignInPage = () => (
   <>
     <StyledSignInWrapper>
-      <StyledWelcome></StyledWelcome>
+      <StyledWelcomeContainer>
+        <h1>The leading platform for tracking your TCG investments</h1>
+        <StyledNodeContainer>
+          <h3>Detailed info</h3>
+          <h3>Become a better investor</h3>
+          <h3>Easy to use</h3>
+        </StyledNodeContainer>
+      </StyledWelcomeContainer>
       <StyledContainer>
-        <h1>SignIn</h1>
         <SignInForm />
         <PasswordForgetLink />
         <SignUpLink />
@@ -76,9 +82,9 @@ class SignInFormBase extends Component {
           type="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit">
+        <StyledButton disabled={isInvalid} type="submit">
           Sign In
-        </button>
+        </StyledButton>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -94,37 +100,45 @@ export { SignInForm };
 
 const StyledSignInWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `;
 
-const StyledWelcome = styled.div`
+const StyledNodeContainer = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
+const StyledWelcomeContainer = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 `;
 
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center !important;
+`;
 
-  button {
-    position: relative;
-    display: block;
-    margin: 2px;
-    width: 120px;
-    height: 26px;
-    border-radius: 18px;
-    background-color: #1c89ff;
-    border: solid 1px transparent;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 300;
-    cursor: pointer;
+const StyledButton = styled.button`
+  position: relative;
+  display: block;
+  margin: 2px;
+  width: 120px;
+  height: 26px;
+  border-radius: 18px;
+  background-color: #1c89ff;
+  border: solid 1px transparent;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  &:hover {
+    background-color: #39375b;
+    border-color: #fff;
     transition: all 0.1s ease-in-out;
-    &:hover {
-      background-color: #39375b;
-      border-color: #fff;
-      transition: all 0.1s ease-in-out;
-    }
   }
 `;
 

@@ -59,13 +59,11 @@ const StyledCardContainer = styled.div`
     flex-wrap: wrap;
     list-style: none;
     width: 100%;
-    transition: 0.3s ease-in;
   }
 
   .display-list {
     list-style: none;
     width: 100%;
-    transition: 0.3s ease-in-out;
   }
 `;
 
