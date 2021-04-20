@@ -5,7 +5,7 @@ import { FaTimes, FaBars } from 'react-icons/fa'
 import SignOutButton from "../SignOut";
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
-
+import v2_pink from "./../../icons/v2_pink.png";
 import { AuthUserContext } from "../Session";
 import { breakpoints } from "../../constants/breakpoints.js";
 
@@ -39,7 +39,7 @@ const NavigationAuth = ({ authUser }) =>
         {click ? <FaTimes/> : <FaBars/>}
       </HumIcon>
     <NavUl className ="NavUl" click={click}>
-      <li className="logo">TCG Empire</li>
+      <li className="logo"><StyledImage src={v2_pink}/></li>
       {/* <li>
         <Link to={ROUTES.LANDING}>Landing</Link>
       </li> */}
@@ -147,7 +147,14 @@ display: none;
 }
 `;
 
+const StyledImage = styled.img`
+width: 120px;
+@media (max-width: 609px)
+{
+  display:none;
+}
 
+`
 
 
 
