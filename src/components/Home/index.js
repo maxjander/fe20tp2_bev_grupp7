@@ -359,7 +359,12 @@ export default compose(withAuthorization(condition))(HomePage);
 
 const StyledHomeComponent = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: center; 
+
+  @media (max-width: 800px) {
+    
+  }
+
 `;
 
 const StyledInventoryHeader = styled.h1`
@@ -376,6 +381,7 @@ const StyledStyledGraphContainer = styled.div`
 
 const StyledGraphContainer = styled.div`
   display: flex;
+  justify-content: center;
   width: 99%;
   @media screen and (min-width: 1000px) {
     max-width: 999px;

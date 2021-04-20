@@ -72,5 +72,6 @@ const StyledWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 80%;
-  height: 80%;
+  height: auto; 
 `;
+

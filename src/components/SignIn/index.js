@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import styled from "styled-components";
+import { FcViewDetails, FcStatistics, FcCheckmark } from 'react-icons/fc'
 
 import { SignUpLink } from "../SignUp";
 import { PasswordForgetLink } from "../PasswordForget";
@@ -13,11 +14,18 @@ const SignInPage = () => (
     <StyledSignInWrapper>
       <StyledWelcomeContainer>
         <h1>The leading platform for tracking your TCG investments</h1>
-        <StyledNodeContainer>
+        <StyleIcon>
+          <StyledFcViewDetails /> 
           <h3>Detailed info</h3>
+          </StyleIcon>
+          <StyleIcon>
+          <StyledFcStatistics />
           <h3>Become a better investor</h3>
+          </StyleIcon>
+          <StyleIcon>
+          <StyledCheckmark/> 
           <h3>Easy to use</h3>
-        </StyledNodeContainer>
+          </StyleIcon>
       </StyledWelcomeContainer>
       <StyledContainer>
         <SignInForm />
@@ -103,10 +111,31 @@ const StyledSignInWrapper = styled.div`
   flex-direction: column;
 `;
 
+const StyledCheckmark = styled(FcCheckmark)`
+font-size: 100px;
+`
+const StyledFcViewDetails = styled(FcViewDetails)`
+font-size: 100px;
+`
+const StyledFcStatistics = styled(FcStatistics)`
+font-size: 100px;
+`
+
+const StyleIcon = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+padding-top: 10px;
+`
+
 const StyledNodeContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 
 const StyledWelcomeContainer = styled.div`
@@ -119,6 +148,7 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center !important;
+  padding-top: 20px;
 `;
 
 const StyledButton = styled.button`
@@ -149,5 +179,5 @@ const StyledInput = styled.input`
   width: 220px;
   padding: 10px;
   margin: 10px 0px 10px 0px;
-  box-sizing: border-box;
+  box-sizing: border-box; 
 `;
