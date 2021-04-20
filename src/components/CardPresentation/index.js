@@ -61,10 +61,9 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledImage = styled.img`
-  flex-grow: 1;
   max-width: 30%;
   @media (max-width: 700px) {
-    max-width: 100%;
+    max-width: 80%;
   }
 `;
 

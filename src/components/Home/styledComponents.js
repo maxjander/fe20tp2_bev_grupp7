@@ -89,11 +89,16 @@ export const StyledUtilButtonContainer = styled.div`
 export const StyledModalMain = styled.section`
   position: fixed;
   background: white;
+  max-height: calc(100vh - 210px);
   width: 80vw;
   padding: 20px;
   top: 50%;
   left: 50%;
+  overflow-y: auto;
   transform: translate(-50%, -50%);
+  &.img {
+    width: 30%;
+  }
 `;
 
 export const StyledModal = styled.div`

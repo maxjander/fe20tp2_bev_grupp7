@@ -72,7 +72,7 @@ const ListItemGrid = ({
   <>
     <StyledGridItem>
       <span onClick={handleCardPresentationToggleModal}>
-        <img src={image} width='100%' height='auto' alt={card.cardName} />
+        <img src={image} width="100%" height="auto" alt={card.cardName} />
         <StyledCardSpecsNameGrid children={card.cardName} />
         <StyledCardSpecs children={card.cardSet.set_code} />
         <StyledCardSpecs children={card.cardSet.set_rarity_code} />
@@ -92,7 +92,14 @@ export default ListItemRender;
 const StyledInfoList = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
+  :nth-child(0) {
+    justify-content: flex-start !important;
+  }
+  :nth-child(1) {
+    background-color: flex-end;
+  }
   @media (max-width: 500px) {
     display: flex;
     flex-direction: column;
@@ -119,6 +126,7 @@ const StyledCardSpecsCardSet = styled(StyledCardSpecs)`
     { 600: "10" },
   ])}
 `;
+
 const StyledCardSpecsRarityList = styled(StyledCardSpecs)`
   display: flex;
   justify-content: flex-end !important;
@@ -131,6 +139,7 @@ const StyledCardSpecsRarityList = styled(StyledCardSpecs)`
     { 600: "10" },
   ])}
 `;
+
 const StyledCardSpecsConditionList = styled(StyledCardSpecs)`
   display: flex;
   justify-content: flex-end !important;
@@ -171,9 +180,9 @@ const StyledCardTitleList = styled(StyledCardTitle)`
 `;
 
 const StyledUtilDiv = styled.div`
-  width: 80%;
+  width: 40%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   flex-direction: row;
 `;
 
@@ -192,6 +201,7 @@ const StyledListItem = styled.li`
   margin-bottom: 5px;
   padding-bottom: 5px;
   cursor: pointer;
+  transition: all 0.1s ease-in-out;
 `;
 
 const StyledGridItem = styled.li`

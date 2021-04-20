@@ -14,7 +14,7 @@ const CardList = ({
   setClickedCard,
   handleCardPresentationToggleModal,
 }) => {
-  const showHideClassName = toggleGridView ? "display-grid" : "display-list";
+  const showHideClassName = toggleGridView ? "display-list" : "display-grid";
 
   return cards ? (
     <>
@@ -53,17 +53,19 @@ const CardList = ({
 export default CardList;
 
 const StyledCardContainer = styled.div`
-  .display-list {
+  .display-grid {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     list-style: none;
     width: 100%;
+    transition: 0.3s ease-in;
   }
 
-  .display-grid {
+  .display-list {
     list-style: none;
     width: 100%;
+    transition: 0.3s ease-in-out;
   }
 `;
 
