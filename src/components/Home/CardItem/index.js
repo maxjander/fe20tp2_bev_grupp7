@@ -10,8 +10,12 @@ import {
   StyledInput,
   StyledSelect,
   StyledEditAndDeleteButtonContainer,
+  StyledDeleteButton,
 } from "../styledComponents";
 import cardConditions from "../../../constants/cardConditions";
+
+import { BsTrash } from "react-icons/bs";
+import { AiFillEdit } from "react-icons/ai";
 
 const CardItem = ({
   card,
@@ -78,18 +82,19 @@ const CardItem = ({
       {editMode && apiCard ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type='text'
+            type="text"
             value={apiCard.name}
             onChange={onChangeEditCardName}
             readOnly
           />
 
           <StyledSelect
-            type='text'
+            type="text"
             value={editCard_sets}
             onChange={onChangeEditCardSet}
-            required='required'>
-            <option key='1' value={card.cardSet}>
+            required="required"
+          >
+            <option key="1" value={card.cardSet}>
               {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
             </option>
             -------
@@ -100,11 +105,12 @@ const CardItem = ({
             ))}
           </StyledSelect>
           <StyledSelect
-            type='text'
+            type="text"
             value={editCondition}
             onChange={onChangeEditCondition}
-            required='required'
-            placeholder='Condition'>
+            required="required"
+            placeholder="Condition"
+          >
             <option>What Condition is your card?</option>
             {cardConditions.map((item, idx) => (
               <option key={idx} value={item}>
@@ -121,10 +127,11 @@ const CardItem = ({
         //{message.userId} {message.text} //message.editedAt
 
         <StyledListItem
-          className='single-card'
+          className="single-card"
           onClick={() => {
             setClickedCard(card);
-          }}>
+          }}
+        >
           {/* {card.userId} */}
           <span onClick={handleCardPresentationToggleModal}>
             <ListItemRender
@@ -134,15 +141,14 @@ const CardItem = ({
             />
           </span>
           <StyledEditAndDeleteButtonContainer>
-            <StyledEditButton
-              className='card-buttons'
-              onClick={onToggleEditMode}
-            />
-            <StyledButton
-              className='card-buttons'
+            <StyledEditButton onClick={onToggleEditMode}>
+              <AiFillEdit />
+            </StyledEditButton>
+            <StyledDeleteButton
               onClick={() => onRemoveCard(card.uid, authUser)}
-              children='Delete'
-            />
+            >
+              <BsTrash />
+            </StyledDeleteButton>
           </StyledEditAndDeleteButtonContainer>
         </StyledListItem>
       )}

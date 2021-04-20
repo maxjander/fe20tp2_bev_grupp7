@@ -29,9 +29,19 @@ export const StyledButton = styled.button`
 `;
 
 export const StyledEditButton = styled(StyledButton)`
-  &:after {
-    content: "Edit";
-  }
+  display: flex;
+  width: auto;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledDeleteButton = styled(StyledButton)`
+  display: flex;
+  width: auto;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StyledInput = styled.input`
@@ -71,11 +81,11 @@ export const StyledAddCardAndGridButtonContainer = styled.div`
 export const StyledEditAndDeleteButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
   width: auto;
   margin-top: 4px;
   margin-bottom: 0px;
-  align-self: center;
+  /* align-self: center; */
   padding: 0 15px;
   @media (max-width: 800px) {
     flex-direction: row;
