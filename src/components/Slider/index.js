@@ -37,8 +37,8 @@ const Slider = (props) => {
         />
     </div>
     <SliderTextWrap>
-    <div>      Date Range: 
-      {" From: " + localStorage.getItem("startDate") +" To: " + localStorage.getItem("endDate") + " "+value + " day(s) back"}</div>
+    <div>
+      {" From: " + localStorage.getItem("startDate") +" To: " + localStorage.getItem("endDate") + " "+ (value - 1) + " day(s) back"}</div>
     </SliderTextWrap>
 
     </SliderWrap>

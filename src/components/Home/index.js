@@ -42,14 +42,6 @@ const HomePage = () => {
       {(context) => (
         <StyledHomeComponent>
           <div>
-           {context.cards[0] && <Slider
-              min={1}
-              max={localStorage.getItem("totalDays")}
-              step={1}
-              defaultLength={rangeValue}
-              value={rangeValue}
-              onChangeValue={onChangeSlider}
-            />}
             <StyledStyledGraphContainer>
               <StyledGraphContainer>
                 {context.cards[0] && (
@@ -58,9 +50,17 @@ const HomePage = () => {
                     label={"Total value of inventory"}
                   />
                 )}
+                
               </StyledGraphContainer>
             </StyledStyledGraphContainer>
-
+            {context.cards[0] && <Slider
+              min={1}
+              max={localStorage.getItem("totalDays")}
+              step={1}
+              defaultLength={rangeValue}
+              value={rangeValue}
+              onChangeValue={onChangeSlider}
+            />}
             <StyledInventoryHeader children='Inventory' />
             <Cards />
 
