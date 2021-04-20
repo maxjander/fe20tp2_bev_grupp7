@@ -1,27 +1,30 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
-import styled from 'styled-components';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
+import styled from "styled-components";
 
-import { SignUpLink } from '../SignUp';
-import { PasswordForgetLink } from '../PasswordForget';
-import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
+import { SignUpLink } from "../SignUp";
+import { PasswordForgetLink } from "../PasswordForget";
+import { withFirebase } from "../Firebase";
+import * as ROUTES from "../../constants/routes";
 
 const SignInPage = () => (
-  <div>
-    <StyledContainer>
-      <h1>SignIn</h1>
-      <SignInForm />
-      <PasswordForgetLink />
-      <SignUpLink />
-    </StyledContainer>
-  </div>
+  <>
+    <StyledSignInWrapper>
+      <StyledWelcome></StyledWelcome>
+      <StyledContainer>
+        <h1>SignIn</h1>
+        <SignInForm />
+        <PasswordForgetLink />
+        <SignUpLink />
+      </StyledContainer>
+    </StyledSignInWrapper>
+  </>
 );
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
+  email: "",
+  password: "",
   error: null,
 };
 
@@ -55,7 +58,7 @@ class SignInFormBase extends Component {
   render() {
     const { email, password, error } = this.state;
 
-    const isInvalid = password === '' || email === '';
+    const isInvalid = password === "" || email === "";
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -89,38 +92,46 @@ export default SignInPage;
 
 export { SignInForm };
 
+const StyledSignInWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const StyledWelcome = styled.div`
+  display: flex;
+`;
 
 const StyledContainer = styled.div`
-  display: flex; 
+  display: flex;
   flex-direction: column;
   justify-content: center;
 
-  button{
-  position: relative;
-  display: block;
-  margin: 2px;
-  width: 120px;
-  height: 26px;
-  border-radius: 18px;
-  background-color: #1c89ff;
-  border: solid 1px transparent;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 300;
-  cursor: pointer;
-  transition: all .1s ease-in-out;
+  button {
+    position: relative;
+    display: block;
+    margin: 2px;
+    width: 120px;
+    height: 26px;
+    border-radius: 18px;
+    background-color: #1c89ff;
+    border: solid 1px transparent;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
     &:hover {
-      background-color: #39375B;
+      background-color: #39375b;
       border-color: #fff;
-      transition: all .1s ease-in-out;
+      transition: all 0.1s ease-in-out;
     }
   }
-`
+`;
 
 const StyledInput = styled.input`
   border-radius: 8px;
-  border: 1px solid; 
-  border-color: rgba(0,0,0,0.3);
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.3);
   width: 220px;
   padding: 10px;
   margin: 10px 0px 10px 0px;
