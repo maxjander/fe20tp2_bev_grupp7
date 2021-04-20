@@ -88,6 +88,7 @@ const NavContainer = styled.div`
 const NavUl = styled.ul`
 background-color: #c0b9dd;
 display: flex;
+justify-content: flex-end;
 flex-direction: row;
 text-transform: uppercase;
 align-items: center;
@@ -95,11 +96,22 @@ margin: 0;
 padding: 10px;
 list-style: none;
 width: 100%;
-
+:nth-child(0)
+  {
+    transform: translate(-1000px);
+  }
+.logo{
+  justify-content: flex-end;
+  display: inline-block;
+  &:hover{
+    background-color: transparent;
+    cursor: default;
+  }
+}
 @media only screen and (max-width: 609px) {
     display: ${({click}) => (click ? 'flex' : 'none')};
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     .logo {
       margin-right: auto;
       flex-grow: 1;
@@ -109,6 +121,8 @@ width: 100%;
       }
     }
   }
+
+  
 
   li {
       padding: 10px 10px 10px 10px;
@@ -122,6 +136,8 @@ width: 100%;
       transition: ease-in 0.2s;
       &:hover {
         background-color: white;
+        background-size: 10px 10px;
+        cursor: pointer;
       }
     }
 
@@ -149,7 +165,7 @@ display: none;
 
 const StyledImage = styled.img`
 width: 140px;
-padding-left:20px;
+margin-right: auto;
 @media (max-width: 609px)
 {
   display:none;
