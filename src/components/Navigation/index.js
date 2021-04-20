@@ -138,9 +138,9 @@ display: none;
 @media only screen and (max-width: 609px) {
   display: flex;
   position: absolute;
-  color: #34ebc9;
-  left: 50.5%;
-  top: -2%;
+  color: #808080;
+  left: 51%;
+  top: -1%;
   right: 0;
   transform: translate(-100%, 60%);
   font-size: 1.8rem;
