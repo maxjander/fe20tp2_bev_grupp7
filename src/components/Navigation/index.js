@@ -35,7 +35,6 @@ const NavigationAuth = ({ authUser }) =>
 
   return(
   <NavContainer>
-<<<<<<< HEAD
           <HumIcon className="XD" onClick={handleClick}>
         {click ? <FaTimes/> : <FaBars/>}
       </HumIcon>
@@ -44,10 +43,6 @@ const NavigationAuth = ({ authUser }) =>
       {/* <li>
         <Link to={ROUTES.LANDING}>Landing</Link>
       </li> */}
-=======
-    <NavUl>
-      <li className='logo' NavLogo to="/">TCG Empire</li>
->>>>>>> main
       <li>
         <Link to={ROUTES.HOME}>Home</Link>
       </li>
@@ -135,13 +130,8 @@ width: 100%;
       color: black;
       text-decoration: none;
     }
-<<<<<<< HEAD
   
 `;
-=======
-  }
-`
->>>>>>> main
 
 const HumIcon = styled.div`
 display: none;
