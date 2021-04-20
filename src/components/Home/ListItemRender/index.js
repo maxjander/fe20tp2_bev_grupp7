@@ -29,18 +29,21 @@ export default ListItemRender;
 const StyledCardSpecs = styled.div`
   display: flex;
   color: #000000;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
 `;
 
 const StyledCardSpecsCardSet = styled(StyledCardSpecs)`
   width: 25%;
+  justify-content: flex-end;
 `;
 const StyledCardSpecsRarityList = styled(StyledCardSpecs)`
   width: 10%;
+  justify-content: flex-end;
 `;
 const StyledCardSpecsConditionList = styled(StyledCardSpecs)`
   width: 15%;
+  justify-content: flex-end;
 `;
 
 const StyledCardSpecsNameGrid = styled(StyledCardSpecs)`
