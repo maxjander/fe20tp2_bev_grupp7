@@ -15,9 +15,9 @@ A portfolio tracker for the card game 'Yugioh'.
 * [Mehrab Norouzi ](https://github.com/MehrabNorouzi)
 
 ## Description
-A group project built around "big-data" representation through APIs, 
+A group project built around "big-data" representation through APIs 
 using ReactJS, Firebase Realtime Database,
-and the YGOPRODECK api.
+and the YGOPRODECK API.
 The webpage works as a portfolio tracker, where you can add your own Yugioh! cards to your account's portfolio, and track the value of each card,
 as well as your overall inventory over time.
 
