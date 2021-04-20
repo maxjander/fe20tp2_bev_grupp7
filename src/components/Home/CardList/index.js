@@ -130,7 +130,7 @@ const StyledCardContainer = styled.div`
       border: 1px solid;
       background-color: #d9d9d9;
       /* border-color: rgba(0, 0, 0, 0.3); */
-      mmargin-bottom: 10px;
+      margin-bottom: 10px;
 
       border-radius: 8px;
       flex-wrap: wrap;

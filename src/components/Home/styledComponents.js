@@ -78,7 +78,7 @@ export const StyledAddCardAndGridButtonContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-export const StyledEditAndDeleteButtonContainer = styled.div`
+export const StyledUtilButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -87,11 +87,11 @@ export const StyledEditAndDeleteButtonContainer = styled.div`
   margin-bottom: 0px;
   /* align-self: center; */
   padding: 0 15px;
-  @media (max-width: 800px) {
+  /* @media (max-width: 800px) {
     flex-direction: row;
     width: 100%;
     justify-content: flex-end;
-  }
+  } */
 `;
 
 export const StyledModalMain = styled.section`

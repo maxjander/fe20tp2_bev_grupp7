@@ -9,7 +9,7 @@ import {
   StyledButton,
   StyledInput,
   StyledSelect,
-  StyledEditAndDeleteButtonContainer,
+  StyledUtilButtonContainer,
   StyledDeleteButton,
 } from "../styledComponents";
 import cardConditions from "../../../constants/cardConditions";
@@ -140,7 +140,7 @@ const CardItem = ({
               image={image}
             />
           </span>
-          <StyledEditAndDeleteButtonContainer>
+          <StyledUtilButtonContainer>
             <StyledEditButton onClick={onToggleEditMode}>
               <AiFillEdit />
             </StyledEditButton>
@@ -149,7 +149,7 @@ const CardItem = ({
             >
               <BsTrash />
             </StyledDeleteButton>
-          </StyledEditAndDeleteButtonContainer>
+          </StyledUtilButtonContainer>
         </StyledListItem>
       )}
 
@@ -162,7 +162,8 @@ export default CardItem;
 
 const StyledListItem = styled.li`
   display: flex;
-  @media (max-width: 800px) {
+  flex-wrap: nowrap;
+  /* @media (max-width: 800px) {
     flex-direction: column;
-  }
+  } */
 `;
