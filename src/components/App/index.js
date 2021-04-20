@@ -69,6 +69,7 @@ const FlexContainer = styled.div`
   flex-direction: column;
   padding: 40px;
   color: ${({ theme }) => theme.text};
+  
 `;
 const Wrapper = styled.div`
   min-height: 100vh;
