@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import {useState} from "react"
 import styled from "styled-components";
-
+import { FaTimes, FaBars } from 'react-icons/fa'
 import SignOutButton from "../SignOut";
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
@@ -22,10 +23,22 @@ const Navigation = () => (
   </div>
 );
 
+
+
 // authUser.roles[ROLES.ADMIN]
-const NavigationAuth = ({ authUser }) => (
+const NavigationAuth = ({ authUser }) => 
+{ 
+  const [click,setClick] = useState(false)
+  const handleClick = () => setClick(!click)
+
+
+
+  return(
   <NavContainer>
-    <NavUl>
+          <HumIcon className="XD" onClick={handleClick}>
+        {click ? <FaTimes/> : <FaBars/>}
+      </HumIcon>
+    <NavUl className ="NavUl" click={click}>
       <li className="logo">TCG Empire</li>
       {/* <li>
         <Link to={ROUTES.LANDING}>Landing</Link>
@@ -47,19 +60,25 @@ const NavigationAuth = ({ authUser }) => (
 
       <SignOutButton />
     </NavUl>
-  </NavContainer>
-);
-const NavigationNonAuth = () => (
-  <NavContainer>
-    <NavUl>
+  </NavContainer>)
+};
+const NavigationNonAuth = () => {
+  const [click,setClick] = useState(false)
+  const handleClick = () => setClick(!click)
+ return( <NavContainer>
+              <HumIcon className="XD" onClick={handleClick}>
+        {click ? <FaTimes/> : <FaBars/>}
+      </HumIcon>
+    <NavUl className ="NavUl" click={click}>
       <li className="logo">TCG Empire</li>
 
       <li>
         <Link to={ROUTES.SIGN_IN}>Sign In</Link>
       </li>
     </NavUl>
-  </NavContainer>
-);
+  </NavContainer>)
+};
+
 
 export default Navigation;
 
@@ -76,17 +95,19 @@ const NavContainer = styled.div`
 `;
 
 const NavUl = styled.ul`
-  background-color: #c0b9dd;
-  display: flex;
-  flex-direction: column;
-  text-transform: uppercase;
-  align-items: center;
-  margin: 0;
-  padding: 10px;
-  list-style: none;
-  width: 100%;
-  @media (min-width: 609px) {
-    flex-direction: row;
+background-color: #c0b9dd;
+display: flex;
+flex-direction: row;
+text-transform: uppercase;
+align-items: center;
+margin: 0;
+padding: 10px;
+list-style: none;
+width: 100%;
+
+@media only screen and (max-width: 609px) {
+    display: ${({click}) => (click ? 'flex' : 'none')};
+    flex-direction: column;
     justify-content: space-around;
     .logo {
       margin-right: auto;
@@ -97,7 +118,8 @@ const NavUl = styled.ul`
       }
     }
   }
-    li {
+
+  li {
       padding: 10px 10px 10px 10px;
       margin: 10px;
       border-radius: 8px;
@@ -117,8 +139,34 @@ const NavUl = styled.ul`
       color: black;
       text-decoration: none;
     }
-  }
+  
 `;
+
+const HumIcon = styled.div`
+display: none;
+@media only screen and (max-width: 609px) {
+  display: flex;
+  position: absolute;
+  color: #34ebc9;
+  left: 50%;
+  top: 0;
+  right: 0;
+  transform: translate(-100%, 60%);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+`;
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 "
