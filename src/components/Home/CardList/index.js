@@ -114,18 +114,18 @@ const StyledCardContainer = styled.div`
   }
 
   .display-list {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     justify-content: space-between;
     list-style: none;
-    margin: 0;
+    margin: 0; */
 
     .single-card {
-      display: flex;
-      flex-direction: row;
-      flex-grow: 1;
-      justify-content: space-between;
-      width: 100%;
+      /* display: flex; */
+      /* flex-direction: row; */
+      /* flex-grow: 1; */
+      /* justify-content: space-between; */
+      /* width: 100%; */
       /* height: 100%; */
       border: 1px solid;
       background-color: #d9d9d9;
@@ -133,7 +133,7 @@ const StyledCardContainer = styled.div`
       margin-bottom: 10px;
 
       border-radius: 8px;
-      flex-wrap: wrap;
+      /* flex-wrap: wrap; */
       span {
         display: flex;
         flex-direction: row;

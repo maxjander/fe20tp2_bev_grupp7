@@ -82,23 +82,14 @@ export const StyledUtilButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
   width: auto;
-  margin-top: 4px;
-  margin-bottom: 0px;
-  /* align-self: center; */
-  padding: 0 15px;
-  /* @media (max-width: 800px) {
-    flex-direction: row;
-    width: 100%;
-    justify-content: flex-end;
-  } */
 `;
 
 export const StyledModalMain = styled.section`
   position: fixed;
   background: white;
   width: 80vw;
-  /* height: 80vh; */
   padding: 20px;
   top: 50%;
   left: 50%;

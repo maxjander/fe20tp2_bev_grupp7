@@ -10,6 +10,7 @@ const ListItemRender = ({
   authUser,
   onRemoveCard,
   onToggleEditMode,
+  handleCardPresentationToggleModal,
 }) =>
   condition ? (
     <ListItemList
@@ -17,6 +18,7 @@ const ListItemRender = ({
       onRemoveCard={onRemoveCard}
       onToggleEditMode={onToggleEditMode}
       authUser={authUser}
+      handleCardPresentationToggleModal={handleCardPresentationToggleModal}
     />
   ) : (
     <ListItemGrid
@@ -25,25 +27,38 @@ const ListItemRender = ({
       onRemoveCard={onRemoveCard}
       onToggleEditMode={onToggleEditMode}
       authUser={authUser}
+      handleCardPresentationToggleModal={handleCardPresentationToggleModal}
     />
   );
 
-const ListItemList = ({ card, onRemoveCard, onToggleEditMode, authUser }) => (
+const ListItemList = ({
+  card,
+  onRemoveCard,
+  onToggleEditMode,
+  authUser,
+  handleCardPresentationToggleModal,
+}) => (
   <>
-    <StyledContainerInfoList>
-      <StyledCardTitleList children={card.cardName} />
-      <StyledUtilDiv>
-        <StyledCardSpecsCardSet children={card.cardSet.set_code} />
-        <StyledCardSpecsRarityList children={card.cardSet.set_rarity_code} />
-        <StyledCardSpecsConditionList children={card.cardCondition} />
-      </StyledUtilDiv>
-      <InventoryUtilButtons
-        onRemoveCard={onRemoveCard}
-        onToggleEditMode={onToggleEditMode}
-        card={card}
-        authUser={authUser}
-      />
-    </StyledContainerInfoList>
+    <StyledListItem>
+      <StyledContainerInfoList>
+        <StyledInfoList onClick={handleCardPresentationToggleModal}>
+          <StyledCardTitleList children={card.cardName} />
+          <StyledUtilDiv>
+            <StyledCardSpecsCardSet children={card.cardSet.set_code} />
+            <StyledCardSpecsRarityList
+              children={card.cardSet.set_rarity_code}
+            />
+            <StyledCardSpecsConditionList children={card.cardCondition} />
+          </StyledUtilDiv>
+        </StyledInfoList>
+        <InventoryUtilButtons
+          onRemoveCard={onRemoveCard}
+          onToggleEditMode={onToggleEditMode}
+          card={card}
+          authUser={authUser}
+        />
+      </StyledContainerInfoList>
+    </StyledListItem>
   </>
 );
 const ListItemGrid = ({
@@ -52,22 +67,37 @@ const ListItemGrid = ({
   onRemoveCard,
   onToggleEditMode,
   authUser,
+  handleCardPresentationToggleModal,
 }) => (
   <>
-    <img src={image} width='100%' height='auto' alt={card.cardName} />
-    <StyledCardSpecsNameGrid children={card.cardName} />
-    <StyledCardSpecs children={card.cardSet.set_code} />
-    <StyledCardSpecs children={card.cardSet.set_rarity_code} />
-    <StyledCardSpecs children={card.cardCondition} />
-    <InventoryUtilButtons
-      onRemoveCard={onRemoveCard}
-      onToggleEditMode={onToggleEditMode}
-      card={card}
-      authUser={authUser}
-    />
+    <StyledGridItem>
+      <span onClick={handleCardPresentationToggleModal}>
+        <img src={image} width="100%" height="auto" alt={card.cardName} />
+        <StyledCardSpecsNameGrid children={card.cardName} />
+        <StyledCardSpecs children={card.cardSet.set_code} />
+        <StyledCardSpecs children={card.cardSet.set_rarity_code} />
+        <StyledCardSpecs children={card.cardCondition} />
+      </span>
+      <InventoryUtilButtons
+        onRemoveCard={onRemoveCard}
+        onToggleEditMode={onToggleEditMode}
+        card={card}
+        authUser={authUser}
+      />
+    </StyledGridItem>
   </>
 );
 export default ListItemRender;
+
+const StyledInfoList = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: column;
+  }
+`;
 
 const StyledCardSpecs = styled.div`
   font-size: 16px;
@@ -79,14 +109,11 @@ const StyledCardSpecs = styled.div`
 
 const StyledCardSpecsCardSet = styled(StyledCardSpecs)`
   display: flex;
-  /* width: 40%; */
   justify-content: flex-end !important;
   @media (max-width: 500px) {
     justify-content: flex-start !important;
   }
   ${breakpoints("font-size", "px", [
-    // { 1200: "17" },
-    // { 800: "16" },
     { 700: "13" },
     { 650: "12" },
     { 600: "10" },
@@ -94,14 +121,11 @@ const StyledCardSpecsCardSet = styled(StyledCardSpecs)`
 `;
 const StyledCardSpecsRarityList = styled(StyledCardSpecs)`
   display: flex;
-  /* width: 20%; */
   justify-content: flex-end !important;
   @media (max-width: 500px) {
     justify-content: flex-start !important;
   }
   ${breakpoints("font-size", "px", [
-    // { 1200: "17" },
-    // { 800: "16" },
     { 700: "13" },
     { 650: "12" },
     { 600: "10" },
@@ -109,15 +133,12 @@ const StyledCardSpecsRarityList = styled(StyledCardSpecs)`
 `;
 const StyledCardSpecsConditionList = styled(StyledCardSpecs)`
   display: flex;
-  /* width: 40%; */
   justify-content: flex-end !important;
   @media (max-width: 500px) {
     justify-content: flex-start !important;
     flex-grow: 2;
   }
   ${breakpoints("font-size", "px", [
-    // { 1200: "17" },
-    // { 800: "16" },
     { 700: "13" },
     { 650: "12" },
     { 600: "10" },
@@ -132,21 +153,17 @@ const StyledCardTitle = styled.div`
   font-weight: bold;
   color: #000000;
   font-size: 20px;
-  width: 40%;
   margin: 0px;
   align-self: center;
 `;
 
 const StyledCardTitleList = styled(StyledCardTitle)`
   display: flex;
-  /* width: 80%; */
   @media (max-width: 500px) {
     width: 100%;
     justify-content: flex-start;
   }
   ${breakpoints("font-size", "px", [
-    // { 1200: "17" },
-    // { 800: "16" },
     { 700: "15" },
     { 650: "14" },
     { 600: "13" },
@@ -154,18 +171,55 @@ const StyledCardTitleList = styled(StyledCardTitle)`
 `;
 
 const StyledUtilDiv = styled.div`
+  /* width: 100%; */
+  width: auto;
   display: flex;
-  justify-content: center;
-  /* flex-grow: 2; */
+  justify-content: flex-end;
   flex-direction: row;
 `;
 
 const StyledContainerInfoList = styled.div`
   display: flex;
   flex-direction: row;
-  width: auto;
-  @media (max-width: 500px) {
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+const StyledListItem = styled.li`
+  display: flex;
+  margin-top: 1px !important;
+  width: 100%;
+  flex-wrap: wrap;
+  flex-direction: column;
+  border-bottom: 1px solid black;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+`;
+
+const StyledGridItem = styled.li`
+  display: flex;
+  margin-top: 1px !important;
+  /* width: 100%; */
+  flex-wrap: wrap;
+  flex-direction: column;
+  /* border-bottom: 1px solid black; */
+  /* margin-bottom: 5px; */
+  /* padding-bottom: 5px; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  justify-content: space-between;
+  width: 250px;
+  /* height: 270px; */
+  border: 1px solid;
+  background-color: #d9d9d9;
+  border-color: rgba(0, 0, 0, 0.3);
+  margin: 5px;
+  padding: 5px;
+
+  border-radius: 8px;
+  transition: all 0.1s ease-in-out;
+
+  &:hover {
+    box-shadow: 1px 1px 16px -6px #000000;
   }
 `;
