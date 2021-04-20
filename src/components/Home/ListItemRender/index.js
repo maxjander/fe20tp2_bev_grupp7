@@ -11,9 +11,11 @@ const ListItemRender = ({ condition, card, image }) =>
 const ListItemList = ({ card }) => (
   <>
     <StyledCardTitleList children={card.cardName} />
+    <StyledUtilDiv>
     <StyledCardSpecsCardSet children={card.cardSet.set_code} />
     <StyledCardSpecsRarityList children={card.cardSet.set_rarity_code} />
     <StyledCardSpecsConditionList children={card.cardCondition} />
+    </StyledUtilDiv>
   </>
 );
 const ListItemGrid = ({ card, image }) => (
@@ -36,7 +38,8 @@ const StyledCardSpecs = styled.div`
 `;
 
 const StyledCardSpecsCardSet = styled(StyledCardSpecs)`
-  width: 25%;
+display:flex;
+  width: 40%;
   justify-content: flex-end;
   ${breakpoints("font-size", "px", [
     { 1200: "17" },
@@ -47,7 +50,8 @@ const StyledCardSpecsCardSet = styled(StyledCardSpecs)`
   ])}
 `;
 const StyledCardSpecsRarityList = styled(StyledCardSpecs)`
-  width: 10%;
+display:flex;
+  width: 20%;
   justify-content: flex-end;
   ${breakpoints("font-size", "px", [
     { 1200: "17" },
@@ -58,7 +62,8 @@ const StyledCardSpecsRarityList = styled(StyledCardSpecs)`
   ])}
 `;
 const StyledCardSpecsConditionList = styled(StyledCardSpecs)`
-  width: 15%;
+display:flex;
+  width: 40%;
   justify-content: flex-end;
   ${breakpoints("font-size", "px", [
     { 1200: "17" },
@@ -70,6 +75,7 @@ const StyledCardSpecsConditionList = styled(StyledCardSpecs)`
 `;
 
 const StyledCardSpecsNameGrid = styled(StyledCardSpecs)`
+
   font-weight: bold;
 `;
 
@@ -83,11 +89,27 @@ const StyledCardTitle = styled.div`
 `;
 
 const StyledCardTitleList = styled(StyledCardTitle)`
+flex-grow:3;
+@media (max-width: 700px) {
+
+  width:100%};
   ${breakpoints("font-size", "px", [
     { 1200: "17" },
     { 800: "16" },
     { 700: "15" },
     { 650: "14" },
     { 600: "13" },
+    
   ])}
+
+
 `;
+
+const StyledUtilDiv = styled.div`
+display:flex;
+justify-content:center;
+flex-grow:2;
+flex-direction:row;
+
+`
+

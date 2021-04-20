@@ -133,13 +133,13 @@ const CardItem = ({
           }}
         >
           {/* {card.userId} */}
-          <span onClick={handleCardPresentationToggleModal}>
+          <StyledContainerInfoList onClick={handleCardPresentationToggleModal}>
             <ListItemRender
               condition={toggleGridView}
               card={card}
               image={image}
             />
-          </span>
+          </StyledContainerInfoList>
           <StyledUtilButtonContainer>
             <StyledEditButton onClick={onToggleEditMode}>
               <AiFillEdit />
@@ -166,4 +166,14 @@ const StyledListItem = styled.li`
   /* @media (max-width: 800px) {
     flex-direction: column;
   } */
+
 `;
+
+const StyledContainerInfoList = styled.div`
+
+@media (max-width: 700px) {
+  width:100%
+    display:flex;
+    flex-direction:column;
+  }
+`
