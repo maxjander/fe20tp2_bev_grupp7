@@ -35,6 +35,7 @@ const NavigationAuth = ({ authUser }) =>
 
   return(
   <NavContainer>
+<<<<<<< HEAD
           <HumIcon className="XD" onClick={handleClick}>
         {click ? <FaTimes/> : <FaBars/>}
       </HumIcon>
@@ -43,21 +44,21 @@ const NavigationAuth = ({ authUser }) =>
       {/* <li>
         <Link to={ROUTES.LANDING}>Landing</Link>
       </li> */}
+=======
+    <NavUl>
+      <li className='logo' NavLogo to="/">TCG Empire</li>
+>>>>>>> main
       <li>
         <Link to={ROUTES.HOME}>Home</Link>
       </li>
       <li>
         <Link to={ROUTES.ACCOUNT}>Account</Link>
       </li>
-      {/* <li>
-        <Link to={ROUTES.GRAPH}>Graph</Link>
-      </li> */}
       {!!authUser.roles[ROLES.ADMIN] && (
         <li>
           <Link to={ROUTES.ADMIN}>Admin</Link>
         </li>
       )}
-
       <SignOutButton />
     </NavUl>
   </NavContainer>)
@@ -80,18 +81,13 @@ const NavigationNonAuth = () => {
 };
 
 
+
 export default Navigation;
 
 const NavContainer = styled.div`
   padding-top: 0px;
   padding-bottom: 0px;
   padding-right: 20px;
-  /* ${breakpoints("background-color", "", [
-    { 1200: "palevioletred" },
-    { 800: "blue" },
-    { 600: "yellow" },
-    { 450: "red" },
-  ])} */
 `;
 
 const NavUl = styled.ul`
@@ -139,8 +135,13 @@ width: 100%;
       color: black;
       text-decoration: none;
     }
+<<<<<<< HEAD
   
 `;
+=======
+  }
+`
+>>>>>>> main
 
 const HumIcon = styled.div`
 display: none;
