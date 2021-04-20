@@ -38,6 +38,7 @@ const PasswordForgetFormBase = (props) => {
         onChange={onChange}
         type='text'
         placeholder='Email Address'
+        autoComplete='current-password'
       />
       <button disabled={isInvalid} type='submit'>
         Reset My Password
@@ -67,8 +68,8 @@ const FlexForm = styled.form`
 
 const StyledInput = styled.input`
   border-radius: 8px;
-  border: 1px solid; 
-  border-color: rgba(0,0,0,0.3);
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.3);
   width: 220px;
   padding: 10px;
   margin: 10px 0px 10px 0px;

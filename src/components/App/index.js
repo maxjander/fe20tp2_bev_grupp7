@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import styled from "styled-components";
 import { ThemeProvider } from "styled-components";
@@ -17,11 +17,18 @@ import AdminPage from "../Admin";
 // import Graph from "../Graph";
 
 import * as ROUTES from "../../constants/routes";
-import { withAuthentication } from "../Session";
+import { AuthUserContext, withAuthentication } from "../Session";
 
-const App = () => {
+const App = (props) => {
   const [theme, toggleTheme, componentMounted] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
+
+  const authUser = useContext(AuthUserContext);
+
+  useEffect(() => {
+    authUser && theme(authUser.theme);
+  }, [authUser, theme]);
+
   if (!componentMounted) {
     return <div />;
   }
