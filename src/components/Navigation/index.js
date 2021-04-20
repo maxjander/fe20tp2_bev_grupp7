@@ -45,7 +45,7 @@ const NavigationAuth = ({ authUser }) => (
 const NavigationNonAuth = () => (
   <NavContainer>
     <NavUl>
-      <li className='logo'>TCG Empire</li>
+      <li className="logo">TCG Empire</li>
 
       <li>
         <Link to={ROUTES.SIGN_IN}>Sign In</Link>

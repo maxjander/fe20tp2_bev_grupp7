@@ -2,8 +2,10 @@ import React from "react";
 
 import AuthUserContext from "./context";
 import { withFirebase } from "../Firebase";
+import CardContextProvider from "../CardContext";
 
 const withAuthentication = (Component) => {
+  // const [theme, toggleTheme, componentMounted, setTheme] = useDarkMode();
   class WithAuthentication extends React.Component {
     constructor(props) {
       super(props);
@@ -15,6 +17,7 @@ const withAuthentication = (Component) => {
     /*
     function that takes two functions as parameters (also known as lambda), a next and a fallback. once loaded, the next function triggers and sets us an access token in our local storage. if failed, it sets the access token to null
     */
+
     componentDidMount() {
       this.listener = this.props.firebase.onAuthUserListener(
         (authUser) => {
@@ -35,11 +38,21 @@ const withAuthentication = (Component) => {
     Takes a component, and its props, and wraps it within the AuthUserContext. 
 */
     render() {
-      return (
-        <AuthUserContext.Provider value={this.state.authUser}>
-          <Component {...this.props} />
-        </AuthUserContext.Provider>
-      );
+      if (this.state.authUser) {
+        return (
+          <CardContextProvider authUser={this.state.authUser}>
+            <AuthUserContext.Provider value={this.state.authUser}>
+              <Component {...this.props} />
+            </AuthUserContext.Provider>
+          </CardContextProvider>
+        );
+      } else {
+        return (
+          <AuthUserContext.Provider value={this.state.authUser}>
+            <Component {...this.props} />
+          </AuthUserContext.Provider>
+        );
+      }
     }
   }
 

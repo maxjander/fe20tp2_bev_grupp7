@@ -28,14 +28,17 @@ const CardPresentation = ({ card }) => {
               <>
                 <h1>{apiCard.name}</h1>
                 <StyledCardImageAndGraph>
-                  <img
-                    height="auto"
-                    width="30%"
+                  <StyledImage
+                    // height="auto"
+                    // width="30%"
                     src={apiCard.card_images[0].image_url}
                   />
                   {card && (
                     <StyledGraph>
-                      <LineGraph data={card.priceChangeDeltaValueHistory} />
+                      <LineGraph
+                        data={card.priceChangeDeltaValueHistory}
+                        label={apiCard.name}
+                      />
                     </StyledGraph>
                   )}
                 </StyledCardImageAndGraph>
@@ -59,10 +62,18 @@ const StyledWrapper = styled.div`
 
 const StyledImage = styled.img`
   flex-grow: 1;
+  max-width: 30%;
+  @media (max-width: 700px) {
+    max-width: 100%;
+  }
 `;
 
 const StyledGraph = styled.div`
   flex-grow: 2;
+  max-width: 70%;
+  @media (max-width: 700px) {
+    max-width: 100%;
+  }
 `;
 
 const StyledCardImageAndGraph = styled.div`
@@ -71,8 +82,11 @@ const StyledCardImageAndGraph = styled.div`
   flex-wrap: nowrap;
   justify-content: space-around;
   width: 100%;
+  @media (max-width: 700px) {
+    flex-direction: column-reverse;
+  }
 `;
 
-const StyledHeader = styled.h1`
-  display: block;
-`;
+// const StyledHeader = styled.h1`
+//   display: block;
+// `;
