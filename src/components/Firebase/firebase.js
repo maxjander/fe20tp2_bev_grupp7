@@ -110,7 +110,8 @@ class Firebase {
 */
   cards = () => this.db.ref("cards");
 
-  priceChangeDeltaValueHistory = (uid) => this.db.ref(`cards/${uid}/priceChangeDeltaValueHistory`);
+  priceChangeDeltaValueHistory = (uid) =>
+    this.db.ref(`cards/${uid}/priceChangeDeltaValueHistory`);
 }
 
 export default Firebase;

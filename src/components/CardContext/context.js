@@ -42,6 +42,11 @@ const CardContextProvider = (props) => {
         // //approves loading of page
       } else {
         // console.log("cardObject: " + cardObject + ", authuser: " + authUser)
+        return () => {
+          //when component unmounts, this disconncts form the cards entity of the
+          //database
+          props.firebase.cards().off();
+        };
       }
     });
 
