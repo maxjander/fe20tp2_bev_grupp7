@@ -7,7 +7,6 @@ import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
 import v2_pink from "./../../icons/v2_pink.png";
 import { AuthUserContext } from "../Session";
-import { breakpoints } from "../../constants/breakpoints.js";
 
 const Navigation = () => (
   <div>
