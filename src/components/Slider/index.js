@@ -69,12 +69,12 @@ const RangeSlider = styled.input`
 
     &.RangeSlider::-webkit-slider-thumb
     { 
-      -webkit-appearance: none;
-      appearance: none;
+   
+     
       width: 30px;
       height: 30px;
       border: 0;
-      background: url(${props => props.backG});
+      
       background-size: 30px;
       background-repeat: no-repeat;
       filter: brightness(100%);

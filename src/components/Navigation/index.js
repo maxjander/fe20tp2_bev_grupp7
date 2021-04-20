@@ -148,7 +148,8 @@ display: none;
 `;
 
 const StyledImage = styled.img`
-width: 120px;
+width: 140px;
+padding-left:20px;
 @media (max-width: 609px)
 {
   display:none;
