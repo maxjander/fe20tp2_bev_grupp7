@@ -1,9 +1,6 @@
-import { useContext } from "react";
+import React from "react";
 import { Line } from "react-chartjs-2";
-import styled from "styled-components";
-import lineChartDat from "../XD/index";
-
-// import { CardContext } from "../CardContext";
+ // import styled from "styled-components";
 
 // const StyledWrapper = styled.div`
 //   display: flex;
@@ -15,15 +12,11 @@ import lineChartDat from "../XD/index";
 // `;
 
 const LineGraph = (props) => {
-  
-  // const cardContext = useContext(CardContext);
-  // const allCards = cardContext.cards;
 
   if (!props.data) {
     return <></>;
   } else {
     return (
-      // <StyledWrapper>
       <Line
         data={{
           labels: Object.keys(props.data).map((timestamp) =>
@@ -37,17 +30,13 @@ const LineGraph = (props) => {
             },
           ],
         }}
-        // height={100}
-        // max-width={960}
         options={{
           maintainAspectRatio: true,
         }}
       />
-      /* </StyledWrapper> */
     );
   }
 };
-
 export default LineGraph;
 
 /*

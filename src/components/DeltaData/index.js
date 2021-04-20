@@ -15,7 +15,7 @@ const LinDat = (allCards, donk) => {
     return null;
   }
   // console.log(allCards);
-  for (var m = 0; m < allCards.length; m++) {
+  for (m = 0; m < allCards.length; m++) {
     var cardDeltaObj = allCards[m].priceChangeDeltaValueHistory;
     var j;
     var l;
@@ -63,7 +63,7 @@ const LinDat = (allCards, donk) => {
     }
   } else {
     for (n = 0; n < allDates.length; n++) {
-      var numDates = Number(allDates[n]);
+      numDates = Number(allDates[n]);
 
       sumObj = Object.assign({ ...sumObj }, { [numDates]: allPrices[n] });
 
