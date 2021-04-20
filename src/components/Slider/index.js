@@ -9,6 +9,12 @@ const Slider = (props) => {
   const handleChange = (maxVal) => (e) => {
     onChangeValue(e);
   };
+  const currDate = new Date();
+  const refDate = new Date(localStorage.getItem("endDate")).getTime();
+  const diffDate = currDate - refDate;
+  const diffTime = Math.abs(diffDate);
+  const diffDays = Math.floor(diffTime/(1000*60*60*24));
+
 
   let thumbIcon;
   
@@ -38,7 +44,11 @@ const Slider = (props) => {
     </div>
     <SliderTextWrap>
     <div>
-      {" From: " + localStorage.getItem("startDate") +" To: " + localStorage.getItem("endDate") + " "+ (value - 1) + " day(s) back"}</div>
+      {" From: " + localStorage.getItem("startDate") }
+      </div>
+      <div> {" To: " + localStorage.getItem("endDate") +" "} </div>
+      
+     <div> { "("+ diffDays + " Days ago)" }</div>
     </SliderTextWrap>
 
     </SliderWrap>
@@ -84,7 +94,11 @@ const SliderWrap =styled.div `
 
 const SliderTextWrap = styled.div`
 font-weight: bold;
+display: inline-flex;
+  flex-direction: column;
 `;
+
+
 
 
 export default Slider;
