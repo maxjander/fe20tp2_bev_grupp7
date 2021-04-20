@@ -32,11 +32,6 @@ import {
 */
 
 const HomePage = () => {
-  // const cardContext = useContext(CardContext);
-  // const allCards = cardContext.cards;
-  // const linG = LinDat(allCards);
-  // console.log(allCards);
-
   const [rangeValue, setRangeValue] = useState(2);
   const onChangeSlider = (e) => {
     setRangeValue(parseInt(e.target.value, 10));
