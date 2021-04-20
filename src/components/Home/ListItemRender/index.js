@@ -1,14 +1,34 @@
 import styled from "styled-components";
 import { breakpoints } from "../../../constants/breakpoints.js";
 
-const ListItemRender = ({ condition, card, image }) =>
+import InventoryUtilButtons from "../InventoryUtilButtons";
+
+const ListItemRender = ({
+  condition,
+  card,
+  image,
+  authUser,
+  onRemoveCard,
+  onToggleEditMode,
+}) =>
   condition ? (
-    <ListItemList card={card} />
+    <ListItemList
+      card={card}
+      onRemoveCard={onRemoveCard}
+      onToggleEditMode={onToggleEditMode}
+      authUser={authUser}
+    />
   ) : (
-    <ListItemGrid card={card} image={image} />
+    <ListItemGrid
+      card={card}
+      image={image}
+      onRemoveCard={onRemoveCard}
+      onToggleEditMode={onToggleEditMode}
+      authUser={authUser}
+    />
   );
 
-const ListItemList = ({ card }) => (
+const ListItemList = ({ card, onRemoveCard, onToggleEditMode, authUser }) => (
   <>
     <StyledContainerInfoList>
       <StyledCardTitleList children={card.cardName} />
@@ -17,16 +37,34 @@ const ListItemList = ({ card }) => (
         <StyledCardSpecsRarityList children={card.cardSet.set_rarity_code} />
         <StyledCardSpecsConditionList children={card.cardCondition} />
       </StyledUtilDiv>
+      <InventoryUtilButtons
+        onRemoveCard={onRemoveCard}
+        onToggleEditMode={onToggleEditMode}
+        card={card}
+        authUser={authUser}
+      />
     </StyledContainerInfoList>
   </>
 );
-const ListItemGrid = ({ card, image }) => (
+const ListItemGrid = ({
+  card,
+  image,
+  onRemoveCard,
+  onToggleEditMode,
+  authUser,
+}) => (
   <>
-    <img src={image} width="100%" height="auto" alt={card.cardName} />
+    <img src={image} width='100%' height='auto' alt={card.cardName} />
     <StyledCardSpecsNameGrid children={card.cardName} />
     <StyledCardSpecs children={card.cardSet.set_code} />
     <StyledCardSpecs children={card.cardSet.set_rarity_code} />
     <StyledCardSpecs children={card.cardCondition} />
+    <InventoryUtilButtons
+      onRemoveCard={onRemoveCard}
+      onToggleEditMode={onToggleEditMode}
+      card={card}
+      authUser={authUser}
+    />
   </>
 );
 export default ListItemRender;
