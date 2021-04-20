@@ -29,9 +29,19 @@ export const StyledButton = styled.button`
 `;
 
 export const StyledEditButton = styled(StyledButton)`
-  &:after {
-    content: "Edit";
-  }
+  display: flex;
+  width: auto;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledDeleteButton = styled(StyledButton)`
+  display: flex;
+  width: auto;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const StyledInput = styled.input`
@@ -68,31 +78,27 @@ export const StyledAddCardAndGridButtonContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-export const StyledEditAndDeleteButtonContainer = styled.div`
+export const StyledUtilButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
+  align-items: center;
   width: auto;
-  margin-top: 4px;
-  margin-bottom: 0px;
-  align-self: center;
-  padding: 0 15px;
-  @media (max-width: 800px) {
-    flex-direction: row;
-    width: 100%;
-    justify-content: flex-end;
-  }
 `;
 
 export const StyledModalMain = styled.section`
   position: fixed;
   background: white;
+  max-height: calc(100vh - 210px);
   width: 80vw;
-  /* height: 80vh; */
   padding: 20px;
   top: 50%;
   left: 50%;
+  overflow-y: auto;
   transform: translate(-50%, -50%);
+  &.img {
+    width: 30%;
+  }
 `;
 
 export const StyledModal = styled.div`

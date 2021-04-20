@@ -2,68 +2,6 @@ import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-/*---Card Search Field---*/
-const StyledInput = styled.input`
-  border-radius: 8px;
-  border: 1px solid;
-  border-color: rgba(0, 0, 0, 0.3);
-  width: 200px;
-  padding: 10px;
-  margin: 10px;
-  margin-bottom: 0px;
-
-  :focus {
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-  }
-`;
-
-const StyledDiv = styled.div`
-  z-index: 20;
-
-  .suggestions-container {
-  }
-
-  .no-suggestions {
-    color: #999;
-    padding: 0.5rem;
-  }
-
-  /*---The card suggestions dropdown---*/
-  .suggestions {
-    border: 1px solid #999;
-    border-top-width: 0;
-    list-style: none;
-    margin-top: 0px;
-    max-height: 300px;
-    overflow-y: auto;
-    padding-left: 0px;
-    width: 220px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    background-color: white;
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .suggestions li {
-    padding: 0.5rem;
-  }
-
-  .suggestion-active,
-  .suggestions li:hover {
-    background-color: #c0b9dd;
-    color: white;
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  .suggestions li:not(:last-of-type) {
-    border-bottom: 1px solid #999;
-  }
-`;
-
 class Autocomplete extends Component {
   static propTypes = {
     suggestions: PropTypes.instanceOf(Array),
@@ -165,8 +103,8 @@ class Autocomplete extends Component {
     if (showSuggestions && userInput.length >= 3) {
       if (filteredSuggestions.length) {
         suggestionsListComponent = (
-          <div className="suggestions-container">
-            <ul className="suggestions">
+          <div className='suggestions-container'>
+            <ul className='suggestions'>
               {filteredSuggestions.map((suggestion, index) => {
                 let className;
 
@@ -186,7 +124,7 @@ class Autocomplete extends Component {
         );
       } else {
         suggestionsListComponent = (
-          <div className="no-suggestions">
+          <div className='no-suggestions'>
             <em>No suggestions, you're on your own!</em>
           </div>
         );
@@ -196,11 +134,11 @@ class Autocomplete extends Component {
     return (
       <Fragment>
         <StyledInput
-          type="text"
+          type='text'
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={userInput}
-          placeholder="Add a new Card Name here"
+          placeholder='Add a new Card Name here'
         />
         <StyledDiv>{suggestionsListComponent}</StyledDiv>
       </Fragment>
@@ -209,3 +147,65 @@ class Autocomplete extends Component {
 }
 
 export default Autocomplete;
+
+/*---Card Search Field---*/
+const StyledInput = styled.input`
+  border-radius: 8px;
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.3);
+  width: 200px;
+  padding: 10px;
+  margin: 10px;
+  margin-bottom: 0px;
+
+  :focus {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+`;
+
+const StyledDiv = styled.div`
+  z-index: 20;
+
+  .suggestions-container {
+  }
+
+  .no-suggestions {
+    color: #999;
+    padding: 0.5rem;
+  }
+
+  /*---The card suggestions dropdown---*/
+  .suggestions {
+    border: 1px solid #999;
+    border-top-width: 0;
+    list-style: none;
+    margin-top: 0px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-left: 0px;
+    width: 220px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: white;
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .suggestions li {
+    padding: 0.5rem;
+  }
+
+  .suggestion-active,
+  .suggestions li:hover {
+    background-color: #c0b9dd;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .suggestions li:not(:last-of-type) {
+    border-bottom: 1px solid #999;
+  }
+`;

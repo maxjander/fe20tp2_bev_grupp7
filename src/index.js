@@ -36,10 +36,6 @@ ul {
     padding-inline-start: 0px;
 }
 
-ul, li {
-  margin: 0 !important;
-} 
-
 *:focus {
     outline: none;
 }

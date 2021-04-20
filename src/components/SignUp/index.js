@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { compose } from "recompose";
 
+import styled from "styled-components";
+
 import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
@@ -88,43 +90,43 @@ class SignUpFormBase extends Component {
     return (
       <form onSubmit={this.onSubmit}>
         <input
-          name='username'
+          name="username"
           value={username}
           onChange={this.onChange}
-          type='text'
-          placeholder='Full Name'
+          type="text"
+          placeholder="Full Name"
         />
         <input
-          name='email'
+          name="email"
           value={email}
           onChange={this.onChange}
-          type='text'
-          placeholder='Email Address'
+          type="text"
+          placeholder="Email Address"
         />
         <input
-          name='passwordOne'
+          name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
-          type='password'
-          placeholder='Password'
+          type="password"
+          placeholder="Password"
         />
         <input
-          name='passwordTwo'
+          name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
-          type='password'
-          placeholder='Confirm Password'
+          type="password"
+          placeholder="Confirm Password"
         />
         <label>
           Admin:
           <input
-            name='isAdmin'
-            type='checkbox'
+            name="isAdmin"
+            type="checkbox"
             checked={isAdmin}
             onChange={this.onChangeCheckbox}
           />
         </label>
-        <button disabled={isInvalid} type='submit'>
+        <button disabled={isInvalid} type="submit">
           Sign Up
         </button>
 
@@ -136,13 +138,17 @@ class SignUpFormBase extends Component {
 
 const SignUpLink = () => (
   <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
+    Don't have an account? <StyledLink to={ROUTES.SIGN_UP}>Sign Up</StyledLink>
   </p>
 );
 
 const SignUpForm = compose(withRouter, withFirebase)(SignUpFormBase);
 
 //withRouter(withFirebase(SignUpFormBase))
+
+const StyledLink = styled(Link)`
+  color: hotpink;
+`;
 
 export default SignUpPage;
 

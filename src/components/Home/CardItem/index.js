@@ -1,15 +1,13 @@
 import { useState } from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 
 import allData from "../../../constants/data.json";
 import ListItemRender from "../ListItemRender";
 import {
   FlexForm,
-  StyledEditButton,
   StyledButton,
   StyledInput,
   StyledSelect,
-  StyledEditAndDeleteButtonContainer,
 } from "../styledComponents";
 import cardConditions from "../../../constants/cardConditions";
 
@@ -78,18 +76,19 @@ const CardItem = ({
       {editMode && apiCard ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type='text'
+            type="text"
             value={apiCard.name}
             onChange={onChangeEditCardName}
             readOnly
           />
 
           <StyledSelect
-            type='text'
+            type="text"
             value={editCard_sets}
             onChange={onChangeEditCardSet}
-            required='required'>
-            <option key='1' value={card.cardSet}>
+            required="required"
+          >
+            <option key="1" value={card.cardSet}>
               {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
             </option>
             -------
@@ -100,11 +99,12 @@ const CardItem = ({
             ))}
           </StyledSelect>
           <StyledSelect
-            type='text'
+            type="text"
             value={editCondition}
             onChange={onChangeEditCondition}
-            required='required'
-            placeholder='Condition'>
+            required="required"
+            placeholder="Condition"
+          >
             <option>What Condition is your card?</option>
             {cardConditions.map((item, idx) => (
               <option key={idx} value={item}>
@@ -120,31 +120,29 @@ const CardItem = ({
       ) : (
         //{message.userId} {message.text} //message.editedAt
 
-        <StyledListItem
-          className='single-card'
+        <span
+          // className="single-card"
           onClick={() => {
             setClickedCard(card);
-          }}>
+          }}
+        >
           {/* {card.userId} */}
-          <span onClick={handleCardPresentationToggleModal}>
+          {/* onClick={handleCardPresentationToggleModal} */}
+          <span>
             <ListItemRender
               condition={toggleGridView}
               card={card}
               image={image}
+              onRemoveCard={onRemoveCard}
+              onToggleEditMode={onToggleEditMode}
+              authUser={authUser}
+              // setClickedCard={setClickedCard}
+              handleCardPresentationToggleModal={
+                handleCardPresentationToggleModal
+              }
             />
           </span>
-          <StyledEditAndDeleteButtonContainer>
-            <StyledEditButton
-              className='card-buttons'
-              onClick={onToggleEditMode}
-            />
-            <StyledButton
-              className='card-buttons'
-              onClick={() => onRemoveCard(card.uid, authUser)}
-              children='Delete'
-            />
-          </StyledEditAndDeleteButtonContainer>
-        </StyledListItem>
+        </span>
       )}
 
       {/* clickedCard && <CardPresentation card={clickedCard}/> */}
@@ -153,10 +151,3 @@ const CardItem = ({
 };
 
 export default CardItem;
-
-const StyledListItem = styled.li`
-  display: flex;
-  @media (max-width: 800px) {
-    flex-direction: column;
-  }
-`;

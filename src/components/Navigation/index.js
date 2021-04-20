@@ -95,7 +95,6 @@ const NavUl = styled.ul`
       font-weight: bold;
       width: 100px;
       transition: ease-in 0.2s;
-
       &:hover {
         background-color: white;
       }
