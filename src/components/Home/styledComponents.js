@@ -34,6 +34,10 @@ export const StyledEditButton = styled(StyledButton)`
   border-radius: 3px;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
 `;
 
 export const StyledDeleteButton = styled(StyledButton)`

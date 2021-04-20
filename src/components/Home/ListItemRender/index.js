@@ -12,15 +12,15 @@ const ListItemList = ({ card }) => (
   <>
     <StyledCardTitleList children={card.cardName} />
     <StyledUtilDiv>
-    <StyledCardSpecsCardSet children={card.cardSet.set_code} />
-    <StyledCardSpecsRarityList children={card.cardSet.set_rarity_code} />
-    <StyledCardSpecsConditionList children={card.cardCondition} />
+      <StyledCardSpecsCardSet children={card.cardSet.set_code} />
+      <StyledCardSpecsRarityList children={card.cardSet.set_rarity_code} />
+      <StyledCardSpecsConditionList children={card.cardCondition} />
     </StyledUtilDiv>
   </>
 );
 const ListItemGrid = ({ card, image }) => (
   <>
-    <img src={image} width="100%" height="auto" alt={card.cardName} />
+    <img src={image} width='100%' height='auto' alt={card.cardName} />
     <StyledCardSpecsNameGrid children={card.cardName} />
     <StyledCardSpecs children={card.cardSet.set_code} />
     <StyledCardSpecs children={card.cardSet.set_rarity_code} />
@@ -38,7 +38,7 @@ const StyledCardSpecs = styled.div`
 `;
 
 const StyledCardSpecsCardSet = styled(StyledCardSpecs)`
-display:flex;
+  display: flex;
   width: 40%;
   justify-content: flex-end;
   ${breakpoints("font-size", "px", [
@@ -50,7 +50,7 @@ display:flex;
   ])}
 `;
 const StyledCardSpecsRarityList = styled(StyledCardSpecs)`
-display:flex;
+  display: flex;
   width: 20%;
   justify-content: flex-end;
   ${breakpoints("font-size", "px", [
@@ -62,7 +62,7 @@ display:flex;
   ])}
 `;
 const StyledCardSpecsConditionList = styled(StyledCardSpecs)`
-display:flex;
+  display: flex;
   width: 40%;
   justify-content: flex-end;
   ${breakpoints("font-size", "px", [
@@ -75,7 +75,6 @@ display:flex;
 `;
 
 const StyledCardSpecsNameGrid = styled(StyledCardSpecs)`
-
   font-weight: bold;
 `;
 
@@ -89,27 +88,22 @@ const StyledCardTitle = styled.div`
 `;
 
 const StyledCardTitleList = styled(StyledCardTitle)`
-flex-grow:3;
-@media (max-width: 700px) {
-
-  width:100%};
+  flex-grow: 3;
+  @media (max-width: 700px) {
+    width: 100%;
+  }
   ${breakpoints("font-size", "px", [
     { 1200: "17" },
     { 800: "16" },
     { 700: "15" },
     { 650: "14" },
     { 600: "13" },
-    
   ])}
-
-
 `;
 
 const StyledUtilDiv = styled.div`
-display:flex;
-justify-content:center;
-flex-grow:2;
-flex-direction:row;
-
-`
-
+  display: flex;
+  justify-content: center;
+  flex-grow: 2;
+  flex-direction: row;
+`;

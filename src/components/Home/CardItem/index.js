@@ -82,19 +82,18 @@ const CardItem = ({
       {editMode && apiCard ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type="text"
+            type='text'
             value={apiCard.name}
             onChange={onChangeEditCardName}
             readOnly
           />
 
           <StyledSelect
-            type="text"
+            type='text'
             value={editCard_sets}
             onChange={onChangeEditCardSet}
-            required="required"
-          >
-            <option key="1" value={card.cardSet}>
+            required='required'>
+            <option key='1' value={card.cardSet}>
               {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
             </option>
             -------
@@ -105,12 +104,11 @@ const CardItem = ({
             ))}
           </StyledSelect>
           <StyledSelect
-            type="text"
+            type='text'
             value={editCondition}
             onChange={onChangeEditCondition}
-            required="required"
-            placeholder="Condition"
-          >
+            required='required'
+            placeholder='Condition'>
             <option>What Condition is your card?</option>
             {cardConditions.map((item, idx) => (
               <option key={idx} value={item}>
@@ -127,11 +125,10 @@ const CardItem = ({
         //{message.userId} {message.text} //message.editedAt
 
         <StyledListItem
-          className="single-card"
+          className='single-card'
           onClick={() => {
             setClickedCard(card);
-          }}
-        >
+          }}>
           {/* {card.userId} */}
           <StyledContainerInfoList onClick={handleCardPresentationToggleModal}>
             <ListItemRender
@@ -145,8 +142,7 @@ const CardItem = ({
               <AiFillEdit />
             </StyledEditButton>
             <StyledDeleteButton
-              onClick={() => onRemoveCard(card.uid, authUser)}
-            >
+              onClick={() => onRemoveCard(card.uid, authUser)}>
               <BsTrash />
             </StyledDeleteButton>
           </StyledUtilButtonContainer>
@@ -163,17 +159,17 @@ export default CardItem;
 const StyledListItem = styled.li`
   display: flex;
   flex-wrap: nowrap;
-  /* @media (max-width: 800px) {
-    flex-direction: column;
-  } */
-
+  @media (max-width: 800px) {
+  }
 `;
 
 const StyledContainerInfoList = styled.div`
+  display: flex;
+  flex-direction: row;
 
-@media (max-width: 700px) {
-  width:100%
-    display:flex;
-    flex-direction:column;
+  @media (max-width: 700px) {
+    width: 60%;
+
+    flex-direction: column;
   }
-`
+`;
