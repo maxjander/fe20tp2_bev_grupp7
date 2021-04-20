@@ -4,8 +4,6 @@ import AuthUserContext from "./context";
 import { withFirebase } from "../Firebase";
 import CardContextProvider from "../CardContext";
 
-import { useDarkMode } from "./../../hooks/useDarkMode";
-
 const withAuthentication = (Component) => {
   // const [theme, toggleTheme, componentMounted, setTheme] = useDarkMode();
   class WithAuthentication extends React.Component {

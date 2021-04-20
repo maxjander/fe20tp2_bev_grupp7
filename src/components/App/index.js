@@ -20,14 +20,14 @@ import * as ROUTES from "../../constants/routes";
 import { AuthUserContext, withAuthentication } from "../Session";
 
 const App = (props) => {
-  const [theme, toggleTheme, componentMounted] = useDarkMode();
+  const [theme, toggleTheme, componentMounted, setTheme] = useDarkMode();
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
   const authUser = useContext(AuthUserContext);
 
   useEffect(() => {
-    authUser && theme(authUser.theme);
-  }, [authUser, theme]);
+    authUser && setTheme(authUser.theme);
+  }, [authUser, setTheme]);
 
   if (!componentMounted) {
     return <div />;
@@ -76,7 +76,6 @@ const FlexContainer = styled.div`
   flex-direction: column;
   padding: 40px;
   color: ${({ theme }) => theme.text};
-  
 `;
 const Wrapper = styled.div`
   min-height: 100vh;
