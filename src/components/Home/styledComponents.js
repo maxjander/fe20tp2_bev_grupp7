@@ -109,4 +109,5 @@ export const StyledModal = styled.div`
   height: 100%;
   color: #000000;
   background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
 `;
