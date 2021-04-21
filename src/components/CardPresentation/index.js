@@ -14,10 +14,10 @@ const CardPresentation = ({ card }) => {
       setApiCard(null);
     };
   }, [card]);
-
+  console.log(apiCard);
   return apiCard ? (
     <StyledWrapper>
-      <h1>{apiCard.name}</h1>
+      {/* <h1>{apiCard.name}</h1> */}
       <StyledCardImageAndGraph>
         <StyledImage src={apiCard.card_images[0].image_url} />
         {card && (
@@ -29,6 +29,15 @@ const CardPresentation = ({ card }) => {
           </StyledGraph>
         )}
       </StyledCardImageAndGraph>
+      <StyledUl>
+        <li>
+          <h2>{apiCard.name}</h2>
+          Level {apiCard.level}
+        </li>
+        <li>{apiCard.type}</li>
+        <li>{apiCard.race}</li>
+        <li>{apiCard.desc}</li>
+      </StyledUl>
     </StyledWrapper>
   ) : null;
 };
@@ -66,6 +75,10 @@ const StyledCardImageAndGraph = styled.div`
   @media (max-width: 700px) {
     flex-direction: column-reverse;
   }
+`;
+
+const StyledUl = styled.ul`
+  list-style: none;
 `;
 
 // const StyledHeader = styled.h1`
