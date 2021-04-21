@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import styled from "styled-components";
 import { FcViewDetails, FcStatistics, FcCheckmark } from "react-icons/fc";
@@ -81,20 +81,20 @@ class SignInFormBase extends Component {
     return (
       <StyledForm onSubmit={this.onSubmit}>
         <StyledInput
-          name="email"
+          name='email'
           value={email}
           onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
+          type='text'
+          placeholder='Email Address'
         />
         <StyledInput
-          name="password"
+          name='password'
           value={password}
           onChange={this.onChange}
-          type="password"
-          placeholder="Password"
+          type='password'
+          placeholder='Password'
         />
-        <StyledButton disabled={isInvalid} type="submit">
+        <StyledButton disabled={isInvalid} type='submit'>
           Sign In
         </StyledButton>
 
