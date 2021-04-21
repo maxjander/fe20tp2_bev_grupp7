@@ -11,7 +11,6 @@ const CardPresentationModal = ({
   handleCardPresentationToggleModal,
   toggleCardPresentationModal,
   children,
-  card,
 }) => {
   const presentationNode = useRef();
 
@@ -43,9 +42,7 @@ const CardPresentationModal = ({
         </StyledButton>
       </StyledModalMain>
     </StyledModal>
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 
 export default CardPresentationModal;

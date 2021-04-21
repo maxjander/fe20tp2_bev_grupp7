@@ -4,51 +4,33 @@ import styled from "styled-components";
 
 const CardPresentation = ({ card }) => {
   const [apiCard, setApiCard] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     fetch(`https://db.ygoprodeck.com/api/v7/cardinfo.php?id=${card.cardId}`)
       .then((res) => res.json())
-      .then((res) => setApiCard(res.data[0]))
-      .then(setLoading(false));
+      .then((res) => setApiCard(res.data[0]));
+
     return () => {
       setApiCard(null);
     };
   }, [card]);
 
-  return (
-    <>
-      {loading ? (
-        <h1>Loading</h1>
-      ) : (
-        <>
-          <StyledWrapper>
-            {apiCard && (
-              <>
-                <h1>{apiCard.name}</h1>
-                <StyledCardImageAndGraph>
-                  <StyledImage
-                    // height="auto"
-                    // width="30%"
-                    src={apiCard.card_images[0].image_url}
-                  />
-                  {card && (
-                    <StyledGraph>
-                      <LineGraph
-                        data={card.priceChangeDeltaValueHistory}
-                        label={apiCard.name}
-                      />
-                    </StyledGraph>
-                  )}
-                </StyledCardImageAndGraph>
-              </>
-            )}
-          </StyledWrapper>
-        </>
-      )}
-    </>
-  );
+  return apiCard ? (
+    <StyledWrapper>
+      <h1>{apiCard.name}</h1>
+      <StyledCardImageAndGraph>
+        <StyledImage src={apiCard.card_images[0].image_url} />
+        {card && (
+          <StyledGraph>
+            <LineGraph
+              data={card.priceChangeDeltaValueHistory}
+              label={apiCard.name}
+            />
+          </StyledGraph>
+        )}
+      </StyledCardImageAndGraph>
+    </StyledWrapper>
+  ) : null;
 };
 
 export default CardPresentation;
