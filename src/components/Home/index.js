@@ -50,17 +50,18 @@ const HomePage = () => {
                     label={"Total value of inventory"}
                   />
                 )}
-                
               </StyledGraphContainer>
             </StyledStyledGraphContainer>
-            {context.cards[0] && <Slider
-              min={1}
-              max={localStorage.getItem("totalDays")}
-              step={1}
-              defaultLength={rangeValue}
-              value={rangeValue}
-              onChangeValue={onChangeSlider}
-            />}
+            {context.cards[0] && (
+              <Slider
+                min={1}
+                max={localStorage.getItem("totalDays")}
+                step={1}
+                defaultLength={rangeValue}
+                value={rangeValue}
+                onChangeValue={onChangeSlider}
+              />
+            )}
             <StyledInventoryHeader children='Inventory' />
             <Cards />
 
@@ -314,6 +315,37 @@ const CardsBase = (props) => {
 
           <CardPresentationModal
             // ref={presentationNode}
+
+            /* 
+
+            handleCardPresenation Modal, 
+                Skickar med den när funktionen som prop och deconstrucas i Childet
+
+                som finns i 
+
+            const handleCardPresentationToggleModal = () => {
+                if (toggleCardPresentationModal === true) {
+                  setClickedCard(null);
+                }
+               setToggleCardPresentationModal(!toggleCardPresentationModal);
+
+                skickar även med statet toggleCardPresentationModal som false från början
+                ifall togglePresentationModal är true så returneras CardPresentation från props children inuti en modal
+                annars returnas null; 
+
+                och skickar med authUser
+
+                Och skickar även med statet clickedCard 
+
+                som sätts från Componenten CardItem med en onClick på en span som wrappar runt varje kort
+
+                i CardPresentation componenten så hämtas all info om kortet från vårat Api, 
+                så länge vi inte har fått svaret från api så Renderas ingenting
+
+  };
+
+
+            */
             handleCardPresentationToggleModal={
               handleCardPresentationToggleModal
             }
@@ -359,12 +391,10 @@ export default compose(withAuthorization(condition))(HomePage);
 
 const StyledHomeComponent = styled.div`
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 
   @media (max-width: 800px) {
-    
   }
-
 `;
 
 const StyledInventoryHeader = styled.h1`
