@@ -41,32 +41,30 @@ const HomePage = () => {
     <CardContext.Consumer>
       {(context) => (
         <StyledHomeComponent>
-          <div>
-            <StyledStyledGraphContainer>
-              <StyledGraphContainer>
-                {context.cards[0] && (
-                  <LineGraph
-                    data={LinDat(context.cards, rangeValue)}
-                    label={"Total value of inventory"}
-                  />
-                )}
-              </StyledGraphContainer>
-            </StyledStyledGraphContainer>
-            {context.cards[0] && (
-              <Slider
-                min={1}
-                max={localStorage.getItem("totalDays")}
-                step={1}
-                defaultLength={rangeValue}
-                value={rangeValue}
-                onChangeValue={onChangeSlider}
-              />
-            )}
-            <StyledInventoryHeader children='Inventory' />
-            <Cards />
+          <StyledStyledGraphContainer>
+            <StyledGraphContainer>
+              {context.cards[0] && (
+                <LineGraph
+                  data={LinDat(context.cards, rangeValue)}
+                  label={"Total value of inventory"}
+                />
+              )}
+            </StyledGraphContainer>
+          </StyledStyledGraphContainer>
+          {context.cards[0] && (
+            <Slider
+              min={1}
+              max={localStorage.getItem("totalDays")}
+              step={1}
+              defaultLength={rangeValue}
+              value={rangeValue}
+              onChangeValue={onChangeSlider}
+            />
+          )}
+          <StyledInventoryHeader children='Inventory' />
+          <Cards />
 
-            {/* <ApiFetch /> */}
-          </div>
+          {/* <ApiFetch /> */}
         </StyledHomeComponent>
       )}
     </CardContext.Consumer>
@@ -392,8 +390,11 @@ export default compose(withAuthorization(condition))(HomePage);
 const StyledHomeComponent = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  width: 80%;
 
-  @media (max-width: 800px) {
+  @media (max-width: 700px) {
+    width: 100%;
   }
 `;
 
