@@ -15,6 +15,7 @@ const CardPresentation = ({ card }) => {
     };
   }, [card]);
   console.log(apiCard);
+  console.log(card);
   return apiCard ? (
     <StyledWrapper>
       {/* <h1>{apiCard.name}</h1> */}
@@ -54,7 +55,7 @@ const StyledWrapper = styled.div`
 const StyledImage = styled.img`
   max-width: 30%;
   @media (max-width: 700px) {
-    max-width: 80%;
+    max-width: 50%;
   }
 `;
 

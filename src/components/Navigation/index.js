@@ -64,8 +64,9 @@ const NavigationNonAuth = () => {
         {click ? <FaTimes /> : <FaBars />}
       </HumIcon>
       <NavUl className='NavUl' click={click}>
-        <li className='logo'>TCG Empire</li>
-
+        <li className='logo'>
+          <StyledImage src={v2_pink} />
+        </li>
         <li>
           <Link to={ROUTES.SIGN_IN}>Sign In</Link>
         </li>

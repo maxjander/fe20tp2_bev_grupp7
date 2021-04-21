@@ -1,43 +1,32 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import styled from "styled-components";
 import { withFirebase } from "../Firebase";
 
-
 const UserGraph = ({ cards, authUser }) => {
-
-  const [data, setData] = useState(null);  
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const userCardList = cards.filter((card) => card.userId === authUser.uid);
-    var pieData = { pos: 0, neg: 0 }
+    var pieData = { pos: 0, neg: 0 };
     userCardList.forEach((card, k) => {
-      let data = card.priceChangeDeltaValueHistory
+      let data = card.priceChangeDeltaValueHistory;
       if (data) {
-      const cardDelta = Object.keys(data);
-      const lastDelta = data[cardDelta[cardDelta.length -1]];
-      if (typeof lastDelta === 'number') {
-      
-      if(lastDelta > 0)
-      {
-       
-       pieData.pos += lastDelta
-
+        const cardDelta = Object.keys(data);
+        const lastDelta = data[cardDelta[cardDelta.length - 1]];
+        if (typeof lastDelta === "number") {
+          if (lastDelta > 0) {
+            pieData.pos += lastDelta;
+          } else if (lastDelta < 0) {
+            pieData.neg += lastDelta;
+          }
+        }
       }
-      else if(lastDelta < 0)
-      {
-        pieData.neg += lastDelta
-       
-      }
-    }
-  }
-    })
-    setData(pieData)
-    
-  }, [cards,authUser.uid])
+    });
+    setData(pieData);
+  }, [cards, authUser.uid]);
 
-  return (
-    data ?
+  return data ? (
     <StyledWrapper>
       <Doughnut
         data={{
@@ -57,10 +46,8 @@ const UserGraph = ({ cards, authUser }) => {
           maintainAspectRatio: true,
         }}
       />
-    </StyledWrapper> : null
-    
-  );
-  
+    </StyledWrapper>
+  ) : null;
 };
 
 const PortfolioGraph = withFirebase(UserGraph);
@@ -72,6 +59,5 @@ const StyledWrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 80%;
-  height: auto; 
+  height: auto;
 `;
-
