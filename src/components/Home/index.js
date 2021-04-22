@@ -100,8 +100,12 @@ const CardsBase = (props) => {
             authUser={authUser}
           />
 
-          <AddCardModal>
-            <AddCard firebase={props.firebase} authUser={authUser} />
+          <AddCardModal Component={<AddCard />}>
+            <AddCard
+              firebase={props.firebase}
+              authUser={authUser}
+              toggleAddCardModal={toggleAddCardModal}
+            />
           </AddCardModal>
         </>
       )}

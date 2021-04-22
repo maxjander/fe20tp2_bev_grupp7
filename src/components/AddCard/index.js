@@ -10,7 +10,7 @@ import {
   StyledInput,
   StyledButton,
 } from "../Home/styledComponents";
-const AddCard = ({ firebase, authUser }) => {
+const AddCard = ({ firebase, authUser, toggleAddCardModal }) => {
   console.log(firebase);
   const autoCompleteElement = React.createRef();
   const [cardName, setCardName] = useState("");
@@ -84,6 +84,7 @@ const AddCard = ({ firebase, authUser }) => {
       setCardSet("");
       setCardCondition("");
       setApiCard(null);
+      toggleAddCardModal();
       // setToggleModal(false);
       //This changes states on the autocomplete when Card is created
       // autoCompleteElement.current.setState({

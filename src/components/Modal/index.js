@@ -7,9 +7,11 @@ import {
 } from "../Home/styledComponents";
 
 const Modal = () => {
-  const [visable, setVisable] = useState(false);
+  const [visable, toggleVisable] = useState(false);
 
   const node = useRef();
+
+  const setVisable = () => toggleVisable(!visable);
 
   useEffect(() => {
     const handleClick = (e) => {
