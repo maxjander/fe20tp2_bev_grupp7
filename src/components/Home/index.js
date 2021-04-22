@@ -15,7 +15,7 @@ import LinDat from "../DeltaData";
 import { BsFillGridFill } from "react-icons/bs";
 import { CgRowFirst } from "react-icons/cg";
 import Slider from "../Slider";
-// import ApiFetch from "../ApiFetch";
+import ApiFetch from "../ApiFetch";
 
 import CardList from "./CardList";
 import AddCardModal from "./AddCardModal";
@@ -32,7 +32,8 @@ import {
 */
 
 const HomePage = () => {
-  const [rangeValue, setRangeValue] = useState(1);
+  //dagens datum
+  const [rangeValue, setRangeValue] = useState(2);
   const onChangeSlider = (e) => {
     setRangeValue(parseInt(e.target.value, 10));
   };
@@ -62,10 +63,10 @@ const HomePage = () => {
                 onChangeValue={onChangeSlider}
               />
             )}
-            <StyledInventoryHeader children='Inventory' />
+            <StyledInventoryHeader children="Inventory" />
             <Cards />
 
-            {/* <ApiFetch /> */}
+            <ApiFetch />
           </div>
         </StyledHomeComponent>
       )}
@@ -350,7 +351,8 @@ const CardsBase = (props) => {
               handleCardPresentationToggleModal
             }
             toggleCardPresentationModal={toggleCardPresentationModal}
-            authUser={authUser}>
+            authUser={authUser}
+          >
             {clickedCard && <CardPresentation card={clickedCard} />}
           </CardPresentationModal>
 
