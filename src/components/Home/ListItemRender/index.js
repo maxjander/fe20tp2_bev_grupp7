@@ -1,8 +1,9 @@
+import { useState } from "react";
 import styled from "styled-components";
 import { breakpoints } from "../../../constants/breakpoints.js";
-
+import CardPresentation from "../../CardPresentation";
 import InventoryUtilButtons from "../InventoryUtilButtons";
-
+import Modal from "../../Modal";
 const ListItemRender = ({
   condition,
   card,
@@ -10,83 +11,61 @@ const ListItemRender = ({
   authUser,
   onRemoveCard,
   onToggleEditMode,
-  handleCardPresentationToggleModal,
-}) =>
-  condition ? (
-    <ListItemList
-      card={card}
-      onRemoveCard={onRemoveCard}
-      onToggleEditMode={onToggleEditMode}
-      authUser={authUser}
-      handleCardPresentationToggleModal={handleCardPresentationToggleModal}
-    />
-  ) : (
-    <ListItemGrid
-      card={card}
-      image={image}
-      onRemoveCard={onRemoveCard}
-      onToggleEditMode={onToggleEditMode}
-      authUser={authUser}
-      handleCardPresentationToggleModal={handleCardPresentationToggleModal}
-    />
+}) => {
+  const { setVisable: toggleCardModal, Content: CardModal } = Modal();
+  const [clickedCard, setClickedCard] = useState(null);
+  return (
+    <span
+      onClick={() => {
+        setClickedCard(card);
+      }}>
+      {condition ? (
+        <>
+          <StyledListItem>
+            <StyledContainerInfoList>
+              <StyledInfoList onClick={toggleCardModal}>
+                <StyledCardTitleList children={card.cardName} />
+                <StyledUtilDiv>
+                  <StyledCardSpecsCardSet children={card.cardSet.set_code} />
+                  <StyledCardSpecsRarityList
+                    children={card.cardSet.set_rarity_code}
+                  />
+                  <StyledCardSpecsConditionList children={card.cardCondition} />
+                </StyledUtilDiv>
+              </StyledInfoList>
+              <InventoryUtilButtons
+                onRemoveCard={onRemoveCard}
+                onToggleEditMode={onToggleEditMode}
+                card={card}
+                authUser={authUser}
+              />
+            </StyledContainerInfoList>
+          </StyledListItem>
+        </>
+      ) : (
+        <StyledGridItem>
+          <span onClick={toggleCardModal}>
+            <img src={image} width='100%' height='auto' alt={card.cardName} />
+            <StyledCardSpecsNameGrid children={card.cardName} />
+            <StyledCardSpecs children={card.cardSet.set_code} />
+            <StyledCardSpecs children={card.cardSet.set_rarity_code} />
+            <StyledCardSpecs children={card.cardCondition} />
+          </span>
+          <InventoryUtilButtons
+            onRemoveCard={onRemoveCard}
+            onToggleEditMode={onToggleEditMode}
+            card={card}
+            authUser={authUser}
+          />
+        </StyledGridItem>
+      )}
+      <CardModal>
+        <CardPresentation card={clickedCard} />
+      </CardModal>
+    </span>
   );
+};
 
-const ListItemList = ({
-  card,
-  onRemoveCard,
-  onToggleEditMode,
-  authUser,
-  handleCardPresentationToggleModal,
-}) => (
-  <>
-    <StyledListItem>
-      <StyledContainerInfoList>
-        <StyledInfoList onClick={handleCardPresentationToggleModal}>
-          <StyledCardTitleList children={card.cardName} />
-          <StyledUtilDiv>
-            <StyledCardSpecsCardSet children={card.cardSet.set_code} />
-            <StyledCardSpecsRarityList
-              children={card.cardSet.set_rarity_code}
-            />
-            <StyledCardSpecsConditionList children={card.cardCondition} />
-          </StyledUtilDiv>
-        </StyledInfoList>
-        <InventoryUtilButtons
-          onRemoveCard={onRemoveCard}
-          onToggleEditMode={onToggleEditMode}
-          card={card}
-          authUser={authUser}
-        />
-      </StyledContainerInfoList>
-    </StyledListItem>
-  </>
-);
-const ListItemGrid = ({
-  card,
-  image,
-  onRemoveCard,
-  onToggleEditMode,
-  authUser,
-  handleCardPresentationToggleModal,
-}) => (
-  <>
-    <StyledGridItem>
-      <span onClick={handleCardPresentationToggleModal}>
-        <img src={image} width="100%" height="auto" alt={card.cardName} />
-        <StyledCardSpecsNameGrid children={card.cardName} />
-        <StyledCardSpecs children={card.cardSet.set_code} />
-        <StyledCardSpecs children={card.cardSet.set_rarity_code} />
-        <StyledCardSpecs children={card.cardCondition} />
-      </span>
-      <InventoryUtilButtons
-        onRemoveCard={onRemoveCard}
-        onToggleEditMode={onToggleEditMode}
-        card={card}
-        authUser={authUser}
-      />
-    </StyledGridItem>
-  </>
-);
 export default ListItemRender;
 
 const StyledInfoList = styled.div`

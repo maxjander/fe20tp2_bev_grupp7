@@ -17,7 +17,6 @@ const CardItem = ({
   onEditCard,
 
   authUser,
-  setClickedCard,
   handleCardPresentationToggleModal,
   image,
   toggleGridView,
@@ -76,19 +75,18 @@ const CardItem = ({
       {editMode && apiCard ? (
         <FlexForm>
           <StyledInput //type='text' value={editText} onChange={this.onChangeEditText}
-            type="text"
+            type='text'
             value={apiCard.name}
             onChange={onChangeEditCardName}
             readOnly
           />
 
           <StyledSelect
-            type="text"
+            type='text'
             value={editCard_sets}
             onChange={onChangeEditCardSet}
-            required="required"
-          >
-            <option key="1" value={card.cardSet}>
+            required='required'>
+            <option key='1' value={card.cardSet}>
               {card.cardSet.set_code} - {card.cardSet.set_rarity_code}
             </option>
             -------
@@ -99,12 +97,11 @@ const CardItem = ({
             ))}
           </StyledSelect>
           <StyledSelect
-            type="text"
+            type='text'
             value={editCondition}
             onChange={onChangeEditCondition}
-            required="required"
-            placeholder="Condition"
-          >
+            required='required'
+            placeholder='Condition'>
             <option>What Condition is your card?</option>
             {cardConditions.map((item, idx) => (
               <option key={idx} value={item}>
@@ -118,31 +115,15 @@ const CardItem = ({
           </span>
         </FlexForm>
       ) : (
-        //{message.userId} {message.text} //message.editedAt
-
-        <span
-          // className="single-card"
-          onClick={() => {
-            setClickedCard(card);
-          }}
-        >
-          {/* {card.userId} */}
-          {/* onClick={handleCardPresentationToggleModal} */}
-          <span>
-            <ListItemRender
-              condition={toggleGridView}
-              card={card}
-              image={image}
-              onRemoveCard={onRemoveCard}
-              onToggleEditMode={onToggleEditMode}
-              authUser={authUser}
-              // setClickedCard={setClickedCard}
-              handleCardPresentationToggleModal={
-                handleCardPresentationToggleModal
-              }
-            />
-          </span>
-        </span>
+        <ListItemRender
+          condition={toggleGridView}
+          card={card}
+          image={image}
+          onRemoveCard={onRemoveCard}
+          onToggleEditMode={onToggleEditMode}
+          authUser={authUser}
+          handleCardPresentationToggleModal={handleCardPresentationToggleModal}
+        />
       )}
 
       {/* clickedCard && <CardPresentation card={clickedCard}/> */}

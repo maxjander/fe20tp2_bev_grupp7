@@ -5,16 +5,28 @@ import CardItem from "../CardItem";
 /*---CARD LIST THAT SHOWS ALL CARDS USER OWNS---*/
 const CardList = ({
   cards, //messages
-  onEditCard, //oneditmessage
-  onRemoveCard,
   props,
   authUser, //onremovemessage
-  handleToggleGridView, //toggle grid
   toggleGridView,
-  setClickedCard,
-  handleCardPresentationToggleModal,
+  firebase,
 }) => {
   const showHideClassName = toggleGridView ? "display-list" : "display-grid";
+  const onEditCard = (card, cardName, cardSet, cardCondition) => {
+    const { uid, ...cardSnapshot } = card;
+
+    firebase.card(card.uid).set({
+      ...cardSnapshot,
+      cardName,
+      cardSet,
+      cardCondition,
+      editedAt: firebase.serverValue.TIMESTAMP,
+    });
+  };
+
+  const onRemoveCard = (uid, authUser) => {
+    firebase.userCardArray(authUser.uid).child(uid).remove();
+    firebase.card(uid).remove();
+  };
 
   return cards ? (
     <>
@@ -29,14 +41,10 @@ const CardList = ({
                 <CardItem //MessageItem
                   key={card.uid} //message.uid
                   card={card}
-                  setClickedCard={setClickedCard}
                   onEditCard={onEditCard}
                   onRemoveCard={onRemoveCard}
                   props={props}
                   authUser={authUser}
-                  handleCardPresentationToggleModal={
-                    handleCardPresentationToggleModal
-                  }
                   image={card.image}
                   toggleGridView={toggleGridView}
                 />
