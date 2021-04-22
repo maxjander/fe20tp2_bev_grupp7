@@ -29,28 +29,32 @@ const NavigationAuth = ({ authUser }) => {
 
   return (
     <NavContainer>
-      <HumIcon className='XD' onClick={handleClick}>
-        {click ? <FaTimes /> : <FaBars />}
-      </HumIcon>
       <NavUl className='NavUl' click={click}>
-        <li className='logo'>
-          <StyledImage src={v2_pink} />
-        </li>
-        {/* <li>
+        <HumIcon className='hamburger' onClick={handleClick}>
+          {click ? <FaTimes /> : <FaBars />}
+        </HumIcon>
+
+        <span>
+          <li className='logo'>
+            <StyledImage src={v2_pink} />
+          </li>
+          {/* <li>
         <Link to={ROUTES.LANDING}>Landing</Link>
       </li> */}
-        <li>
-          <Link to={ROUTES.HOME}>Home</Link>
-        </li>
-        <li>
-          <Link to={ROUTES.ACCOUNT}>Account</Link>
-        </li>
-        {!!authUser.roles[ROLES.ADMIN] && (
           <li>
-            <Link to={ROUTES.ADMIN}>Admin</Link>
+            <Link to={ROUTES.HOME}>Home</Link>
           </li>
-        )}
-        <SignOutButton />
+          <li>
+            <Link to={ROUTES.ACCOUNT}>Account</Link>
+          </li>
+          {!!authUser.roles[ROLES.ADMIN] && (
+            <li>
+              <Link to={ROUTES.ADMIN}>Admin</Link>
+            </li>
+          )}
+
+          <SignOutButton />
+        </span>
       </NavUl>
     </NavContainer>
   );
@@ -60,10 +64,11 @@ const NavigationNonAuth = () => {
   const handleClick = () => setClick(!click);
   return (
     <NavContainer>
-      <HumIcon className='XD' onClick={handleClick}>
-        {click ? <FaTimes /> : <FaBars />}
-      </HumIcon>
       <NavUl className='NavUl' click={click}>
+        <HumIcon className='hamburger' onClick={handleClick}>
+          {click ? <FaTimes /> : <FaBars />}
+        </HumIcon>
+
         <li className='logo'>
           <StyledImage src={v2_pink} />
         </li>
@@ -92,34 +97,64 @@ const NavUl = styled.ul`
   text-transform: uppercase;
   align-items: center;
   margin: 0;
-  padding: 10px;
+  padding: 5px;
   list-style: none;
   width: 100%;
-  :nth-child(0) {
-    transform: translate(-1000px);
-  }
+
   .logo {
     justify-content: flex-start;
     display: inline-block;
+
+    padding: 0px;
+    margin: 0px;
     margin-right: auto;
+    margin-left: 15px;
     &:hover {
       background-color: transparent;
       cursor: default;
     }
   }
+  span {
+    display: flex;
+    width: 100%;
+  }
+  .hamburger {
+    display: none;
+    margin-right: auto;
+    flex-grow: 1;
+  }
   @media only screen and (max-width: 609px) {
-    display: ${({ click }) => (click ? "flex" : "none")};
+    /* position: fixed;
+    z-index: 999; */
     flex-direction: column;
-    justify-content: space-between;
+    width: 100%;
     .logo {
       display: none;
       margin-right: auto;
       flex-grow: 1;
     }
+    .hamburger {
+      display: flex;
+      margin-right: auto;
+      flex-grow: 1;
+      &:hover {
+        background-color: transparent;
+        cursor: default;
+      }
+    }
+    span {
+      display: ${({ click }) => (click ? "flex" : "none")};
+      width: 100%;
+
+      flex-direction: column;
+      align-items: center;
+    }
   }
 
   li {
-    padding: 10px 10px 10px 10px;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 5px 5px 5px;
     margin: 10px;
     border-radius: 8px;
     text-align: center;
@@ -141,24 +176,25 @@ const NavUl = styled.ul`
   }
 `;
 
-const HumIcon = styled.div`
+const HumIcon = styled.li`
   display: none;
   @media only screen and (max-width: 609px) {
     display: flex;
-    position: absolute;
     color: #808080;
-    left: 51%;
-    top: -1%;
-    right: 0;
-    transform: translate(-100%, 60%);
+    /* position: absolute;
+    top: 15px;
+    left: 15px; */
     font-size: 1.8rem;
     cursor: pointer;
+    &:hover {
+      background-color: transparent;
+    }
   }
 `;
 
 const StyledImage = styled.img`
   width: 140px;
-  @media (max-width: 609px) {
+  paddin @media (max-width: 609px) {
     display: none;
   }
 `;

@@ -11,7 +11,6 @@ const ApiFetcher = (props) => {
       let userCardId = null;
       let userMainId = null;
       let userBuyPoint = null;
-      let k = null;
 
       props.firebase
         .cards()
@@ -29,7 +28,7 @@ const ApiFetcher = (props) => {
           async function cardCalculator() {
             // aysnc func that lets you wait for the api response before calculating values.
             for (
-              k = 0;
+              let k = 0;
               k < userBuyPoint.length;
               k++ // Loop which matches usercards to yugioh api, and checks for price difference, if there is one, pushes the delta to firebase
             ) {

@@ -14,7 +14,6 @@ import Slider from "../Slider";
 
 import ApiFetch from "../ApiFetch";
 
-
 import CardList from "./CardList";
 import AddCard from "../AddCard";
 import Modal from "../Modal";
@@ -64,7 +63,6 @@ const HomePage = () => {
           <Cards cards={context.cards} />
 
           {/* <ApiFetch /> */}
-
         </StyledHomeComponent>
       )}
     </CardContext.Consumer>
@@ -102,7 +100,6 @@ const CardsBase = (props) => {
             cards={cards}
             firebase={props.firebase}
             toggleGridView={toggleGridView}
-
             authUser={authUser}
           />
 
