@@ -30,7 +30,7 @@ import {
 
 const HomePage = () => {
   //dagens datum
-  const [rangeValue, setRangeValue] = useState(2);
+  const [rangeValue, setRangeValue] = useState();
   const onChangeSlider = (e) => {
     setRangeValue(parseInt(e.target.value, 10));
   };

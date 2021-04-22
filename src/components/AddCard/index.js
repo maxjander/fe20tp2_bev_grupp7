@@ -122,11 +122,13 @@ const AddCard = ({ firebase, authUser, toggleAddCardModal }) => {
         {apiCard && apiCard.card_sets.length > 0 && (
           <StyledSelect
             onChange={onChangeCardSet}
-            value={cardSet.set_code || ""}
+            value={`${cardSet.set_code} - ${cardSet.set_rarity_code}` || ""}
             required='required'>
             <option> Select a Card Set</option>
             {apiCard.card_sets.map((item, idx) => (
-              <option key={idx} value={item.set_code}>
+              <option
+                key={idx}
+                value={`${item.set_code} - ${item.set_rarity_code}`}>
                 {item.set_code} -{item.set_rarity_code}
               </option>
             ))}

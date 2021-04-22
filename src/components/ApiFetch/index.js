@@ -47,10 +47,10 @@ const ApiFetcher = (props) => {
               //ta det objektet och matcha set-kod
               //
 
-              console.log(cardList[k].cardSet.set_code);
+              // console.log(cardList[k].cardSet.set_code);
 
-              console.log(cardSetObject.set_price);
-              console.log(apiCardPrice + " <----- detta är apicardprice");
+              // console.log(cardSetObject.set_price);
+              // console.log(apiCardPrice + " <----- detta är apicardprice");
               if (
                 userBuyPoint[k] < apiCardPrice ||
                 userBuyPoint[k] > apiCardPrice
