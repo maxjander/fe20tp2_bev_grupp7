@@ -31,7 +31,6 @@ const LinDat = (allCards, donk) => {
   }
 
   if (allDates.length > donk) {
-
     var holdDates = [];
     var holdPrices = [];
 
@@ -51,8 +50,16 @@ const LinDat = (allCards, donk) => {
     }
   }
   var compDates = Object.keys(sumObj);
-  localStorage.setItem("startDate", new Date(Number(compDates[0])).toLocaleDateString());
-  localStorage.setItem("endDate",new Date(Number(compDates[compDates.length -1])).toLocaleDateString());
+  // console.log(compDates.reverse());
+  console.log(compDates + "THIS IS NORMAL VALUES");
+  localStorage.setItem(
+    "startDate",
+    new Date(Number(compDates[0])).toLocaleDateString()
+  );
+  localStorage.setItem(
+    "endDate",
+    new Date(Number(compDates[compDates.length - 1])).toLocaleDateString()
+  );
   localStorage.setItem("totalDays", allDates.length);
   return sumObj;
 };

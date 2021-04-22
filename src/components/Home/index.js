@@ -12,6 +12,9 @@ import { BsFillGridFill } from "react-icons/bs";
 import { CgRowFirst } from "react-icons/cg";
 import Slider from "../Slider";
 
+import ApiFetch from "../ApiFetch";
+
+
 import CardList from "./CardList";
 import AddCard from "../AddCard";
 import Modal from "../Modal";
@@ -27,7 +30,8 @@ import {
 */
 
 const HomePage = () => {
-  const [rangeValue, setRangeValue] = useState(1);
+  //dagens datum
+  const [rangeValue, setRangeValue] = useState(2);
   const onChangeSlider = (e) => {
     setRangeValue(parseInt(e.target.value, 10));
   };
@@ -60,6 +64,7 @@ const HomePage = () => {
           <Cards cards={context.cards} />
 
           {/* <ApiFetch /> */}
+
         </StyledHomeComponent>
       )}
     </CardContext.Consumer>
@@ -97,6 +102,7 @@ const CardsBase = (props) => {
             cards={cards}
             firebase={props.firebase}
             toggleGridView={toggleGridView}
+
             authUser={authUser}
           />
 

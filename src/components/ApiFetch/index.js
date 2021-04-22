@@ -39,13 +39,25 @@ const ApiFetcher = (props) => {
 
               const response = await fetch(url);
               var apiCardData = await response.json();
-              var apiCardPrice =
-                apiCardData.data[0].card_prices[0].cardmarket_price;
+              let cardSetObject = apiCardData.data[0].card_sets.find(
+                (item) => item.set_code === cardList[k].cardSet.set_code
+              );
+              var apiCardPrice = cardSetObject.set_price;
+              //gör en check för setprice
+              //gör en .find() och plocka ut set_price-objektet
+              //ta det objektet och matcha set-kod
+              //
+
+              console.log(cardList[k].cardSet.set_code);
+
+              console.log(cardSetObject.set_price);
+              console.log(apiCardPrice + " <----- detta är apicardprice");
               if (
                 userBuyPoint[k] < apiCardPrice ||
                 userBuyPoint[k] > apiCardPrice
               ) {
                 var delta = apiCardPrice - userBuyPoint[k];
+                //kör nedanstående endast om den senaste
                 props.firebase
                   .card(userMainId[k])
                   .child("priceChangeDeltaValueHistory")
@@ -55,7 +67,6 @@ const ApiFetcher = (props) => {
               }
             }
           }
-
           cardCalculator();
         });
     }, 60000); /* <- the interval at which this runs, in milliseconds */
