@@ -12,7 +12,7 @@ import { BsFillGridFill } from "react-icons/bs";
 import { CgRowFirst } from "react-icons/cg";
 import Slider from "../Slider";
 
-import ApiFetch from "../ApiFetch";
+// import ApiFetch from "../ApiFetch";
 
 import CardList from "./CardList";
 import AddCard from "../AddCard";

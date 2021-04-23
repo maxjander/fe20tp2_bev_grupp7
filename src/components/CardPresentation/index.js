@@ -20,7 +20,10 @@ const CardPresentation = ({ card }) => {
     <StyledWrapper>
       {/* <h1>{apiCard.name}</h1> */}
       <StyledCardImageAndGraph>
-        <StyledImage src={apiCard.card_images[0].image_url} />
+        <StyledImageDiv>
+        <img src={apiCard.card_images[0].image_url} width='100%' alt={apiCard.name} />
+        </StyledImageDiv>
+
         {card && (
           <StyledGraph>
             <LineGraph
@@ -52,7 +55,7 @@ const StyledWrapper = styled.div`
   width: 100%;
 `;
 
-const StyledImage = styled.img`
+const StyledImageDiv = styled.div`
   max-width: 30%;
   @media (max-width: 700px) {
     max-width: 50%;

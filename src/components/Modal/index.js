@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 import {
   StyledModalMain,
@@ -11,7 +11,10 @@ const Modal = () => {
 
   const node = useRef();
 
-  const setVisable = () => toggleVisable(!visable);
+  const setVisable = useCallback( () => {
+    toggleVisable(!visable)
+  }, [toggleVisable, visable]);
+
 
   useEffect(() => {
     const handleClick = (e) => {
